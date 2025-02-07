@@ -25,7 +25,7 @@ public class AverageNumbers {
      * max(int [] data) 함수
      * 최댓값을 구하는 함수, 
      * n개의 시험 점수 중에서 최댓값을 구해야 하기 때문에 구현 
-     */
+    */
     public static int max(int [] data){
         int max = 0;
         for(int i = 0; i < data.length; i++){
