@@ -14,7 +14,7 @@ public class PrefixSum1 {
     * 문제 출처 : 백준
     * 문제 번호 : 11659
     * 문제 이름 : 구간 합 구하기 4
-    * 문제 난이도 : 실버3
+    * 문제 난이도 : 실버 Ⅲ
     *
     * 작성 목적
     * 
@@ -31,7 +31,6 @@ public class PrefixSum1 {
         st = new StringTokenizer(br.readLine());
         int [] datas = new int[size+1];
 
-        datas[0] = 0;
         for(int i = 1; i < datas.length; i++){
             datas[i] = Integer.parseInt(st.nextToken()) + datas[i-1];
         }
