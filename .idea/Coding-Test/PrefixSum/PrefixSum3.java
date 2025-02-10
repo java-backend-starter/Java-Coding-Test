@@ -1,5 +1,3 @@
-package PrefixSum;
-
 public class PrefixSum3 {
     /* 
     * 최초 작성일시 : 2025-02-10
