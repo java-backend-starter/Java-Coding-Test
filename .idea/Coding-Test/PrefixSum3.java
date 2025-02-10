@@ -22,4 +22,8 @@ public class PrefixSum3 {
     * 
     * 책에 있는 문제 복습
     */
+
+    public static void main(String[] args) {
+        
+    }
 }
