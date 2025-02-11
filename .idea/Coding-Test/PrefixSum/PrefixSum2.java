@@ -3,40 +3,43 @@ import java.util.StringTokenizer;
 
 public class PrefixSum2 {
     /* 
-    * ÀÛ¼ºÀÏ½Ã : 2025-02-10
-    * ÀÛ¼º½Ã°£ : 19:42
-    * ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+    * ìž‘ì„±ì¼ì‹œ : 2025-02-10
+    * ìž‘ì„±ì‹œê°„ : 19: 42
+    * ìž‘ì„±ìž : ìž¥ì„±í™˜
     *
-    * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-    * ¹®Á¦ ¹øÈ£ : 11660
-    * ¹®Á¦ ÀÌ¸§ : ±¸°£ ÇÕ ±¸ÇÏ±â 5
-    * ¹®Á¦ ³­ÀÌµµ : ½Ç¹ö ¥°
+    * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+    * ë¬¸ì œ ë²ˆí˜¸ : 11660
+    * ë¬¸ì œ ì´ë¦„ : êµ¬ê°„ í•© êµ¬í•˜ê¸° 5
+    * ë¬¸ì œ ë‚œì´ë„ : ì‹¤ë²„ â… 
     *
-    * ÀÛ¼º ¸ñÀû
+    * ìž‘ì„± ëª©ì 
     * 
-    * Ã¥¿¡ ÀÖ´Â ¹®Á¦ º¹½À
+    * ì±…ì— ìžˆëŠ” ë¬¸ì œ ë³µìŠµ
     */
-
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         /*
-         * size : n * n Å©±âÀÇ 2Â÷¿ø ¹è¿­¿¡¼­ n °ª
-         * query : ±¸°£ ÇÕÀÇ ÁúÀÇÀÇ °³¼ö
+         * size : n * n í¬ê¸°ì˜ 2ì°¨ì› ë°°ì—´ì„ ë§Œë“¤ ë•Œ ì‚¬ìš©í•  nê°’ ì €ìž¥
+         * query : êµ¬ê°„ í•© ì§ˆì˜ë¥¼ í•  íšŸìˆ˜
          */
         int size = Integer.parseInt(st.nextToken());
         int query = Integer.parseInt(st.nextToken());
 
         /*
-         * ÇØ´ç ¹®Á¦´Â ¹éÁØÀÇ 11659¹ø ¹®Á¦ÀÎ ±¸°£ ÇÕ ±¸ÇÏ±â 4¸¦ 2Â÷¿ø ¹è¿­·Î È®ÀåÇÑ °ÍÀÌ´Ù.
+         * ì´ ë¬¸ì œëŠ” êµ¬ê°„ í•© êµ¬í•˜ê¸° 4(11659ë²ˆ ë¬¸ì œ)ì—ì„œ ì‚¬ìš©í•œ 1ì°¨ì› ë°°ì—´ì„ 2ì°¨ì› ë°°ì—´ë¡œ í™•ìž¥í•œ ë¬¸ì œì´ë‹¤.
          * 
-         * µû¶ó¼­ ±¸°£ ÇÕ ±¸ÇÏ±â 5´Â Çà°ú ¿­ÀÌ¶ó´Â µÎ ¹æÇâÀ» °í·ÁÇØ¼­ °è»ê½ÄÀ» ¼¼¿ö¾ß ÇÑ´Ù.
+         * 2ì°¨ì› ë°°ì—´ì—ì„œ êµ¬ê°„ í•©ì„ êµ¬í•  ë•Œì—ëŠ” í–‰ê³¼ ì—´ì„ ê³ ë ¤í•´ì„œ í•© ë°°ì—´ì„ ë§Œë“  ë’¤ì— êµ¬ê°„ í•©ì„ ê³„ì‚°í•œë‹¤.
          * 
-         * ÀÌ ¹®Á¦¿¡¼­´Â Ã¹ ¹øÂ° ¿ä¼Ò°¡ ÀÖ´Â (1, 1)¿¡¼­ (i, j)(1 <= i <= n, 1 <= j <= n)±îÁöÀÇ ÇÕ ¹è¿­À» ¸¸µç ´ÙÀ½¿¡
+         * ì´ ë¬¸ì œì—ì„œ í•© ë°°ì—´ì„ ë§Œë“¤ì§€ ì•Šê³  êµ¬ê°„ í•©ì„ ê³„ì‚°í•˜ë©´ ì§ˆì˜ í•˜ë‚˜ ë‹¹ 
          * 
-         * (i1, j1)(i1 <= n, j1 <= n)ºÎÅÍ (i2, j2)(i1 <= i2 <= n, j1 <= j2 <= n)±îÁöÀÇ ±¸°£ ÇÕÀ» °è»êÇÑ´Ù.
+         * ì´ì¤‘ for ë¬¸ìœ¼ë¡œ ì›ë³¸ ë°°ì—´ì˜ ìš”ì†Œë“¤ì„ ì ‘ê·¼í•´ì„œ ê³„ì‚°í•´ì•¼ í•˜ê¸° ë•Œë¬¸ì— ÎŸ(n^2)ì´ë¼ëŠ” ì‹œê°„ ë³µìž¡ë„ê°€ ë‚˜ì™€ì„œ 1ì´ˆì•ˆì— ì´ ë¬¸ì œë¥¼ í’€ ìˆ˜ ì—†ë‹¤.
+         * 
+         * í•˜ì§€ë§Œ í•© ë°°ì—´ì„ í•œ ë²ˆ ë§Œë“¤ê³  êµ¬ê°„ í•©ì„ ê³„ì‚°í•˜ë©´ êµ¬ê°„ í•© ê³µì‹ë§Œ ì ìš©í•˜ë©´ ë˜ê³  í•© ë°°ì—´ì˜ íŠ¹ì • ìœ„ì¹˜ì˜ ìš”ì†Œì— ì ‘ê·¼í•˜ëŠ”ë° ë“œëŠ” ì‹œê°„ ë³µìž¡ë„ëŠ” ÎŸ(1) ì´ê¸° ë•Œë¬¸ì—
+         * 
+         * ÎŸ(1)ì´ë¼ëŠ” ì‹œê°„ ë³µìž¡ë„ë¡œ êµ¬ê°„ í•©ì„ êµ¬í•  ìˆ˜ ìžˆë‹¤.
          */
         int [][] datas = new int[size+1][size+1];
         int [][] sum = new int[size+1][size+1];
@@ -49,26 +52,11 @@ public class PrefixSum2 {
         }
 
         /*
-         * ÇÕ ¹è¿­À» ¸¸µå´Â ÀÌÀ¯´Â ¸Å ÁúÀÇ¸¶´Ù ¹è¿­ ¾È¿¡ ÀÖ´Â ¿ä¼ÒµéÀ» °¢°¢ Á¢±ÙÇØ¼­ ±¸°£ ÇÕÀ» ¸¸µå´Â °ÍÀº ºñÈ¿À²ÀûÀÌ±â ¶§¹®ÀÌ´Ù.
+         * ì›ë³¸ ë°°ì—´ Aì—ì„œ í•© ë°°ì—´ Së¥¼ ë§Œë“¤ ë•Œ ì‚¬ìš©í•˜ëŠ” ê³µì‹ì€ ë‹¤ìŒê³¼ ê°™ë‹¤.
          * 
-         * ¹éÁØÀÇ 11659¹ø ¹®Á¦´Â 1Â÷¿ø ¹è¿­¿¡ ÀÖ´Â ¿ä¼Òµé¿¡ ´ëÇÑ ±¸°£ ÇÕÀ» ÇÕ ¹è¿­ ¾øÀÌ ±¸ÇÏ¸é ¥Ï(n)ÀÌ µéÁö¸¸
+         * S[i][j] = S[i-1][j] + S[i][j-1] + A[i][j] - S[i-1][j-1]
          * 
-         * ÀÌ ¹®Á¦´Â 2Â÷¿ø ¹è¿­¿¡ ÀÖ´Â ¿ä¼Òµé¿¡ ´ëÇÑ ±¸°£ ÇÕÀ» ±¸ÇØ¾ß ÇÏ±â ¶§¹®¿¡ ÇÕ ¹è¿­ ¾øÀÌ °è»êÇÏ¸é
-         * 
-         * ¸Å ÁúÀÇ¸¶´Ù ¥Ï(n^2)°¡ µé±â ¶§¹®¿¡ 1ÃÊ ¾È¿¡ ÀÌ ¹®Á¦¸¦ Ç® ¼ö ¾ø´Ù.
-         * 
-         * ¥Ï(n^2)¶ó´Â ½Ã°£ º¹Àâµµ°¡ µå´Â ÀÌÀ¯´Â ÃÖ¾ÇÀÇ °æ¿ì´Â 2Â÷¿ø ¹è¿­ÀÇ ¸ðµç ¿ä¼Ò¸¦ ´Ù Á¢±ÙÇÏ´Â °ÍÀÌ±â ¶§¹®ÀÌ´Ù.
-         * 
-         * µû¶ó¼­ ÇÕ ¹è¿­À» ÇÑ ¹ø ¸¸µé¾îµÎ°í ¸Å ÁúÀÇ¸¦ Ã³¸®ÇÏ¸é È¿À²ÀûÀ¸·Î ÀÌ ¹®Á¦ÀÇ ´äÀ» ±¸ÇÒ ¼ö ÀÖ´Ù.
-         * 
-         * 
-         * (1, 1)ºÎÅÍ (i, j)(1 <= i <= n, 1 <= j <= n)±îÁöÀÇ ÇÕÀ» ±¸ÇÏ´Â °ø½ÄÀº
-         * 
-         * (¿øº» ¹è¿­ÀÇ (i, j)¹øÂ° ¿ä¼Ò) + (ÇÕ ¹è¿­ÀÇ (i-1, j)¹øÂ° °ª) + (ÇÕ ¹è¿­ÀÇ (i, j-1)¹øÂ° °ª) - (ÇÕ¹è¿­ÀÇ (i-1, j-1)¹øÂ° °ª)
-         * 
-         * ÀÌ´Ù. ÇÕ¹è¿­ÀÇ (i-1, j-1)¹øÂ° °ªÀ» »©´Â ÀÌÀ¯´Â ÇÕ¹è¿­ÀÇ (i-1, j)¹øÂ° °ª°ú ÇÕ¹è¿­ÀÇ (i, j-1)¹øÂ° °ª ¸ðµÎ
-         * 
-         * ÇÕ¹è¿­ÀÇ (i-1, j-1)¹øÂ° °ªÀÌ Æ÷ÇÔµÇ¾î ÀÖ±â¿¡ Áßº¹µÈ °ªÀ» »©ÁÖ´Â °ÍÀÌ´Ù.
+         * S[i-1][j-1]ì„ ë¹¼ëŠ” ì´ìœ ëŠ” S[i-1][j]ì™€ S[i][j-1]ë¥¼ A[i][j]ì— ë”í•  ë•Œ S[i-1][j-1]ê°€ ë‘ ë²ˆ ë”í•´ì§€ê¸° ë•Œë¬¸ì´ë‹¤.
          */
         for(int i = 1; i <= size; i++){
             for(int j = 1; j <= size; j++){
@@ -77,18 +65,13 @@ public class PrefixSum2 {
         }
 
         /*
-         * ÀÌ for¹®Àº ±¸°£ ÇÕÀ» ±¸ÇÏ´Â for¹®ÀÌ´Ù.
+         * í•© ë°°ì—´ Sì—ì„œ (x1, y1)ë¶€í„° (x2, y2)ê¹Œì§€ì˜ êµ¬ê°„ í•©ì„ êµ¬í•  ë•Œì—ëŠ” ë‹¤ìŒ ê³µì‹ì„ ì‚¬ìš©í•œë‹¤.
          * 
-         * 2Â÷¿ø ¹è¿­¿¡¼­ ±¸°£ ÇÕÀ» ±¸ÇÏ´Â °ø½ÄÀº 
+         * S[x2][y2] - S[x1-1][y2] - S[x2][y1-1] + S[x1-1][y1-1]
          * 
-         * (ÇÕ ¹è¿­ÀÇ (i2, j2)¹øÂ° °ª) - (ÇÕ ¹è¿­ÀÇ (i1-1, j2)¹øÂ° °ª) - (ÇÕ ¹è¿­ÀÇ (i2, j1-1)¹øÂ° °ª) + (ÇÕ ¹è¿­ÀÇ (i1 - 1, j1 - 1)¹øÂ° °ª)
+         * S[x1-1][y1-1]ì™€ S[x2][y1-1]ì€ (x1, y1)ë¶€í„° (x2, y2)ê¹Œì§€ì˜ êµ¬ê°„ ë°”ê¹¥ì˜ í•©ì´ë‹¤.
          * 
-         * ÀÌ´Ù. (ÇÕ ¹è¿­ÀÇ (i1-1, j2)¹øÂ° °ª)°ú (ÇÕ ¹è¿­ÀÇ (i2, j1-1)¹øÂ° °ª)À» »©´Â ÀÌÀ¯´Â (i1, j1)ºÎÅÍ (i2, j2) ±¸°£¿¡ Æ÷ÇÔµÇÁö ¾Ê´Â ±¸°£ÀÌ±â ¶§¹®ÀÌ°í
-         * 
-         * (ÇÕ ¹è¿­ÀÇ (i1 - 1, j1 - 1)¹øÂ° °ª)À» ´õÇÏ´Â ÀÌÀ¯´Â (ÇÕ ¹è¿­ÀÇ (i1-1, j2)¹øÂ° °ª)°ú (ÇÕ ¹è¿­ÀÇ (i2, j1-1)¹øÂ° °ª)À» »©´Â °úÁ¤¿¡¼­ 
-         * 
-         * (ÇÕ ¹è¿­ÀÇ (i1 - 1, j1 - 1)¹øÂ° °ª)À» µÎ ¹ø »©±â ¶§¹®¿¡ ÀÌ °ªÀ» º¸Á¤ÇÏ±â À§ÇÔÀÌ´Ù.
-         * 
+         * S[x1-1][y1-1]ì„ ë”í•˜ëŠ” ì´ìœ ëŠ” S[x2][y2] - S[x1-1][y1-1] - S[x2][y1-1] ì—°ì‚°ì„ í•  ë•Œ, S[x1-1][y1-1]ê°€ ë‘ ë²ˆ ëº„ì…ˆí•œ ê²°ê³¼ê°€ ë‚˜ì˜¤ê¸° ë–„ë¬¸ì´ë‹¤. 
          */
         for(int i = 0; i < query; i++){
             st = new StringTokenizer(br.readLine());

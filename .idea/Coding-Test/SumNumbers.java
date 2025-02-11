@@ -1,55 +1,50 @@
 import java.io.*;
 public class SumNumbers{
-    /* 
-    * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-01-24
-    * ÃÖÃÊ ÀÛ¼º½Ã°£ : 00:45
-    * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
-    * 
-    * ¸¶Áö¸· ÀÛ¼ºÀÏ½Ã : 2025-01-24
-    * ¸¶Áö¸· ÀÛ¼º½Ã°£ : 01:43
-    * ¸¶Áö¸· ÀÛ¼ºÀÚ : Àå¼ºÈ¯
+     /* 
+    * ìž‘ì„±ì¼ì‹œ : 2025-01-24
+    * ìž‘ì„±ì‹œê°„ : 00:45
+    * ìž‘ì„±ìž : ìž¥ì„±í™˜
     *
-    * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-    * ¹®Á¦ ¹øÈ£ : 11720
-    * ¹®Á¦ ÀÌ¸§ : ¼ýÀÚÀÇ ÇÕ
-    * ¹®Á¦ ³­ÀÌµµ : ºê·ÐÁî ¥³
+    * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+    * ë¬¸ì œ ë²ˆí˜¸ : 11720
+    * ë¬¸ì œ ì´ë¦„ : ìˆ«ìžì˜ í•©
+    * ë¬¸ì œ ë‚œì´ë„ : ë¸Œë¡ ì¦ˆ â…¢
     *
-    * ÀÛ¼º ¸ñÀû
+    * ìž‘ì„± ëª©ì 
     * 
-    * Ã¥¿¡ ÀÖ´Â ¹®Á¦ º¹½À
+    * ì±…ì— ìžˆëŠ” ë¬¸ì œ ë³µìŠµ
     */
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         /*
-         * size : ´õÇÒ ¼ýÀÚÀÇ °³¼ö
-         * data : ÀÔ·Â¹ÞÀº ¼ýÀÚ(°¢ ÀÚ¸®¼öÀÇ ¼ýÀÚµéÀ» ´õÇÏ´Â °Í)
+         * size : ìž…ë ¥ë°›ì„ ìˆ«ìžì˜ ê°œìˆ˜
+         * data : ê³µë°± ì—†ì´ ì£¼ì–´ì§„ size ê°œì˜ ìˆ«ìž
          */
         int size = Integer.parseInt(br.readLine());
         String data = br.readLine();
 
         /*
-         * µ¥ÀÌÅÍ¸¦ ¹®ÀÚ¿­·Î ¹Þ°í ÇØ´ç ¹®ÀÚ¿­À» ¼ýÀÚ·Î º¯È¯ÇØ¼­ ÇÕÀ» ±¸ÇÑ´Ù.
-         * ¹®ÀÚ¿­À» ¼ýÀÚ·Î º¯È¯ÇÒ ¶§ ¹®ÀÚ ÇÏ³ª¾¿ ¼ýÀÚ·Î ¹Ù²Û´Ù.
-         * ¹®ÀÚ·Î µÈ ¼ýÀÚµé(¿¹ : '0', '1')Àº ¾Æ½ºÅ°ÄÚµå¿¡¼­ 48ºÎÅÍ ½ÃÀÛÇÏ¹Ç·Î
-         * 48ÀÌ³ª '0'À» »©¾ß ÇÕÀ» Á¤È®ÇÏ°Ô ±¸ÇÒ ¼ö ÀÖ´Ù. 
+         * ì´ ë¬¸ì œëŠ” ë¬¸ìžì—´ í˜•ì‹ì˜ ìˆ«ìžë¥¼ ì •ìˆ˜ íƒ€ìž…ìœ¼ë¡œ ë³€í™˜í•˜ëŠ” ë²•ì„ ë‹¤ë£¬ë‹¤
+         * ìžë°”ì—ì„œëŠ” toCharArray() í•¨ìˆ˜ë¡œ char ë°°ì—´ë¡œ ë°”ê¾¼ ë’¤ì— ìˆ«ìžì˜ í•©ì„ êµ¬í•˜ê±°ë‚˜
+         * ë¬¸ìžì—´ì—ì„œ charAt() í•¨ìˆ˜ë¥¼ í™œìš©í•˜ì—¬ ìˆ«ìžì˜ í•©ì„ êµ¬í•œë‹¤.
          */
         
         int sum = 0;
 
-        // charAt() ÇÔ¼ö¸¦ »ç¿ëÇã´Â ¹æ¹ý
+        // charAt()ì„ ì‚¬ìš©í•˜ëŠ” ê²½ìš°
         for(int i = 0; i < size; i++){
             sum += (data.charAt(i) - '0'); 
-            // sum += (data.charAt(i) - 48); // '0' ´ë½Å 48ÀÌ µé¾î°¡µµ °á°ú´Â °°´Ù.
+            // sum += (data.charAt(i) - 48); // '0'ì€ ASCII ì½”ë“œì—ì„œ 48ì´ë‹¤.
         }
-        System.out.println("charAt() ÇÔ¼ö¸¦ ÀÌ¿ëÇÑ °æ¿ì : " + sum);
+        System.out.println("charAt() ì„ ì‚¬ìš©í•˜ëŠ” ê²½ìš°: " + sum);
 
         sum = 0;
-        // char Å¸ÀÔÀÇ array¸¦ »ç¿ëÇÏ´Â ¹æ¹ý
+        // charAt() í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ì§€ ì•ŠëŠ” ê²½ìš°, ì´ë–„ëŠ” String íƒ€ìž…ì˜ dataë¥¼ char íƒ€ìž…ì˜ ë°°ì—´ì— ì €ìž¥í•œ ë‹¤ìŒì— ê³„ì‚°í•œë‹¤.
         char [] datas = data.toCharArray();
         for(int i = 0; i < datas.length; i++){
             sum += (datas[i] - '0');
             // sum += (datas[i] - 48);
         }
-        System.out.println("char ¹è¿­À» ÀÌ¿ëÇÑ °æ¿ì : " + sum);
+        System.out.println("char arrayë¥¼ ì‚¬ìš©í•˜ëŠ” ê²½ìš° : " + sum);
     }
 }

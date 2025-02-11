@@ -2,19 +2,20 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 public class PrefixSum1 {
+    
     /* 
-    * ÀÛ¼ºÀÏ½Ã : 2025-02-07
-    * ÀÛ¼º½Ã°£ : 21:53
-    * ÀÛ¼ºÀÚ : Àå¼ºÈ¯
+    * ìž‘ì„±ì¼ì‹œ : 2025-02-07
+    * ìž‘ì„±ì‹œê°„ : 21:53
+    * ìž‘ì„±ìž : ìž¥ì„±í™˜
     *
-    * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-    * ¹®Á¦ ¹øÈ£ : 11659
-    * ¹®Á¦ ÀÌ¸§ : ±¸°£ ÇÕ ±¸ÇÏ±â 4
-    * ¹®Á¦ ³­ÀÌµµ : ½Ç¹ö ¥³
+    * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+    * ë¬¸ì œ ë²ˆí˜¸ : 11659
+    * ë¬¸ì œ ì´ë¦„ : êµ¬ê°„ í•© êµ¬í•˜ê¸° 4
+    * ë¬¸ì œ ë‚œì´ë„ : ì‹¤ë²„ â…£
     *
-    * ÀÛ¼º ¸ñÀû
+    * ìž‘ì„± ëª©ì 
     * 
-    * Ã¥¿¡ ÀÖ´Â ¹®Á¦ º¹½À
+    * ì±…ì— ìžˆëŠ” ë¬¸ì œ ë³µìŠµ
     */
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,8 +23,8 @@ public class PrefixSum1 {
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         /*
-         * size : ±¸°£ ÇÕÀ» ±¸ÇÏ´Âµ¥ »ç¿ëÇÒ ¿ä¼ÒÀÇ °³¼ö
-         * query : ±¸°£ ÇÕÀÇ ÁúÀÇÀÇ °³¼ö
+         * size : êµ¬ê°„ í•©ì„ êµ¬í•˜ëŠ”ë° ì‚¬ìš©í•  ìš”ì†Œì˜ ê°œìˆ˜
+         * query : êµ¬ê°„ í•©ì˜ ì§ˆì˜ì˜ ê°œìˆ˜
          */
         int size = Integer.parseInt(st.nextToken());
         int query = Integer.parseInt(st.nextToken());
@@ -31,30 +32,30 @@ public class PrefixSum1 {
         st = new StringTokenizer(br.readLine());
 
         /*
-         * datas ¹è¿­Àº °¢ ¿ä¼Ò¸¦ ÀúÀåÇÏ¸é¼­ µ¿½Ã¿¡ ÇÕ ¹è¿­·Î ¸¸µå´Âµ¥ »ç¿ëÇÒ °ÍÀÌ´Ù. 
+         * datas ë°°ì—´ì€ ê° ìš”ì†Œë¥¼ ì €ìž¥í•˜ë©´ì„œ ë™ì‹œì— í•© ë°°ì—´ë¡œ ë§Œë“œëŠ”ë° ì‚¬ìš©í•  ê²ƒì´ë‹¤. 
          * 
-         * ÇÕ ¹è¿­¿¡¼­ ±¸°£ ÇÕÀ» ±¸ÇÏ´Â °ø½ÄÀº S[j] - S[i-1]ÀÌ´Ù. µû¶ó¼­ i-1Àº 0°ú °°°Å³ª Ä¿¾ß ÇÑ´Ù(i-1ÀÌ ¹è¿­ÀÇ ÀÎµ¦½º ¹üÀ§¸¦ ÃÊ°úÇÏ¸é ¾ÈµÇ±â ¶§¹®)
+         * í•© ë°°ì—´ì—ì„œ êµ¬ê°„ í•©ì„ êµ¬í•˜ëŠ” ê³µì‹ì€ S[j] - S[i-1]ì´ë‹¤. ë”°ë¼ì„œ i-1ì€ 0ê³¼ ê°™ê±°ë‚˜ ì»¤ì•¼ í•œë‹¤(i-1ì´ ë°°ì—´ì˜ ì¸ë±ìŠ¤ ë²”ìœ„ë¥¼ ì´ˆê³¼í•˜ë©´ ì•ˆë˜ê¸° ë•Œë¬¸)
          */
         int [] datas = new int[size+1];
         /*
-         * ¾Æ·¡ÀÇ for¹®¿¡¼­´Â ÇÕ ¹è¿­À» ¸¸µå´Â °úÁ¤ÀÌ´Ù.
+         * ì•„ëž˜ì˜ forë¬¸ì—ì„œëŠ” í•© ë°°ì—´ì„ ë§Œë“œëŠ” ê³¼ì •ì´ë‹¤.
          * 
-         * ¿øº» ¹è¿­À» ¸¸µé°í ÇÕ ¹è¿­À» ¸¸µé¾îµµ ½Ã°£ º¹Àâµµ´Â ¥Ï(n)ÀÌ±â¿¡ ¾î¶² ¹æ½ÄÀ¸·Î Ã³¸®ÇØµµ ½Ã°£ ÃÊ°ú´Â µÇÁö ¾Ê´Â´Ù.
+         * ì›ë³¸ ë°°ì—´ì„ ë§Œë“¤ê³  í•© ë°°ì—´ì„ ë§Œë“¤ì–´ë„ ì‹œê°„ ë³µìž¡ë„ëŠ” ÎŸ(n)ì´ê¸°ì— ì–´ë–¤ ë°©ì‹ìœ¼ë¡œ ì²˜ë¦¬í•´ë„ ì‹œê°„ ì´ˆê³¼ëŠ” ë˜ì§€ ì•ŠëŠ”ë‹¤.
          */
         for(int i = 1; i < datas.length; i++){
             datas[i] = Integer.parseInt(st.nextToken()) + datas[i-1];
         }
 
         /*
-         * ¾Æ·¡ÀÇ for¹®¿¡¼­ ±¸°£ ÇÕÀ» ±¸ÇÏ°í ÀÖ´Ù.
+         * ì•„ëž˜ì˜ forë¬¸ì—ì„œ êµ¬ê°„ í•©ì„ êµ¬í•˜ê³  ìžˆë‹¤.
          * 
-         * start´Â ±¸°£¿¡¼­ Ã¹ ¹øÂ° ¿ä¼Ò, end´Â ±¸°£¿¡¼­ ¸¶Áö¸· ¿ä¼ÒÀÌ´Ù.
+         * startëŠ” êµ¬ê°„ì—ì„œ ì²« ë²ˆì§¸ ìš”ì†Œ, endëŠ” êµ¬ê°„ì—ì„œ ë§ˆì§€ë§‰ ìš”ì†Œì´ë‹¤.
          * 
-         * bw(BufferedWriter)¸¦ ¾´ ÀÌÀ¯´Â °¢ ÁúÀÇ·Î ±¸ÇÑ ±¸°£ ÇÕÀ» ÀúÀåÇØ¼­ ÇÑ ¹ø¿¡ Ãâ·ÂÇÏ±â À§ÇÔÀÌ¶ó´Â ÀÌÀ¯µµ ÀÖÁö¸¸
+         * bw(BufferedWriter)ë¥¼ ì“´ ì´ìœ ëŠ” ê° ì§ˆì˜ë¡œ êµ¬í•œ êµ¬ê°„ í•©ì„ ì €ìž¥í•´ì„œ í•œ ë²ˆì— ì¶œë ¥í•˜ê¸° ìœ„í•¨ì´ë¼ëŠ” ì´ìœ ë„ ìžˆì§€ë§Œ
          * 
-         * System.out¿¡ ¼ÓÇÑ print ÇÔ¼öº¸´Ù ¸®¼Ò½º¸¦ Àû°Ô ¸Ô´Â´Ù.
+         * System.outì— ì†í•œ print í•¨ìˆ˜ë³´ë‹¤ ë¦¬ì†ŒìŠ¤ë¥¼ ì ê²Œ ë¨¹ëŠ”ë‹¤.
          * 
-         * BufferedReader¿Í BufferedWriter¿¡ ´ëÇØ¼­´Â µû·Î ´Ù·ïº¼ ¿¹Á¤ÀÌ´Ù.
+         * BufferedReaderì™€ BufferedWriterì— ëŒ€í•´ì„œëŠ” ë”°ë¡œ ë‹¤ë¤„ë³¼ ì˜ˆì •ì´ë‹¤.
          */
         for(int i = 0; i < query; i++){
             st = new StringTokenizer(br.readLine());
