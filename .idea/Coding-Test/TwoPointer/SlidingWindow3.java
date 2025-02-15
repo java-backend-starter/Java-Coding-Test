@@ -87,7 +87,7 @@ public class SlidingWindow3 {
 
             queue.addLast(new Node(i, value));
 
-            if(queue.getFirst().getIndex() < i - partial){
+            if(queue.getFirst().getIndex() <= i - partial){
                 queue.removeFirst();
             }
 
