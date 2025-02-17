@@ -62,5 +62,5 @@ C로 배우는 쉬운 자료구조
 |구분|성공|실패|
 |:---:|:---:|:---:|
 |element|front에 있는 데이터 반환|NoSuchElementExeception 발생|
-|peek|front에 있는데이터 반환|null 반환|
+|peek|front에 있는 데이터 반환|null 반환|
 
