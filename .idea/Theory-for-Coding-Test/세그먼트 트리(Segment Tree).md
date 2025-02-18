@@ -7,7 +7,7 @@
 ---
 
 ### 마지막 수정일자 : 2025-02-18
-### 마지막 수정일시 : 22:34
+### 마지막 수정일시 : 23:29
 ### 마지막 작성자 : 장성환
 
 ---
@@ -15,6 +15,7 @@
 
 2025-02-18
 1. 코드 가독성 향상
+2. 코드 오류 수정
 
 ---
 ### 자료 출처
@@ -88,7 +89,7 @@
         // 리프 노드가 아닌 경우
         else {
             init(values, tree, node*2, start, (start+end)/2);
-            init(values, tree, node*2, (start+end)/2, end);
+            init(values, tree, node*2, (start+end)/2+1, end);
             tree[node] = tree[node*2] + tree[node*2+1];
         }
     }
@@ -109,15 +110,15 @@
 
         // 리프 노드인 경우
         if (start == end) {
-            a[index] = value;
+            values[index] = value;
             tree[node] = value;
             return;
         }
 
         // [start, end]에 index가 포함된 경우
-        update(a, tree,node*2, start, (start+end)/2, index, value);
-        update(a, tree,node*2+1, (start+end)/2+1, end, index, value);
-        tree[node] = tree[node*2] + tree[node*2+1];
+        update(values, tree,node*2, start, (start+end)/2, index, value);
+        update(valuse, tree,node*2+1, (start+end)/2+1, end, index, value);
+        tree[node] = tree[node*2] + tree[node*2 + 1];
     }
 ```
 
@@ -152,8 +153,8 @@
          * [start, end]가 [left, right]를 완전히 포함하는 경우와
          * [left, right]와 [start, end]가 겹쳐져 있는 경우
          */
-        return prefixSume(tree, node * 2, start, (start + end) / 2, left, right)
-            + prefixSume(tree, node * 2, (start + end) / 2 + 1, end, left, right);
+        return prefixSum(tree, node * 2, start, (start + end) / 2, left, right)
+            + prefixSum(tree, node * 2, (start + end) / 2 + 1, end, left, right);
     }
 ```
 * 구간 합을 구하기 위해서 다음의 경우를 확인해야 한다.
@@ -186,3 +187,7 @@
 
 * 세그먼트 트리는 구간 합을 구하는 것 외에도 최솟값, 최댓값, 특정 구간의 숫자들의 곱, XOR 연산 등도 구할 수 있다.
 * 구간 합 이외의 다른 것을 구할 때에는 return되는 값의 수식을 변경하면 된다.
+
+### 전체 코드
+
+작성 예정
