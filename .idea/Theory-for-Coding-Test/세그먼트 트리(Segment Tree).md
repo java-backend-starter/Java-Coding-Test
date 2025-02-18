@@ -150,7 +150,8 @@
          * [start, end]가 [left, right]를 완전히 포함하는 경우와
          * [left, right]와 [start, end]가 겹쳐져 있는 경우
          */
-        return prefixSume(tree, node * 2, start, (start + end) / 2, left, right) + prefixSume(tree, node * 2, (start + end) / 2 + 1, end, left, right);
+        return prefixSume(tree, node * 2, start, (start + end) / 2, left, right)
+            + prefixSume(tree, node * 2, (start + end) / 2 + 1, end, left, right);
     }
 ```
 * 구간 합을 구하기 위해서 다음의 경우를 확인해야 한다.
