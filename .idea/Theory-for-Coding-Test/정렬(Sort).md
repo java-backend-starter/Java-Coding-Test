@@ -287,3 +287,66 @@ void merge(int [] values, int start, int middle, int end){
     }
 }
 ```
+
+
+## 6. 퀵 정렬(Quick Sort)
+
+* 기준값을 이용해서 부분집합을 만들어서 정렬된 부분집합을 병합하는 방식의 정렬 알고리즘
+* 퀵정렬은 다음의 방법으로 정렬한다.
+  * 정렬할 집합에 대해서 기준값을 기준으로 왼쪽 부분집합과 오른쪽 부분집합으로 나눈다.
+  * 왼쪽 부분집합에는 기준값보다 작은 요소들, 오른쪽 부분집합에는 기준값보다 큰 요소들을 이동시킨다.
+  * 왼쪽 부분집합과 오른쪽 부분집합을 독립적으로 정렬한다.
+* 퀵정렬에서 사용하는 기준값을 피봇이라고 한다. 피봇을 정하는 기준은 다음과 같다.
+  * 첫 번째 요소 또는 마지막 요소
+  * 전체 원소 중 가운데에 위치한 요소
+  * 별도의 수식으로 계산한 위치에 있는 요소
+* 퀵 정렬의 알고리즘은 다음과 같다. 피봇은 마지막 요소로 정했다.
+``` java
+quickSort(A[], p, r){
+  if(p < r) {
+    q ← partition(A, p, r);
+    quickSort(A, p, q-1);
+    quickSort(A, q+1, r);
+  }
+}
+
+partition(A[], p, r) {
+  x ← A[r];
+  i ← p-1;
+  for j ← p to r - 1 {
+    if(A[j] ≤ x) then A[++i] ↔ A[j];
+  }
+  A[i+1] ↔ A[r];
+  return i+1;
+    
+}
+```
+* 이를 구현하면 다음과 같다.
+```java
+void quickSort(int [] values, int start, int end){
+    if(start < end){
+        int mid = partition(values, start, end);
+        quickSort(values, start, mid-1);
+        quickSort(values, mid+1, end);
+    }
+}
+
+int partition(int [] values, int start, int end){
+    int pivot = values[end];
+    int left = start-1;
+    for(int right = start; right < end; right++){
+        if(values[right] <= pivot){
+            int temp = values[++left];
+            values[left] = values[right];
+            values[right] = temp;
+        }
+    }
+    int tmp = values[left+1];
+    values[left+1] = values[end];
+    values[end] = tmp;
+    return left+1;
+}
+```
+
+
+## 7. 힙 정렬
