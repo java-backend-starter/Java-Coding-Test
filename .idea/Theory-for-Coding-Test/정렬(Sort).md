@@ -293,7 +293,11 @@ void merge(int [] values, int start, int middle, int end){
 ![시간복잡도 식](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%201.png?raw=true)
 * 정렬할 요소의 개수가 1개일 때에는 상수 시간이 들고 정렬할 요소의 개수가 2개 이상일 때는 다음의 식으로 시간 복잡도가 계산된다.
 ![시간복잡도 계산](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%202.png?raw=true)
-* 
+  * T(n/2) : 두 개의 부분 집합을 처리하는 비용
+  * c(상수) : 병합에 드는 시간(선형 시간)
+  * 아래는 n = 2^k로 가정하여 계산한 것
+* 따라서 병합 정렬은 최악의 경우에도 Θ(n log n)이라는 시간 복잡도를 가진다.
+
 ## 6. 퀵 정렬(Quick Sort)
 
 * 기준값을 이용해서 부분집합을 만들어서 정렬된 부분집합을 병합하는 방식의 정렬 알고리즘
@@ -352,6 +356,14 @@ int partition(int [] values, int start, int end){
     return left+1;
 }
 ```
-
+* 퀵 정렬의 수행 시간은 다음과 같다.
+  * 분할
+    * 분할은 집합의 모든 요소를 탐색하는 과정으로 Θ(n)이 소요된다.
+  * 병합
+    * 이상적인 경우
+      * 이상적인 경우는 분할이 항상 균등하게 될 때로 병합 정렬과 같은 모양이 되어서 Θ(n log n)이 된다.
+      
+    * 최악의 경우
+    * 평균적인 경우
 
 ## 7. 힙 정렬
