@@ -292,7 +292,7 @@ void merge(int [] values, int start, int middle, int end){
   * 정렬할 요소의 개수가 2개 이상일 때
 ![시간복잡도 식](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%201.png?raw=true)
 * 정렬할 요소의 개수가 1개일 때에는 상수 시간이 들고 정렬할 요소의 개수가 2개 이상일 때는 다음의 식으로 시간 복잡도가 계산된다.
-![시간복잡도 계산](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%202.png?raw=true)
+![시간복잡도 계산](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%202(%EC%88%98%EC%A0%95).png?raw=true)
   * T(n/2) : 두 개의 부분 집합을 처리하는 비용
   * c(상수) : 병합에 드는 시간(선형 시간)
   * 아래는 n = 2^k로 가정하여 계산한 것
@@ -361,9 +361,16 @@ int partition(int [] values, int start, int end){
     * 분할은 집합의 모든 요소를 탐색하는 과정으로 Θ(n)이 소요된다.
   * 병합
     * 이상적인 경우
-      * 이상적인 경우는 분할이 항상 균등하게 될 때로 병합 정렬과 같은 모양이 되어서 Θ(n log n)이 된다.
-      
+      * 이상적인 경우는 분할이 항상 균등하게 될 때로 병합 정렬과 같은 모양이 되어서 다음의 수식에 따라 Θ(n log n)이 된다.
+      ![이상적인 경우](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%203.png?raw=true)
     * 최악의 경우
+      * 최악의 경우는 계속해서 한쪽은 하나도 없고 다른 쪽에 다 몰리도록 분할되는 경우로 다음의 수식에 따라 Θ(n^2)이 된다.
+      ![최악의 경우](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%204.png?raw=true)
     * 평균적인 경우
+      * 평균적인 경우는 피봇을 랜덤으로 정하는 경우로 모든 가능한 경우의 수를 구해 평균을 낸 것이다.
+      * 어떠한 경우의 수행 시간은 다음과 같다.(T(i-1)와 T(n-i)는 재귀호출 비용, Θ(n)는 분할 비용)
+      ![평균적인 경우의 어떤 분할에 대한 식](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%205.png?raw=true)
+      * 이 수식을 평균내면 다음의 수식이 나오고 이를 계산하면 Θ(n log n)이다.
+      ![평균적인 경우](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%206.png?raw=true)
 
 ## 7. 힙 정렬
