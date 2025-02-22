@@ -206,4 +206,84 @@ void insertionSort(int [] values){
 ## 5. 병합 정렬(Merge Sort)
 
 * 여러 개의 정렬된 부분집합을 병합하여 하나의 정렬된 집합을 만드는 정렬
-* 
+* 병합 정렬은 분할과 정복이라는 원리를 사용하여 정렬하기에 다음의 과정을 거친다.
+  * 집합을 2개 이상의 부분집합으로 나눈다.
+  * 부분 집합에 대해서 정렬 작업을 진행한다.
+  * 정렬된 부분 집합을 결합한다.
+* 이때 몇 개의 부분집합을 결합해서 하나의 집합을 만드는지에 따라 2-way 병합과 n-way 병합으로 나누어진다.
+* 병합 정렬의 알고리즘은 다음과 같다.
+``` java
+// p : 시작 지점, r : 마지막 지점
+mergeSort(A [], p, r) {
+  if(p < r) then {
+    q ← ⌊(p+r)/2⌋;
+    // 집합을 분할해서 정렬
+    mergeSort(A, p, q);
+    mergeSort(A, q+1, r);
+    // 병합
+    merge(A, p, q, r);
+  }
+}
+// p : 시작 지점, q : 중간 지점, r : 마지막 지점
+merge(A[], p, q, r){
+  i ← p;
+  j ← q + 1;
+  t ← 1;
+ 
+  while(i ≤ q and j ≤ r) {
+    if(A[i] ≤ A[j]) then tmp[t++] ← A[i++];
+    else tmp[t++] ← A[j++];
+  }
+  
+  while(i ≤ q) {
+    tmp[t++] ← A[i++];
+  }
+  
+  while(j ≤ r) {
+    tmp[t++] ← A[j++];
+  }
+  
+  i ← p;
+  t ← 1;
+  while(i ≤ r) {
+    A[i++] ← tmp[t++];
+  }
+}
+```
+* 이를 구현하면 다음과 같다.
+```java
+void mergeSort(int [] values, int start, int end){
+    if(start < end){
+        mid = (start+end)/2;
+        mergeSort(values, start, mid);
+        mergeSort(values. mid+1, end);
+        merge(values, start, mid, end);
+    }
+}
+
+void merge(int [] values, int start, int middle, int end){
+    int left = start, right = middle + 1, t = start;
+    int [] sorted = new int[values.length];
+    while(left <= middle && right <= end){
+        if(values[i] <= values[j]){
+            sorted[t++] = values[left++];
+        }
+        else {
+            sorted[t++] = values[right++];
+        }
+    }
+    
+    while(left <= middle){
+        sorted[t++] = values[left++];
+    }
+    
+    while(right <= end){
+        sorted[t++] = values[right++];
+    }
+    
+    left = start; t = start;
+    while(left <= end){
+        values[left++] = sorted[t++];
+    }
+}
+```
