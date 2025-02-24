@@ -290,7 +290,7 @@ void merge(int [] values, int start, int middle, int end){
 * 병합 정렬의 수행 시간을 계산할 때 두 가지 경우로 나누어서 본다
   * 정렬할 요소의 개수가 1개일 때
   * 정렬할 요소의 개수가 2개 이상일 때
-  ![시간복잡도 식](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%201.png?raw=true)
+![시간복잡도 식](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%201.png?raw=true)
 * 정렬할 요소의 개수가 1개일 때에는 상수 시간이 들고 정렬할 요소의 개수가 2개 이상일 때는 다음의 식으로 시간 복잡도가 계산된다.
 ![시간복잡도 계산](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%202(%EC%88%98%EC%A0%95).png?raw=true)
   * T(n/2) : 두 개의 부분 집합을 처리하는 비용
