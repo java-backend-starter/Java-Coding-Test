@@ -381,4 +381,114 @@ int partition(int [] values, int start, int end){
   * 힙은 최소 힙과 최대 힙이 있다. 최소 힙을 기준으로 다음의 성질을 만족한다.
     * 각 노드의 값은 자기 자식의 값보다 작거나 같다.(최대 힙은 반대)
     * 따라서 최소 힙의 루트 노드는 최솟값, 최대 힙의 루트 노드는 최대값이 있다.
+  * 힙은 완전 이진 트리이므로 배열로도 표현이 가능하다.
+  * 루트 노드는 1부터 시작하고 부모와 자식의 관계는 다음과 같다.
+    * 부모 노드가 i번째일 때
+      * 왼쪽 자식 : (2 * i)번째
+      * 오른쪽 자식 : [(2 * i) + 1]번째
+    * 자식 노드가 i번째일 때
+      * 부모 노드 : ⌊(i/2)⌋번째
 * 힙 정렬을 하기 위해서 요소들의 집합을 힙으로 만드는 과정과 요소 하나를 제거하고 힙 성질을 만족하도록 수선하는 과정이 필요하다.
+* 힙을 만드는 것에 대한 알고리즘은 다음과 같다.
+``` java
+buildHeap(A[], n) {
+  for i ← ⌊(n/2)⌋ downto 1 {
+    heapify(A, i, n);
+  }
+}
+
+heapify(A[], k, n) {
+  // A[k]를 루트로 하는 트리가 힙성질을 만족하도록 수선
+  // A[k]의 두 자식을 루트로 하는 서브 트리는 힙성질을 이미 만족
+  // n : 최대 인댁서(전체 배열의 크기)
+  left ← 2k; right = 2k+1;
+  if(right ≤ n) then { // 두 자식을 가지는 있는 경우
+    if(A[left] < A[right] then smaller ← left;
+    else smaller ← right;
+  }
+  else if(left ≤ n) then smaller ← left; // k의 왼쪽 자식만 있는 경우
+  else return; // A[k]가 리프 노드인 경우
+  
+  // 최소 힙이나 최대 힙의 성질에 반할 경우 smaller를 기준으로 재수선
+  if(A[smaller] < A[k]) then {
+    A[k] ↔ A[smaller];
+    heapify(A, smaller, n);
+  }
+}
+```
+* 이를 구현하면 다음과 같다.
+```java
+void buildHeap(int [] values, int size){
+    for(int i = values.length/2; i > 0; i--){
+        heapify(values, i, size);
+    }
+}
+
+void heapify(int [] values, int root, int size){
+    int left = 2 * root, right = 2 * root + 1;
+    int smaller;
+    if(right < size){
+        if(values[left] < values[right]){
+            smaller = left;
+        }
+        else {
+            smaller = right;
+        }
+    }
+    else if(left <= size){
+        smaller = left;
+    }
+    else {
+        return;
+    }
+    if(values[smaller] < values[root]){
+        int temp = values[root];
+        values[root] = values[smaller];
+        values[smaller] = temp;
+        heapify(values, smaller);
+    }
+}
+```
+* 힙을 만든 다음에는 정렬 작업을 진행한다. 이를 알고리즘으로 표현하면 다음과 같다.
+``` java
+heapSort(A[], n) {
+  buildHeap(A, n);
+  // 원소를 교환한 후 힙 성질을 만족하도록 수선
+  for i ← n downto 2 {
+    A[1] ↔ A[i];
+    heapify(A, 1, i-1);
+  }
+}
+```
+* 이를 구현하면 다음과 같다.
+```java
+void heapSort(int [] values){
+    buildHeap(values);
+    for(int i = values.length-1; i > 1; i--){
+        int temp = values[1];
+        values[1] = values[i];
+        values[i] = temp;
+        heapify(values, 1, i-1);
+    }
+}
+```
+* 힙 정렬의 시간 복잡도는 다음과 같다.
+  * buildHeap의 경우
+    * buildHeap은 ⌊(i/2)⌋의 heapify를 수행한다.
+    * 리프 노드에 대해서 heapify를 수행하지 않기 때문에 다음의 식에 따라 Θ(n)의 수행 시간이 소요된다.
+    ![buildHeap 수행시간](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%207(%EC%88%98%EC%A0%95).png?raw=true)
+      * 안의 등비급수에 대해서 계산하면 다음과 같은 식과 결과가 나온다. 
+      ![buildHeap 수행시간](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%208(%EC%88%98%EC%A0%95).png?raw=true)
+      ![bulidHeap 수행시간](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%209(%EC%88%98%EC%A0%95).png?raw=true)
+      * 여기서 h/(2^h)는 x가 1/2인 경우이다. 따라서 상한은 2다. 가장 위의 식에 대입하면 Ο(n)이 된다.
+      ![bulidHeap 수행시간](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%2010(%EC%88%98%EC%A0%95).png?raw=true)
+  * heapify의 경우
+    * buildHeap에서 계산한 식 중 O(h)가 heapify를 수행하는데 소요되는 시간이다.
+    * h는 트리의 높이이고 h = log n(log의 밑은 2)이기 때문에 최악의 경우를 계산하면 O(log n)이다.
+  * heapSort의 경우
+    * heapSort는 buildHeap을 한 번 수행하고 n번의 heapify를 수행한다.
+    * 따라서 buildHeap과 n번의 heapify를 수행하는데 Θ(n log n)이 든다.(비교 정렬의 경우 최악의 경우에 Θ(n log n)의 시간이 든다.)
+
+## 8. 기수 정렬(Radix Sort)
+
+* 
