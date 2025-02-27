@@ -253,38 +253,38 @@ merge(A[], p, q, r){
 * 이를 구현하면 다음과 같다.
 ```java
 void mergeSort(int [] values, int start, int end){
-    if(start < end){
-        mid = (start+end)/2;
-        mergeSort(values, start, mid);
-        mergeSort(values. mid+1, end);
-        merge(values, start, mid, end);
-    }
+  if(start < end){
+    int mid = (start+end)/2;
+    mergeSort(values, start, mid);
+    mergeSort(values, mid+1, end);
+    merge(values, start, mid, end);
+  }
 }
 
 void merge(int [] values, int start, int middle, int end){
-    int left = start, right = middle + 1, t = start;
-    int [] sorted = new int[values.length];
-    while(left <= middle && right <= end){
-        if(values[i] <= values[j]){
-            sorted[t++] = values[left++];
-        }
-        else {
-            sorted[t++] = values[right++];
-        }
+  int left = start, right = middle + 1, t = start;
+  int [] sorted = new int[values.length];
+  while(left <= middle && right <= end){
+    if(values[left] <= values[right]){
+      sorted[t++] = values[left++];
     }
-    
-    while(left <= middle){
-        sorted[t++] = values[left++];
+    else {
+      sorted[t++] = values[right++];
     }
-    
-    while(right <= end){
-        sorted[t++] = values[right++];
-    }
-    
-    left = start; t = start;
-    while(left <= end){
-        values[left++] = sorted[t++];
-    }
+  }
+
+  while(left <= middle){
+    sorted[t++] = values[left++];
+  }
+
+  while(right <= end){
+    sorted[t++] = values[right++];
+  }
+
+  left = start; t = start;
+  while(left <= end){
+    values[left++] = sorted[t++];
+  }
 }
 ```
 * 병합 정렬의 수행 시간을 계산할 때 두 가지 경우로 나누어서 본다
@@ -373,7 +373,7 @@ int partition(int [] values, int start, int end){
       * 이 수식을 평균내면 다음의 수식이 나오고 이를 계산하면 Θ(n log n)이다.
 ![평균적인 경우](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%206.png?raw=true)
 
-## 7. 힙 정렬
+## 7. 힙 정렬(코드 수정 예정)
 
 * 힙 자료구조를 사용하여 정렬을 수행하는 방식의 알고리즘
 * 힙은 다음의 특징을 가지고 있다.
@@ -445,7 +445,7 @@ void heapify(int [] values, int root, int size){
         int temp = values[root];
         values[root] = values[smaller];
         values[smaller] = temp;
-        heapify(values, smaller);
+        heapify(values, smaller, size);
     }
 }
 ```
@@ -463,7 +463,7 @@ heapSort(A[], n) {
 * 이를 구현하면 다음과 같다.
 ```java
 void heapSort(int [] values){
-    buildHeap(values);
+    buildHeap(values, values.length);
     for(int i = values.length-1; i > 1; i--){
         int temp = values[1];
         values[1] = values[i];
@@ -519,9 +519,27 @@ radixsort(A[], n) {
   }
 }
 ```
-* 이를 구현하면 다음과 같다.
+* 이를 구현하면 다음과 같다. 여기서는 큐를 이용해 정렬했지만 코딩 테스트 문제에서는 다른 방식으로도 구현된다.
 ```java
-
+void radixSort(int [] values, int radix, int digit){
+        int factor = 1;
+        Queue<Integer> [] queue = new Queue[radix];
+        for(int i = 0; i < radix; i++){
+            queue[i] = new LinkedList<>();
+        }
+        for(int i = 0; i < digit; i++){
+            for(int j = 0; j < values.length; j++){
+                queue[(values[j]/factor)%radix].add(values[j]);
+            }
+            int index = 0;
+            for(int j = 0; j < radix; j++){
+                while(!queue[j].isEmpty()){
+                    values[index++] = queue[j].poll();
+                }
+            }
+            factor *= radix;
+        }
+    }
 ```
 * 기수 정렬은 한 번 n개의 요소를 r개의 버킷에 분배하고 정렬하는 과정으로 (n+r)번이 소요된다.
 * 위의 (n+r)번을 자릿수(d)만큼 반복하기 때문에 시간 복잡도는 Θ(d(n+r))이다.
