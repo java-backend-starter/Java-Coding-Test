@@ -1,0 +1,8 @@
+{
+    "java.project.sourcePaths": [
+        ".idea/Coding-Test/TwoPointer",
+        ".idea/Coding-Test/StackAndQueue",
+        ".idea/Coding-Test/PrefixSum",
+        ".idea/Coding-Test/Sort"
+    ]
+}
