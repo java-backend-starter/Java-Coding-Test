@@ -523,9 +523,56 @@ radixsort(A[], n) {
 ```java
 
 ```
-* 기수 정렬은 n개의 요소를 r개의 버킷에서 분배하고 정렬하는 과정으로 (n+r)번이 소요된다.
+* 기수 정렬은 한 번 n개의 요소를 r개의 버킷에 분배하고 정렬하는 과정으로 (n+r)번이 소요된다.
 * 위의 (n+r)번을 자릿수(d)만큼 반복하기 때문에 시간 복잡도는 Θ(d(n+r))이다.
 
 ## 9. 계수 정렬
 
-* 정렬하고자 하는 요소들의 값이 Ο(n)
+* 정렬하고자 하는 요소들의 값이 Ο(n)인 특수한 경우에 사용한 정렬 알고리즘
+* 계수 정렬은 주어진 요소들에서 1부터 n까지의 숫자가 각각 몇 개 있는지 센 후, 이 개수를 이용해 숫자들의 위치를 결정하는 방식으로 정렬한다.
+* 계수 정렬의 알고리즘은 다음과 같다.
+``` java
+// A[] : 입력 배열
+// B[] : 배열 A를 정렬한 결과
+countingSort(A[], B[], n){
+    for i ← 1 to k {
+      C[i] ← 0;
+    }
+    for(j ← 1 to n){
+      C[A[j]]++; // 값이 i인 원소의 개수
+    }
+    for(i ← 2 to k){
+      C[i] ← C[i] + C[i-1]; // 값이 i보다 작거나 같은 원소의 개수
+    }
+    for(j ← n downto 1) {
+      B[C[A[j]]] ← A[j];
+      C[A[j]]--;
+    }
+}
+```
+* 이를 구현하면 다음과 같다.
+```java
+int [] countingSort(int [] values, int k){
+    int [] sorted = new int[values.length];
+    int [] count = new int[k+1];
+    
+    for(int i = 0; i <= k; i++){
+        count[i] = 0;
+    }
+    
+    for(int j = 0; j < values.length; j++){
+        count[values[j]]++;
+    }
+    
+    for(int i = 1; i <= k; i++){
+        count[i] = count[i] + count[i-1];
+    }
+    
+    for(int j = values.length-1; j >= 0; j--){
+        sorted[count[values[j]]] = values[j];
+        count[values[j]]--;
+    }
+}
+```
+* 계수 정렬은 두 번의 k번 반복하는 for 루프와 두 번의 n번 반복하는 for 루프가 시간을 결정한다.
+* 따라서 k가 O(n)을 초과하면 시간 복잡도는 Θ(k)이고 그렇지 않으면 Θ(n)이 소요된다.
