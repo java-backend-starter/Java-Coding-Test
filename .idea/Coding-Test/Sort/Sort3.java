@@ -15,6 +15,12 @@ public class Sort3 {
      *
      * 책에 있는 문제 복습
      */
+
+    /*
+     * 내림차순으로 정렬하는 선택 정렬 알고리즘
+     * 가장 큰 값을 찾아서 i번째 요소와 자리를 변경
+     * 백준 1427번 문제는 최대 10개의 요소들을 정렬하기 때문에 어떤 정렬 알고리즘을 사용해도 시간 내에 풀 수 있음.
+     */
     static void selectionSort(int [] values){
         int max;
         for(int i = 0; i < values.length; i++){
@@ -35,8 +41,14 @@ public class Sort3 {
     public static void main(String [] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+        /*
+         * value : 입력받은 숫자를 문자열로 받음
+         */
         String value = br.readLine();
 
+        /*
+         * 입력받은 숫자에서 각 자리를 저장
+         */
         int [] values = new int[value.length()];
         for(int i = 0; i < values.length; i++){
             values[i] = Integer.parseInt(value.substring(i, i+1));
