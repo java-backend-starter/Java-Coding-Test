@@ -62,7 +62,7 @@
 * 트리의 높이를 구한 다음에 2의 거듭제곱 꼴로 만든다.
 * 2의 거듭제곱 꼴로 만드는 이유는 세그먼트 트리가 완전 이진트리가 아니라서 배열의 순서대로 채워지지 않기 떄문이다.
 
-``` java
+```java
     /*
      * n : 요소의 개수
      * h : 트리의 높이
@@ -74,7 +74,7 @@
 
 #### 세그먼트 트리 초기화 방법
 
-``` java
+```java
     /*
      * values : 원본 배열
      * tree : 세그먼트 트리
@@ -90,7 +90,7 @@
         // 리프 노드가 아닌 경우
         else {
             init(values, tree, node*2, start, (start+end)/2);
-            init(values, tree, node*2, (start+end)/2+1, end);
+            init(values, tree, node*2+1, (start+end)/2+1, end);
             tree[node] = tree[node*2] + tree[node*2+1];
         }
     }
@@ -102,7 +102,7 @@
 
 #### 수 변경하기
 
-``` java
+```java
     void update(long [] values, long [] tree, int node, int start, int end, int index, int value){
         // [start, end]에 index가 포함되지 않은 경우
         if (index < start || index > end) {
@@ -132,7 +132,7 @@
 
 #### 구간 합
 
-``` java
+```java
     /* 
      * tree : 세그먼트 트리
      * node : 현재 노드
@@ -155,7 +155,7 @@
          * [left, right]와 [start, end]가 겹쳐져 있는 경우
          */
         return prefixSum(tree, node * 2, start, (start + end) / 2, left, right)
-            + prefixSum(tree, node * 2, (start + end) / 2 + 1, end, left, right);
+            + prefixSum(tree, node * 2+1, (start + end) / 2 + 1, end, left, right);
     }
 ```
 * 구간 합을 구하기 위해서 다음의 경우를 확인해야 한다.
