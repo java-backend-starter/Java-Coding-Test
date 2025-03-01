@@ -37,8 +37,50 @@
   2. 이때, 피벗 4는 전체 배열에서 4번째로 작은 값이며, 2번째로 작은 값은 왼쪽 부분 배열 [1, 3, 2]에 존재함을 알 수 있다.
   3. 1과 2를 반복하여 원하는 값을 찾는다.
 
-시간 복잡도:
+### 3. 시간 복잡도
 
-이상적인 경우, 매번 배열이 절반으로 나누어져 시간 복잡도는 O(n)이 됩니다.
-최악의 경우, 피벗 선택이 계속해서 한쪽으로 치우쳐 O(n^2)의 시간 복잡도를 가질 수 있습니다.
-그러나 평균적으로는 O(n)의 시간 복잡도를 보입니다.
+* 이상적인 경우는 매번 배열이 절반으로 나누어지는 경우로 시간 복잡도는 O(n)이다.
+* 최악의 경우는 피벗 선택이 계속해서 한쪽으로 치우지는 경우로 시간 복잡도는 O(n^2)이다.
+* 배열의 크기가 커질 수록 최악의 경우는 거의 발생하지 않기 때문에 평균적으로는 O(n)의 시간 복잡도를 가진다.
+
+### 4. 구현
+
+* 자바로 직접 구현한 코드를 찾지 못해서 다른 언어로 작성된 코드를 보고 직접 구현해봤다.
+* partition 함수에서 피봇은 마지막 요소로 정한 뒤에 올바른 위치로 변경했다.
+```java
+int quickSelect(int [] values, int start, int end, int k){
+    if(start == end){
+        return values[end];
+    }
+    int pivot = partition(values, start, end);
+    if(k == pivot){
+        return values[pivot];
+    }
+    else if(k < pivot){
+        return quickSelect(values, start, pivot-1, k);
+    }
+    else {
+        return quickSelect(values, pivot+1, end, k);
+    }
+}
+int partition(int[] values, int left, int right) {
+  int pivot = values[right]; // 마지막 요소를 피벗으로 설정
+  int i = left; // 작은 값이 들어갈 위치
+
+  for (int j = left; j < right; j++) {
+    if (values[j] < pivot) {
+      swap(values, i, j);
+      i++;
+    }
+  }
+  swap(values, i, right); // 피벗을 올바른 위치로 이동
+  return i; // 피벗의 최종 위치 반환
+}
+
+// 배열 원소 교환 함수
+void swap(int[] values, int i, int j) {
+  int temp = values[i];
+  values[i] = values[j];
+  values[j] = temp;
+}
+```
