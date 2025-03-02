@@ -33,6 +33,8 @@ public class Sort5 {
     }
 
     static int partition(int [] values, int start, int end){
+        int index = start + (int) (Math.random() * (end - start + 1));
+        swap(values, index, end);
         int pivot = values[end];
         int left = start-1;
         for(int right = start; right < end; right++){
