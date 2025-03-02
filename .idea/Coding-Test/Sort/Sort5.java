@@ -16,6 +16,9 @@ public class Sort5 {
      *
      * 책에 있는 문제 복습
      */
+    /*
+     * quick select 알고리즘은
+     */
     static int quickSelect(int [] values, int start, int end, int k){
         if(start == end){
             return values[start];
@@ -33,7 +36,7 @@ public class Sort5 {
     }
 
     static int partition(int [] values, int start, int end){
-        int index = start + (int) (Math.random() * (end - start + 1));
+        int index = (start + end)/2;
         swap(values, index, end);
         int pivot = values[end];
         int left = start-1;
