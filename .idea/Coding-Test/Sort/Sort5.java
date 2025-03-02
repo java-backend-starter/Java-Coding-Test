@@ -2,6 +2,20 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 public class Sort5 {
+    /*
+     * 작성일시 : 2025-03-02
+     * 작성시간 : 09:34
+     * 작성자 : 장성환
+     *
+     * 문제 출처 : 백준
+     * 문제 번호 : 11004
+     * 문제 이름 : k번째 수
+     * 문제 난이도 : 실버 Ⅴ
+     *
+     * 작성 목적
+     *
+     * 책에 있는 문제 복습
+     */
     static int quickSelect(int [] values, int start, int end, int k){
         if(start == end){
             return values[start];
