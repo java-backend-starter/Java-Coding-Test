@@ -120,6 +120,7 @@ void DFS(int vertex) {
   4. 스택이 공백이 될 때까지 2와 3을 반복
 * 너비 우선 탐색의 알고리즘은 다음과 같다.
 ``` java
+BFS(v) {
     for each v ∈ V - |s|
         visited[v] ← NO;
     visited[s] ← YES;
@@ -131,6 +132,32 @@ void DFS(int vertex) {
                 visited[v] ← YES;
                 Q.enqueue(v);
             }
+    }
+}
+```
+* 너비 우선 탐색을 구현하면 다음과 같다.
+```java
+import java.util.*;
+
+static ArrayList<ArrayList<Integer>> graph;
+static boolean[] visited;
+
+// 중략 : 그래프 생성 등의 코드
+
+void BFS(int vertex){
+    for(int i = 0; i < visited.length; i++){
+        visited[i] = false;
+    }
+    Queue<Integer> queue = new LinkedList<>();
+    visited[vertex] = true;
+    while(!queue.isEmpty()){
+        int u = queue.poll();
+        for(int v : graph.get(u)){
+            if(!visited[v]){
+                visited[v] = true;
+                queue.add(v);
+            }
+        }
     }
 }
 ```
