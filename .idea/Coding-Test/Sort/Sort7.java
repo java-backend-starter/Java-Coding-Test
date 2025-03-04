@@ -19,6 +19,7 @@ public class Sort7 {
     /*
      * 역순 쌍 : 배열이나 리스트에서 두 원소가 "뒤집힌" 순서를 의미(i < j이지만 arr[i] > arr[j]인 경우)
      * 다른 말로 "왼쪽에 있는 값이 오른쪽에 있는 값보다 클 때"이다.
+     * 이 문제에서 mergeSort를 쓰는 이유는 요소의 최대 개수는 100만개이기 때문에 O(n log n)의 시간복잡도가 드는 정렬 알고리즘을 써야 하기 때문
      */
     static long answer = 0;  // 역순 쌍의 수를 저장할 변수
     
@@ -36,27 +37,32 @@ public class Sort7 {
         int left = start, right = middle + 1, t = 0;
         int [] sorted = new int[end - start + 1];  // 병합된 배열을 저장할 임시 배열
 
-        // 왼쪽과 오른쪽 배열을 병합하면서 역순 쌍을 셈
+        /*
+         * 왼쪽과 오른쪽 배열을 병합하면서 역순 쌍을 셈
+         * 역순 쌍을 세는 이유는 문제는 버블 소트를 하면서 모든 요소가 왼쪽으로 이동하는 횟수를 답으로 요구하기 때문.
+         */
         while(left <= middle && right <= end){
             if(values[left] <= values[right]){
                 sorted[t++] = values[left++];  // 값이 작은 쪽을 병합
             }
             else{
-                // 오른쪽 배열의 값이 왼쪽 배열의 값보다 작으면,
-                // 왼쪽 배열에서 남은 값들의 개수만큼 역순 쌍이 발생함.
-                // (middle - left + 1)는 left부터 middle까지의 남은 원소들의 개수입니다.
-                // 이 부분은 "버블 소트"와 유사하게 왼쪽 배열의 값들이 오른쪽 배열의 값보다 클 때 발생하는 역순 쌍의 개수를 셈.
+                /*
+                 * 오른쪽 부분 배열의 값이 왼쪽 부분 배열의 값보다 작으면, 왼쪽 부분 배열에서 남은 값들의 개수만큼 역순 쌍이 발생함.
+                 * (middle - left + 1)는 left부터 middle까지의 남은 원소들의 개수로 오른쪽 부분 배열에 있는 값이 왼쪽으로 이동하는 횟수
+                 * 이 부분은 "버블 소트"와 유사하게 왼쪽 부분 배열의 값들이 오른쪽 배열의 값보다 클 때 발생하는 역순 쌍의 개수를 셈.
+                 */
                 answer += (middle - left + 1);
                 sorted[t++] = values[right++];  // 오른쪽 배열의 값을 병합
             }
         }
 
-        // 왼쪽 배열에 남은 값들 병합
+        /*
+         * 각 부분 배열에 남은 값들을 복사
+         */
         while(left <= middle){
             sorted[t++] = values[left++];
         }
 
-        // 오른쪽 배열에 남은 값들 병합
         while(right <= end){
             sorted[t++] = values[right++];
         }
@@ -86,7 +92,6 @@ public class Sort7 {
         // 병합 정렬을 시작하면서 역순 쌍을 세기 시작
         mergeSort(values, 0, size - 1);
 
-        // 최종적으로 역순 쌍의 수 출력
         System.out.println(answer);
     }
 }
