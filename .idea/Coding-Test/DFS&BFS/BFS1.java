@@ -16,8 +16,12 @@ public class BFS1 {
      *
      * 책에 있는 문제 복습
      */
+    /*
+     * graph : 입력받은 간선을 토대로 만든 인접 리스트
+     */
     static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
     static boolean [] visited;
+
 
     static BufferedWriter DFSbw = new BufferedWriter(new OutputStreamWriter(System.out));
     static BufferedWriter BFSbw = new BufferedWriter(new OutputStreamWriter(System.out));
