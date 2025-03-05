@@ -18,6 +18,7 @@ public class BFS1 {
      */
     /*
      * graph : 입력받은 간선을 토대로 만든 인접 리스트
+     * visited : 방문 여부를 체크하는 배열
      */
     static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
     static boolean [] visited;
@@ -26,10 +27,20 @@ public class BFS1 {
     static BufferedWriter DFSbw = new BufferedWriter(new OutputStreamWriter(System.out));
     static BufferedWriter BFSbw = new BufferedWriter(new OutputStreamWriter(System.out));
 
+    /*
+     * DFS : 깊이 우선 탐색 알고리즘, 재귀 호출로 구현
+     * BFS : 너비 우선 탐색 알고리즘, Queue로 구현
+     */
     static void DFS(int vertex) throws IOException{
+        /*
+         * 노드를 방문하고 기록
+         */
         visited[vertex] = true;
         DFSbw.append(vertex + " ");
         for(int v : graph.get(vertex)){
+            /*
+             * 인접 노드에서 방문하지 않은 노드를 방문
+             */
             if(!visited[v]){
                 DFS(v);
             }
@@ -37,12 +48,18 @@ public class BFS1 {
     }
 
     static void BFS(int vertex) throws IOException {
+        /*
+         * 시작 정점을 방문하고 기록
+         */
         visited[vertex] = true;
 
         Queue<Integer> queue = new LinkedList<>();
         queue.add(vertex);
         BFSbw.append(vertex + " ");
         while(!queue.isEmpty()){
+            /*
+             * 큐에서 나온 노드에 대해서 인접 노드들을 방문하고 기록
+             */
             int u = queue.poll();
             for(int v : graph.get(u)){
                 if(!visited[v]){
@@ -57,6 +74,11 @@ public class BFS1 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
+        /*
+         * node : 노드의 개수
+         * edge : 간선의 개수
+         * start : 시작 정점
+         */
         int node = Integer.parseInt(st.nextToken());
         int edge = Integer.parseInt(st.nextToken());
         int start = Integer.parseInt(st.nextToken());
@@ -74,6 +96,9 @@ public class BFS1 {
             graph.get(v).add(u);
         }
 
+        /*
+         * 작은 노드부터 방문하기 위해 정렬을 수행
+         */
         for(int i = 1; i <= node; i++){
             Collections.sort(graph.get(i));
         }
