@@ -7,13 +7,15 @@
 
 ---
 
-### 마지막 수정일자 :
-### 마지막 수정일시 :
-### 마지막 작성자 :
+### 마지막 수정일자 : 2025-03-06
+### 마지막 수정일시 : 22:04
+### 마지막 작성자 : 장성환
 
 ---
 ### 수정이력
 
+2025-03-06
+1. 수식 입력 방식 변경
 
 ---
 ### 자료 출처
@@ -38,6 +40,7 @@
   * 비교할 각 키값을 한 번에 두 개씩 비교하여 교환하는 방식으로 진행되는 정렬
   * 비교식 정렬에서 정렬하는 방식에 따라 교환 방식, 삽입 방식, 병합 방식, 선택 방식으로 나누어진다.
 * 분배식 정렬(Distribute Sort)
+  * 키값을 기준으로 해서 자료를 여러 개의 부분 집합으로 나누고 각 부분 집합을 정렬함으로써 전체를 정렬하는 방식
 * 내부 정렬(Internal Sort)
   * 컴퓨터 메모리 내부에서 정렬
   * 정렬 속도는 빠르지만 정렬할 수 있는 자료의 양이 메모리 용량에 따라 제한된다.
@@ -50,7 +53,7 @@
   * 정렬할 자료의 양
   * 자료들의 정렬 전 상태
   * 정렬에 사용하는 기억 공간과 실행 시간
-* 같은 조건에서 정렬 방법의 효율성을 비교하는 기준은 다음과 같아
+* 같은 조건에서 정렬 방법의 효율성을 비교하는 기준은 다음과 같다.
   * 정렬에 필요한 비교 횟수와 이동 횟수
 
 ## 2. 선택 정렬(Selection Sort)
@@ -92,10 +95,10 @@ int largest(int [] values, int last){
     return max;
 }
 ```
-* 선택 정렬의 시간복잡도는 모든 경우에서 Θ(n^2)이다.
+* 선택 정렬의 시간복잡도는 모든 경우에서 $Θ(n^2)$이다.
   * largest 함수에서 가장 큰 값을 찾기 위해 n - i번(i번째 원소를 기준으로) 반복되고 selectionSort에 있는 for문으로 largest 함수가 n번 실행되기 때문이다.
   * 따라서 전체 비교 횟수는 다음과 같다.
-    * (n-1) + (n-2) + ... + 2 + 1 = (n(n-1))/2
+    * $(n-1) + (n-2) + ... + 2 + 1 = \sum_{i=0}^n i = \dfrac{n(n-1)}{2}$
 
 ## 3. 버블 정렬(Bubble Sort)
 
@@ -124,7 +127,7 @@ void bubbleSort(int [] values){
 ```
 * 버블 정렬은 정렬하는 방식에서 차이가 있을 뿐 선택 정렬과 같은 수행횟수를 가진다. 
 * 따라서 시간 복잡도는 모든 경우에서 Θ(n^2)이다.
-  * 전체 비교 횟수 : (n-1) + (n-2) + ... + 2 + 1 = (n(n-1))/2
+  * 전체 비교 횟수 : $(n-1) + (n-2) + ... + 2 + 1 = \sum_{i=0}^n i = \dfrac{n(n-1)}{2}$
 * 위 알고리즘은 알고리즘이 수행하기 시작하거나 수행 중에 요소들의 정렬이 끝나는 경우에도 끝까지 수행된다.
 * 따라서 무의미한 반복을 제거하기 위해 다음 알고리즘을 쓴다.
 ``` java
@@ -198,8 +201,8 @@ void insertionSort(int [] values){
     * 최선의 경우 : A[i]가 제자리에 있는 경우(자리 이동이 없음)
     * 최악의 경우 : A[i]가 A[1] 자리에 가야 하는 경우(자리 이동이 i번)
     * 평균적인 경우 : A[i]가 A[i/2]번째 자리에 가는 경우(자리 이동이 i/2번)
-  * 따라서 최악의 경우의 수행 시간은 (n-1) + (n-2) + ... + 2 + 1 = (n(n-1))/2이기 때문에 시간 복잡도는 Θ(n^2)이다.
-* 삽입 정렬은 특정 조건에서는 Θ(n)에 가까운 시간 복잡도를 가진다.
+  * 따라서 최악의 경우의 수행 시간은 $(n-1) + (n-2) + ... + 2 + 1 = \dfrac{n(n-1)}{2}$이기 때문에 시간 복잡도는 $Θ(n^2)$이다.
+* 삽입 정렬은 특정 조건에서는 $Θ(n)$에 가까운 시간 복잡도를 가진다.
   * 특정 조건 : 배열이 거의 정렬되어 있는 경우
   * 사유 : while문이 거의 실행되지 않기 때문에 사실상 for문의 n번 반복의 영향을 받기 때문
 
@@ -293,9 +296,9 @@ void merge(int [] values, int start, int middle, int end){
   * ![시간복잡도 식](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%201.png?raw=true)
 * 정렬할 요소의 개수가 1개일 때에는 상수 시간이 들고 정렬할 요소의 개수가 2개 이상일 때는 다음의 식으로 시간 복잡도가 계산된다.
   * ![시간복잡도 계산](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%202(%EC%88%98%EC%A0%95).png?raw=true) 
-  * T(n/2) : 두 개의 부분 집합을 처리하는 비용
-  * c(상수) : 병합에 드는 시간(선형 시간)
-  * 아래는 n = 2^k로 가정하여 계산한 것
+  * $T(n/2)$ : 두 개의 부분 집합을 처리하는 비용
+  * $c$ (상수) : 병합에 드는 시간(선형 시간)
+  * 아래는 $n = 2^k$로 가정하여 계산한 것
 * 따라서 병합 정렬은 최악의 경우에도 Θ(n log n)이라는 시간 복잡도를 가진다.
 
 ## 6. 퀵 정렬(Quick Sort)
@@ -358,19 +361,19 @@ int partition(int [] values, int start, int end){
 ```
 * 퀵 정렬의 수행 시간은 다음과 같다.
   * 분할
-    * 분할은 집합의 모든 요소를 탐색하는 과정으로 Θ(n)이 소요된다.
+    * 분할은 집합의 모든 요소를 탐색하는 과정으로 $Θ(n)$이 소요된다.
   * 병합
     * 이상적인 경우
-      * 이상적인 경우는 분할이 항상 균등하게 될 때로 병합 정렬과 같은 모양이 되어서 다음의 수식에 따라 Θ(n log n)이 된다.
+      * 이상적인 경우는 분할이 항상 균등하게 될 때로 병합 정렬과 같은 모양이 되어서 다음의 수식에 따라 $Θ(n \log n)$이 된다.
 ![이상적인 경우](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%203.png?raw=true)
     * 최악의 경우
-      * 최악의 경우는 계속해서 한쪽은 하나도 없고 다른 쪽에 다 몰리도록 분할되는 경우로 다음의 수식에 따라 Θ(n^2)이 된다.
+      * 최악의 경우는 계속해서 한쪽은 하나도 없고 다른 쪽에 다 몰리도록 분할되는 경우로 다음의 수식에 따라 $Θ(n^2)$이 된다.
 ![최악의 경우](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%204.png?raw=true)
     * 평균적인 경우
       * 평균적인 경우는 피봇을 랜덤으로 정하는 경우로 모든 가능한 경우의 수를 구해 평균을 낸 것이다.
-      * 어떠한 경우의 수행 시간은 다음과 같다.(T(i-1)와 T(n-i)는 재귀호출 비용, Θ(n)는 분할 비용)
+      * 어떠한 경우의 수행 시간은 다음과 같다.$T(i-1)$와 $T(n-i)$는 재귀호출 비용, Θ(n)는 분할 비용)
 ![평균적인 경우의 어떤 분할에 대한 식](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%205.png?raw=true)
-      * 이 수식을 평균내면 다음의 수식이 나오고 이를 계산하면 Θ(n log n)이다.
+      * 이 수식을 평균내면 다음의 수식이 나오고 이를 계산하면 $Θ(n \log n)$이다.
 ![평균적인 경우](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%206.png?raw=true)
 
 ## 7. 힙 정렬(코드 수정 예정)
@@ -475,16 +478,16 @@ void heapSort(int [] values){
 * 힙 정렬의 시간 복잡도는 다음과 같다.
   * buildHeap의 경우
     * buildHeap은 ⌊(i/2)⌋의 heapify를 수행한다.
-    * 리프 노드에 대해서 heapify를 수행하지 않기 때문에 다음의 식에 따라 Θ(n)의 수행 시간이 소요된다.
+    * 리프 노드에 대해서 heapify를 수행하지 않기 때문에 다음의 식에 따라 $Θ(n)$의 수행 시간이 소요된다.
 ![buildHeap 수행시간](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%207(%EC%88%98%EC%A0%95).png?raw=true)
       * 안의 등비급수에 대해서 계산하면 다음과 같은 식과 결과가 나온다. 
 ![buildHeap 수행시간](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%208(%EC%88%98%EC%A0%95).png?raw=true)
 ![bulidHeap 수행시간](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%209(%EC%88%98%EC%A0%95).png?raw=true)
-      * 여기서 h/(2^h)는 x가 1/2인 경우이다. 따라서 상한은 2다. 가장 위의 식에 대입하면 Ο(n)이 된다.
+      * 여기서 $\dfrac{h}{(2^{h+1})}$는 x가 1/2인 경우이다. 따라서 상한은 2다. 가장 위의 식에 대입하면 Ο(n)이 된다.
 ![bulidHeap 수행시간](https://github.com/seonghwanJang/Java-Coding-Test/blob/main/.idea/Images/%EC%A0%95%EB%A0%AC/%EA%B3%B5%EC%8B%9D%2010(%EC%88%98%EC%A0%95).png?raw=true)
   * heapify의 경우
-    * buildHeap에서 계산한 식 중 O(h)가 heapify를 수행하는데 소요되는 시간이다.
-    * h는 트리의 높이이고 h = log n(log의 밑은 2)이기 때문에 최악의 경우를 계산하면 O(log n)이다.
+    * buildHeap에서 계산한 식 중 $O(h)$가 heapify를 수행하는데 소요되는 시간이다.
+    * h는 트리의 높이이고 $h = \log n$(log의 밑은 2)이기 때문에 최악의 경우를 계산하면 O(log n)이다.
   * heapSort의 경우
     * heapSort는 buildHeap을 한 번 수행하고 n번의 heapify를 수행한다.
     * 따라서 buildHeap과 n번의 heapify를 수행하는데 Θ(n log n)이 든다.(비교 정렬의 경우 최악의 경우에 Θ(n log n)의 시간이 든다.)
@@ -541,12 +544,12 @@ void radixSort(int [] values, int radix, int digit){
         }
     }
 ```
-* 기수 정렬은 한 번 n개의 요소를 r개의 버킷에 분배하고 정렬하는 과정으로 (n+r)번이 소요된다.
-* 위의 (n+r)번을 자릿수(d)만큼 반복하기 때문에 시간 복잡도는 Θ(d(n+r))이다.
+* 기수 정렬은 한 번 n개의 요소를 r개의 버킷에 분배하고 정렬하는 과정으로 $(n+r)$번이 소요된다.
+* 위의 $(n+r)$번을 자릿수$(d)$만큼 반복하기 때문에 시간 복잡도는 $Θ(d(n+r))$이다.
 
 ## 9. 계수 정렬
 
-* 정렬하고자 하는 요소들의 값이 Ο(n)인 특수한 경우에 사용한 정렬 알고리즘
+* 정렬하고자 하는 요소들의 값이 $Ο(n)$인 특수한 경우에 사용한 정렬 알고리즘
 * 계수 정렬은 주어진 요소들에서 1부터 n까지의 숫자가 각각 몇 개 있는지 센 후, 이 개수를 이용해 숫자들의 위치를 결정하는 방식으로 정렬한다.
 * 계수 정렬의 알고리즘은 다음과 같다.
 ``` java
@@ -593,4 +596,4 @@ int [] countingSort(int [] values, int k){
 }
 ```
 * 계수 정렬은 두 번의 k번 반복하는 for 루프와 두 번의 n번 반복하는 for 루프가 시간을 결정한다.
-* 따라서 k가 O(n)을 초과하면 시간 복잡도는 Θ(k)이고 그렇지 않으면 Θ(n)이 소요된다.
+* 따라서 k가 $O(n)$을 초과하면 시간 복잡도는 $Θ(k)$이고 그렇지 않으면 $Θ(n)$이 소요된다.

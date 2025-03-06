@@ -1,0 +1,118 @@
+# 이진 탐색
+
+### 최초 작성일 : 2025-03-06
+### 최초 작성시간 : 21:11
+### 최초 작성자 : 장성환
+### 작성 목적 : 이진 탐색 알고리즘 개념 정리
+
+---
+
+### 마지막 수정일 :
+### 마지막 수정시간 :
+### 마지막 작성자 :
+
+---
+
+### 수정이력
+
+---
+
+### 자료 출처
+
+[이진 탐색 자료1](https://search.shopping.naver.com/book/catalog/32436279809?cat_id=50010920&frm=PBOKMOD&query=C%EB%A1%9C+%EB%B0%B0%EC%9A%B0%EB%8A%94+%EC%89%AC%EC%9A%B4+%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0&NaPm=ct%3Dm7xb3md4%7Cci%3Db15dc1713ff461fb04bdab2b2e417fad3f4df5ff%7Ctr%3Dboknx%7Csn%3D95694%7Chk%3Da298b51adeae2a62cbf8569a9753b13db14cceb3)
+
+[이진 탐색 자료2](https://velog.io/@kwontae1313/%EC%9D%B4%EC%A7%84-%ED%83%90%EC%83%89Binary-Search-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EA%B0%9C%EB%85%90)
+
+---
+
+### 1. 이진 탐색
+
+* 요소 집합에서 가운데에 있는 요소의 키값과 비교해서 키값이 더 크면 오른쪽을, 키값이 작으면 왼쪽을 검색하는 방법
+* 키를 찾을 때까지 검색 범위를 반으로 줄여가면서 반복적으로 수행하기 때문에 요소 집합이 정렬되어 있어야 한다.
+* 이진 탐색은 가운데를 기준으로 왼쪽과 오른쪽으로 나누어서 검색하기 때문에 이분 탐색 또는 보간 탐색(Interpolation Search)라고 한다.
+
+---
+
+### 2. 동작 방식
+
+#### 1. 배열에서의 동작 방식
+
+1. 정렬된 배열에서 중간 인덱스(middle)를 찾는다.
+2. 찾으려는 값(target)과 중간 값(middle_value)을 비교한다.
+   1. target > middle_value일 때 : middle을 기준으로 왼쪽 부분 배열을 탐색
+   2. target < middle_value일 때 : middle을 기준으로 오른쪽 부분 배열을 탐색
+   3. target == middle_value일 때 : 검색 완료
+3. 2-1과 2-2의 경우일 때 탐색 범위를 반으로 줄여가면서 2를 반복한다.
+* 이를 알고리즘으로 표현하면 다음과 같다.
+``` java
+binarySearch(A[], begin, end, key) {
+    middle ← (begin+end)/2;
+    if(key == A[middle]) then return middle;
+    else if(key < A[middle]) then return binarySearch(A, begin, middle - 1, key);
+    else if(key > A[middle]) then return binarySearch(A, middle+1, end, key);
+    else return -1;
+}
+```
+* 이를 구현하면 다음과 같다.
+```java
+// 재귀호출 버전
+int binarySearch(int [] values, int begin, int end, int key){
+    if(begin == end){
+        if(key == values[begin]){
+            return begin;
+        }
+        else {
+            return -1;
+        }
+    }
+    
+    int middle = (begin+end)/2;
+    if(key == values[middle]){
+        return middle;
+    }
+    else if(key < values[middle] && middle - 1 >= begin){
+        return binarySearch(values, begin, middle-1, key);
+    }
+    else if(key > values[middle] && middle + 1 <= end){
+        return binarySearch(values, middle+1, end, key);
+    }
+    else {
+        return -1;
+    }
+}
+```
+```java
+// 반복문 버전
+int binarySearch(int [] values, int begin, int end, int key){
+    int middle;
+    while(begin <= end){
+        middle = (begin+end)/2;
+        if(key == values[middle]){
+            return middle;
+        }
+        else if(key < values[middle] && middle - 1 >= begin){
+            begin = middle + 1;
+        }
+        else if(key > values[middle] && middle + 1 <= end){
+            end = middle - 1;
+        }
+    }
+    return -1;
+}
+```
+
+#### 2. 트리에서의 동작 방식
+
+1. 트리에서 중간 노드를 검색
+2. 찾으려는 값과 중간 노드의 값을 비교
+   1. 찾으려는 값 < 중간 노드의 값일 때 : 왼쪽 서브 트리에서 탐색을 계속한다.
+   2. 찾으려는 값 > 중간 노드의 값일 때 : 오른쪽 서브 트리에서 탐색을 계속한다.
+   3. 찾으려는 값 == 중간 노드의 값일 떄 : 탐색을 종류
+3. 2-1과 2-2의 경우에는 탐색 범위를 반으로 좁히면서 탐색하며 탐색 범위를 더 이상 줄일 수 없을 때까지 반복한다.
+* 트리구조에서 이진 탐색을 적용하려면 트리가 이진 탐색 트리여야 한다.
+
+---
+
+### 시간 복잡도
+
+* 범위를 절반씩 줄이면서 탐색하기 때문에 시간 복잡도는 $Ο(\log n)$이다.
