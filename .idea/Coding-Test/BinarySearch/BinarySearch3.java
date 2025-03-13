@@ -38,7 +38,8 @@ public class BinarySearch2 {
             if (count >= k) { // k번째 원소보다 크거나 같은 개수라면
                 end = mid - 1; // 더 작은 값이 있을 수 있으므로 왼쪽 범위를 탐색
                 answer = mid; // 현재 mid를 정답 후보로 저장
-            } else { // count가 k보다 작다면
+            }
+            else { // count가 k보다 작다면
                 start = mid + 1; // 오른쪽 범위를 탐색
             }
         }
