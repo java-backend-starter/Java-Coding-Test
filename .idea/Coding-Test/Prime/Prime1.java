@@ -23,7 +23,7 @@ public class Prime1 {
      * 2. 0과 1은 소수에서 제외한다.
      * 3. 2부터 n까지의 수들 중 소수를 구한다.
      */
-    static boolean [] eratostenes(int n){
+    static boolean [] eratosthenes(int n){
         boolean [] primes = new boolean[n+1];
         Arrays.fill(primes, true);
         primes[0] = false;
