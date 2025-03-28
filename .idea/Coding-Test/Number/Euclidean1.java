@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Euclidean {
+public class Euclidean1 {
     /*
      * 최초 작성일시 : 2025-03-29
      * 최초 작성시간 : 00:27
