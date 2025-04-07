@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class TopologicalSort2 {
+public class TopologicalSort3 {
     /*
      * 최초 작성일시 : 2025-04-07
      * 최초 작성시간 : 13:01
