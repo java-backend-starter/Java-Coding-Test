@@ -16,27 +16,43 @@ public class Dijkstra13 {
      *
      * 백준에 있는 문제 풀이
      */
+    /*
+     * graph : 입력받은 그래프
+     * distance : 각 노드별 거리 데이터 저장 배열
+     */
     static int[][] graph = new int[1001][1001];
     static ArrayList<PriorityQueue<Integer>> distance = new ArrayList<>();
 
+    // k번째 최단 경로를 구하는 다익스트라 변형 알고리즘
+// start: 시작 정점, node: 총 정점 수, k: 각 정점까지 최대 몇 개의 최단 경로를 저장할지
     static void dijkstra(int start, int node, int k) {
+        // 최소 거리 기준으로 정점을 처리하기 위한 우선순위 큐
         PriorityQueue<Node> queue = new PriorityQueue<>();
+
+        // 시작 정점에서의 거리 0으로 초기화하고 큐에 삽입
         queue.add(new Node(start, 0));
-        distance.get(1).add(0);
+        distance.get(1).add(0); // 시작 정점 1번에 대한 거리 리스트에 0 추가
 
+        // 큐가 빌 때까지 반복
         while (!queue.isEmpty()) {
-            Node now = queue.poll();
+            Node now = queue.poll(); // 현재까지 가장 짧은 거리의 정점 꺼냄
 
+            // 모든 다른 정점에 대해 확인
             for (int next = 1; next <= node; next++) {
+                // 현재 정점에서 next 정점으로 가는 간선이 존재할 경우
                 if (graph[now.getVertex()][next] != 0) {
+                    // 현재 거리 + 간선 가중치
                     int newDist = now.getWeight() + graph[now.getVertex()][next];
 
+                    // 아직 k개의 경로가 저장되지 않았으면 그냥 추가
                     if (distance.get(next).size() < k) {
                         distance.get(next).add(newDist);
                         queue.add(new Node(next, newDist));
+
+                        // 이미 k개가 찼지만, 현재 거리보다 큰 값이 있다면 교체
                     } else if (distance.get(next).peek() > newDist) {
-                        distance.get(next).poll(); // 가장 큰 값 제거
-                        distance.get(next).add(newDist);
+                        distance.get(next).poll(); // 가장 큰 값 제거 (우선순위 큐가 max-heap일 경우)
+                        distance.get(next).add(newDist); // 새로운 더 짧은 거리 추가
                         queue.add(new Node(next, newDist));
                     }
                 }
@@ -84,6 +100,10 @@ public class Dijkstra13 {
     }
 }
 
+/*
+ * 인접 노드를 표현한 클래스
+ * 노드 번호와 가중치 저장
+ */
 class Node implements Comparable<Node> {
     private int vertex;
     private int weight;
