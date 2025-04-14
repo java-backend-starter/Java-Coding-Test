@@ -3,7 +3,7 @@ import java.util.*;
 
 public class MinimumSpanningTree3 {
     /*
-     * 최초 작성일시 : 2025-04-09
+     * 최초 작성일시 : 2025-04-14
      * 최초 작성시간 : 13:18
      * 최초 작성자 : 정성환
      *
