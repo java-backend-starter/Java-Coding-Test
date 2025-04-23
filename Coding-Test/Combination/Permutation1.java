@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class permutation1 {
+public class Permutation1 {
     /*
      * 최초 작성일시 : 2025-04-21
      * 최초 작성시간 : 12:58
