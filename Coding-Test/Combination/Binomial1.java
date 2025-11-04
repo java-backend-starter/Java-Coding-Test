@@ -3,32 +3,32 @@ import java.util.*;
 
 public class Binomial1 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-18
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 10:34
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ìž‘ì„±ì¼ì‹œ : 2025-04-18
+     * ìµœì´ˆ ìž‘ì„±ì‹œê°„ : 10:34
+     * ìµœì´ˆ ìž‘ì„±ìž : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 11050
-     * ¹®Á¦ ÀÌ¸§ : ÀÌÇ× °è¼ö 1
-     * ¹®Á¦ ³­ÀÌµµ : ºê·ÐÁî ¥°
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 11050
+     * ë¬¸ì œ ì´ë¦„ : ì´í•­ ê³„ìˆ˜ 1
+     * ë¬¸ì œ ë‚œì´ë„ : ë¸Œë¡ ì¦ˆ â… 
      *
-     * ÀÛ¼º ¸ñÀû
+     * ìž‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìžˆëŠ” ë¬¸ì œ í’€ì´
      *
      */
-    // ÀÌÇ× °è¼ö¸¦ ÀúÀåÇÏ´Â ¹è¿­
+    // ì´í•­ ê³„ìˆ˜ë¥¼ ì €ìž¥í•˜ëŠ” ë°°ì—´
     static int [][] binomial;
 
     /*
-     * ¹è¿­ ÃÊ±âÈ­
-     * size : binomialÀÇ Å©±â ¼³Á¤
+     * ë°°ì—´ ì´ˆê¸°í™”
+     * size : binomialì˜ í¬ê¸° ì„¤ì •
      */
     static void init(int size){
-        // ÀÌÇ× °è¼ö ¹è¿­À» (size+1) x (size+1) Å©±â·Î ÃÊ±âÈ­
+        // ì´í•­ ê³„ìˆ˜ ë°°ì—´ì„ (size+1) x (size+1) í¬ê¸°ë¡œ ì´ˆê¸°í™”
         binomial = new int[size+1][size+1];
 
-        // ÀÌÇ× °è¼öÀÇ ±âº» °ª ¼³Á¤
+        // ì´í•­ ê³„ìˆ˜ì˜ ê¸°ë³¸ ê°’ ì„¤ì •
         // nC0 = 1, nCn = 1, nC1 = n
         for(int i = 0; i <= size; i++){
             binomial[i][1] = i;  // nC1 = n
@@ -36,11 +36,11 @@ public class Binomial1 {
             binomial[i][i] = 1;  // nCn = 1
         }
 
-        // ÀÌÇ× °è¼ö °è»ê: ÀÌÇ× °è¼ö´Â ´ÙÀ½°ú °°Àº Àç±ÍÀû ¼ºÁúÀ» °¡Áü
+        // ì´í•­ ê³„ìˆ˜ ê³„ì‚°: ì´í•­ ê³„ìˆ˜ëŠ” ë‹¤ìŒê³¼ ê°™ì€ ìž¬ê·€ì  ì„±ì§ˆì„ ê°€ì§
         // nCk = (n-1)C(k-1) + (n-1)Ck
         for(int i = 2; i <= size; i++){
             for(int j = 1; j < i; j++){
-                // À§ÀÇ Á¡È­½ÄÀ» Àû¿ëÇÏ¿© ÀÌÇ× °è¼ö¸¦ °è»ê
+                // ìœ„ì˜ ì í™”ì‹ì„ ì ìš©í•˜ì—¬ ì´í•­ ê³„ìˆ˜ë¥¼ ê³„ì‚°
                 binomial[i][j] = binomial[i-1][j-1] + binomial[i-1][j];
             }
         }
@@ -50,13 +50,13 @@ public class Binomial1 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int n = Integer.parseInt(st.nextToken()); // ÀÌÇ× °è¼ö¿¡¼­ n °ª
-        int k = Integer.parseInt(st.nextToken()); // ÀÌÇ× °è¼ö¿¡¼­ k °ª
+        int n = Integer.parseInt(st.nextToken()); // ì´í•­ ê³„ìˆ˜ì—ì„œ n ê°’
+        int k = Integer.parseInt(st.nextToken()); // ì´í•­ ê³„ìˆ˜ì—ì„œ k ê°’
 
-        // ÀÌÇ× °è¼ö ¹è¿­ ÃÊ±âÈ­
+        // ì´í•­ ê³„ìˆ˜ ë°°ì—´ ì´ˆê¸°í™”
         init(n);
 
-        // binomial[n][k]´Â nCk °ªÀ» Ãâ·Â
+        // binomial[n][k]ëŠ” nCk ê°’ì„ ì¶œë ¥
         System.out.println(binomial[n][k]);
     }
 }

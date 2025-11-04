@@ -2,36 +2,36 @@ import java.io.*;
 
 public class Binomial3 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-18
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 11:23
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ìž‘ì„±ì¼ì‹œ : 2025-04-18
+     * ìµœì´ˆ ìž‘ì„±ì‹œê°„ : 11:23
+     * ìµœì´ˆ ìž‘ì„±ìž : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 2775
-     * ¹®Á¦ ÀÌ¸§ : ºÎ³àÈ¸ÀåÀÌ µÉ Å×¾ß
-     * ¹®Á¦ ³­ÀÌµµ : ºê·ÐÁî ¥°
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 2775
+     * ë¬¸ì œ ì´ë¦„ : ë¶€ë…€íšŒìž¥ì´ ë  í…Œì•¼
+     * ë¬¸ì œ ë‚œì´ë„ : ë¸Œë¡ ì¦ˆ â… 
      *
-     * ÀÛ¼º ¸ñÀû
+     * ìž‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìžˆëŠ” ë¬¸ì œ í’€ì´
      *
      */
-    // 15x15 Å©±âÀÇ ¾ÆÆÄÆ® ¹è¿­ ¼±¾ð (°¢°¢ÀÇ Ãþ°ú È£¿¡ ´ëÇÑ ÀÎ¿ø ¼ö¸¦ ÀúÀå)
+    // 15x15 í¬ê¸°ì˜ ì•„íŒŒíŠ¸ ë°°ì—´ ì„ ì–¸ (ê°ê°ì˜ ì¸µê³¼ í˜¸ì— ëŒ€í•œ ì¸ì› ìˆ˜ë¥¼ ì €ìž¥)
     static int [][] apartment = new int[15][15];
 
     /*
-     * ¾ÆÆÄÆ® ¹è¿­ ÃÊ±âÈ­ ÇÔ¼ö
-     * 0ÃþÀÇ °¢ È£´Â ±× È£ ¹øÈ£¿Í µ¿ÀÏÇÑ »ç¶÷ ¼ö¸¦ °¡Áü
-     * °¢ È£ÀÇ ÀÎ¿ø ¼ö´Â À§ÃþÀÇ ÇØ´ç È£¿Í ±× ÀÌÀü È£ »ç¶÷ ¼öÀÇ ÇÕÀ¸·Î °è»ê
+     * ì•„íŒŒíŠ¸ ë°°ì—´ ì´ˆê¸°í™” í•¨ìˆ˜
+     * 0ì¸µì˜ ê° í˜¸ëŠ” ê·¸ í˜¸ ë²ˆí˜¸ì™€ ë™ì¼í•œ ì‚¬ëžŒ ìˆ˜ë¥¼ ê°€ì§
+     * ê° í˜¸ì˜ ì¸ì› ìˆ˜ëŠ” ìœ„ì¸µì˜ í•´ë‹¹ í˜¸ì™€ ê·¸ ì´ì „ í˜¸ ì‚¬ëžŒ ìˆ˜ì˜ í•©ìœ¼ë¡œ ê³„ì‚°
      */
     static void init(){
-        // 0ÃþÀº °¢ È£°¡ ±× ¹øÈ£ÀÇ »ç¶÷ ¼ö¸¦ °¡Áü (1È£¿¡´Â 1¸í, 2È£¿¡´Â 2¸í, ...)
+        // 0ì¸µì€ ê° í˜¸ê°€ ê·¸ ë²ˆí˜¸ì˜ ì‚¬ëžŒ ìˆ˜ë¥¼ ê°€ì§ (1í˜¸ì—ëŠ” 1ëª…, 2í˜¸ì—ëŠ” 2ëª…, ...)
         for(int i = 0; i < 15; i++){
-            apartment[i][1] = 1;   // 1È£¿¡´Â Ç×»ó 1¸íÀÌ »ì°í
-            apartment[0][i] = i;   // 0ÃþÀÇ °¢ È£¿¡ »ç´Â »ç¶÷ ¼ö´Â ÇØ´ç È£ÀÇ ¹øÈ£¿Í µ¿ÀÏ
+            apartment[i][1] = 1;   // 1í˜¸ì—ëŠ” í•­ìƒ 1ëª…ì´ ì‚´ê³ 
+            apartment[0][i] = i;   // 0ì¸µì˜ ê° í˜¸ì— ì‚¬ëŠ” ì‚¬ëžŒ ìˆ˜ëŠ” í•´ë‹¹ í˜¸ì˜ ë²ˆí˜¸ì™€ ë™ì¼
         }
 
-        // 1Ãþ ÀÌ»óÀÇ ÃþÀº °¢ È£¿¡ »ç´Â »ç¶÷ ¼ö¸¦ ÀÌÀü ÃþÀÇ ÇØ´ç È£¿Í ÀÌÀü È£ »ç¶÷ ¼ö¸¦ ´õÇÏ¿© °è»ê
+        // 1ì¸µ ì´ìƒì˜ ì¸µì€ ê° í˜¸ì— ì‚¬ëŠ” ì‚¬ëžŒ ìˆ˜ë¥¼ ì´ì „ ì¸µì˜ í•´ë‹¹ í˜¸ì™€ ì´ì „ í˜¸ ì‚¬ëžŒ ìˆ˜ë¥¼ ë”í•˜ì—¬ ê³„ì‚°
         for(int i = 1; i < 15; i++){
             for(int j = 2; j < 15; j++){
                 apartment[i][j] = apartment[i-1][j] + apartment[i][j-1];
@@ -40,26 +40,26 @@ public class Binomial3 {
     }
 
     public static void main(String [] args) throws IOException{
-        // ÀÔ·ÂÀ» Ã³¸®ÇÒ BufferedReader¿Í °á°ú¸¦ Ãâ·ÂÇÒ BufferedWriter »ý¼º
+        // ìž…ë ¥ì„ ì²˜ë¦¬í•  BufferedReaderì™€ ê²°ê³¼ë¥¼ ì¶œë ¥í•  BufferedWriter ìƒì„±
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        // Å×½ºÆ® ÄÉÀÌ½ºÀÇ °³¼ö¸¦ ÀÔ·Â¹ÞÀ½
+        // í…ŒìŠ¤íŠ¸ ì¼€ì´ìŠ¤ì˜ ê°œìˆ˜ë¥¼ ìž…ë ¥ë°›ìŒ
         int query = Integer.parseInt(br.readLine());
 
-        // ¾ÆÆÄÆ® ¹è¿­ ÃÊ±âÈ­ (¸ðµç °è»êÀ» ¹Ì¸® ÇØµÎ¾î ³ªÁß¿¡ ºü¸£°Ô °á°ú¸¦ Ãâ·ÂÇÒ ¼ö ÀÖµµ·Ï)
+        // ì•„íŒŒíŠ¸ ë°°ì—´ ì´ˆê¸°í™” (ëª¨ë“  ê³„ì‚°ì„ ë¯¸ë¦¬ í•´ë‘ì–´ ë‚˜ì¤‘ì— ë¹ ë¥´ê²Œ ê²°ê³¼ë¥¼ ì¶œë ¥í•  ìˆ˜ ìžˆë„ë¡)
         init();
 
-        // °¢ Å×½ºÆ® ÄÉÀÌ½º¿¡ ´ëÇØ °á°ú¸¦ Ãâ·Â
+        // ê° í…ŒìŠ¤íŠ¸ ì¼€ì´ìŠ¤ì— ëŒ€í•´ ê²°ê³¼ë¥¼ ì¶œë ¥
         for(int i = 0; i < query; i++){
-            // °¢ Å×½ºÆ® ÄÉÀÌ½º¿¡¼­ Ãþ°ú È£ ¹øÈ£¸¦ ÀÔ·Â¹ÞÀ½
-            int row = Integer.parseInt(br.readLine());  // Ãþ
-            int col = Integer.parseInt(br.readLine());  // È£ ¹øÈ£
+            // ê° í…ŒìŠ¤íŠ¸ ì¼€ì´ìŠ¤ì—ì„œ ì¸µê³¼ í˜¸ ë²ˆí˜¸ë¥¼ ìž…ë ¥ë°›ìŒ
+            int row = Integer.parseInt(br.readLine());  // ì¸µ
+            int col = Integer.parseInt(br.readLine());  // í˜¸ ë²ˆí˜¸
 
-            // ÇØ´ç Ãþ°ú È£ÀÇ »ç¶÷ ¼ö¸¦ Ãâ·Â
+            // í•´ë‹¹ ì¸µê³¼ í˜¸ì˜ ì‚¬ëžŒ ìˆ˜ë¥¼ ì¶œë ¥
             bw.write(apartment[row][col] + "\n");
         }
-        // °á°ú Ãâ·Â
+        // ê²°ê³¼ ì¶œë ¥
         bw.flush();
     }
 }

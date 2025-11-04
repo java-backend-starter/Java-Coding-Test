@@ -3,34 +3,34 @@ import java.util.*;
 
 public class BellmanFord1 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-09
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 10:55
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-09
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 10:55
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 11657
-     * ¹®Á¦ ÀÌ¸§ : Å¸ÀÓ¸Ó½Å
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥³
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 11657
+     * ë¬¸ì œ ì´ë¦„ : íƒ€ì„ë¨¸ì‹ 
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…£
      *
-     * ÀÛ¼º ¸ñÀû
-     * º§¸¸Æ÷µå ¾Ë°í¸®ÁòÀ» ÀÌ¿ëÇÑ ÃÖ´Ü °Å¸® °è»ê ¹× À½¼ö »çÀÌÅ¬ ÆÇº°
+     * ì‘ì„± ëª©ì 
+     * ë²¨ë§Œí¬ë“œ ì•Œê³ ë¦¬ì¦˜ì„ ì´ìš©í•œ ìµœë‹¨ ê±°ë¦¬ ê³„ì‚° ë° ìŒìˆ˜ ì‚¬ì´í´ íŒë³„
      */
 
-    static Node[] graph;           // °£¼± Á¤º¸¸¦ ÀúÀåÇÏ´Â ¹è¿­
-    static long[] distance;        // ½ÃÀÛ ³ëµå·ÎºÎÅÍÀÇ ÃÖ´Ü °Å¸® ¹è¿­
+    static Node[] graph;           // ê°„ì„  ì •ë³´ë¥¼ ì €ì¥í•˜ëŠ” ë°°ì—´
+    static long[] distance;        // ì‹œì‘ ë…¸ë“œë¡œë¶€í„°ì˜ ìµœë‹¨ ê±°ë¦¬ ë°°ì—´
 
-    // º§¸¸Æ÷µå ¾Ë°í¸®Áò ±¸Çö
+    // ë²¨ë§Œí¬ë“œ ì•Œê³ ë¦¬ì¦˜ êµ¬í˜„
     static void bellmanFord(int node, int edge, int start){
-        distance[start] = 0; // ½ÃÀÛ ³ëµåÀÇ °Å¸®´Â 0
+        distance[start] = 0; // ì‹œì‘ ë…¸ë“œì˜ ê±°ë¦¬ëŠ” 0
 
-        // N-1¹ø ¹İº¹ÇÏ¿© ÃÖ´Ü °Å¸® °»½Å
+        // N-1ë²ˆ ë°˜ë³µí•˜ì—¬ ìµœë‹¨ ê±°ë¦¬ ê°±ì‹ 
         for(int i = 1; i < node; i++){
             for(int j = 0; j < edge; j++){
                 Node next = graph[j];
 
-                // Ãâ¹ß ³ëµå°¡ µµ´Ş °¡´ÉÇÑ °æ¿ì¸¸ Ã³¸®
+                // ì¶œë°œ ë…¸ë“œê°€ ë„ë‹¬ ê°€ëŠ¥í•œ ê²½ìš°ë§Œ ì²˜ë¦¬
                 if(distance[next.getStart()] != Long.MAX_VALUE){
-                    // ´õ ÂªÀº °æ·Î°¡ Á¸ÀçÇÏ¸é °»½Å
+                    // ë” ì§§ì€ ê²½ë¡œê°€ ì¡´ì¬í•˜ë©´ ê°±ì‹ 
                     if(distance[next.getEnd()] > distance[next.getStart()] + next.getWeight()){
                         distance[next.getEnd()] = distance[next.getStart()] + next.getWeight();
                     }
@@ -44,28 +44,28 @@ public class BellmanFord1 {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int node = Integer.parseInt(st.nextToken()); // ³ëµå ¼ö
-        int edge = Integer.parseInt(st.nextToken()); // °£¼± ¼ö
+        int node = Integer.parseInt(st.nextToken()); // ë…¸ë“œ ìˆ˜
+        int edge = Integer.parseInt(st.nextToken()); // ê°„ì„  ìˆ˜
 
-        graph = new Node[edge + 1];           // °£¼± ¸®½ºÆ® ÃÊ±âÈ­
-        distance = new long[node + 1];        // °Å¸® ¹è¿­ ÃÊ±âÈ­ (1¹øºÎÅÍ »ç¿ë)
-        Arrays.fill(distance, Long.MAX_VALUE); // ¹«ÇÑ´ë·Î ÃÊ±âÈ­
+        graph = new Node[edge + 1];           // ê°„ì„  ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
+        distance = new long[node + 1];        // ê±°ë¦¬ ë°°ì—´ ì´ˆê¸°í™” (1ë²ˆë¶€í„° ì‚¬ìš©)
+        Arrays.fill(distance, Long.MAX_VALUE); // ë¬´í•œëŒ€ë¡œ ì´ˆê¸°í™”
 
-        // °£¼± Á¤º¸ ÀÔ·Â
+        // ê°„ì„  ì •ë³´ ì…ë ¥
         for(int i = 0; i < edge; i++){
             st = new StringTokenizer(br.readLine());
-            int u = Integer.parseInt(st.nextToken());      // Ãâ¹ß ³ëµå
-            int v = Integer.parseInt(st.nextToken());      // µµÂø ³ëµå
-            long w = Long.parseLong(st.nextToken());       // °¡ÁßÄ¡
+            int u = Integer.parseInt(st.nextToken());      // ì¶œë°œ ë…¸ë“œ
+            int v = Integer.parseInt(st.nextToken());      // ë„ì°© ë…¸ë“œ
+            long w = Long.parseLong(st.nextToken());       // ê°€ì¤‘ì¹˜
 
-            graph[i] = new Node(u, v, w);                  // °£¼± °´Ã¼ ÀúÀå
+            graph[i] = new Node(u, v, w);                  // ê°„ì„  ê°ì²´ ì €ì¥
         }
 
-        bellmanFord(node, edge, 1); // 1¹ø ³ëµå¿¡¼­ ½ÃÀÛÇÏ¿© ÃÖ´Ü °Å¸® °è»ê
+        bellmanFord(node, edge, 1); // 1ë²ˆ ë…¸ë“œì—ì„œ ì‹œì‘í•˜ì—¬ ìµœë‹¨ ê±°ë¦¬ ê³„ì‚°
 
         boolean isCycle = false;
 
-        // N¹øÂ° ¼øÈ¸ ½Ã¿¡µµ °Å¸® °»½ÅÀÌ ÀÏ¾î³ª¸é À½¼ö »çÀÌÅ¬ Á¸Àç
+        // Në²ˆì§¸ ìˆœíšŒ ì‹œì—ë„ ê±°ë¦¬ ê°±ì‹ ì´ ì¼ì–´ë‚˜ë©´ ìŒìˆ˜ ì‚¬ì´í´ ì¡´ì¬
         for(int i = 0; i < edge; i++){
             Node now = graph[i];
             if(distance[now.getStart()] != Long.MAX_VALUE){
@@ -75,32 +75,32 @@ public class BellmanFord1 {
             }
         }
 
-        // Ãâ·Â Ã³¸®
+        // ì¶œë ¥ ì²˜ë¦¬
         if(!isCycle){
-            // 1¹ø ³ëµå¸¦ Á¦¿ÜÇÑ ´Ù¸¥ ³ëµå±îÁöÀÇ ÃÖ´Ü °Å¸® Ãâ·Â
+            // 1ë²ˆ ë…¸ë“œë¥¼ ì œì™¸í•œ ë‹¤ë¥¸ ë…¸ë“œê¹Œì§€ì˜ ìµœë‹¨ ê±°ë¦¬ ì¶œë ¥
             for(int i = 2; i <= node; i++){
                 if(distance[i] == Long.MAX_VALUE){
-                    bw.write("-1\n"); // µµ´ŞÇÒ ¼ö ¾ø´Â °æ¿ì
+                    bw.write("-1\n"); // ë„ë‹¬í•  ìˆ˜ ì—†ëŠ” ê²½ìš°
                 }
                 else{
-                    bw.write(distance[i] + "\n"); // µµ´Ş °¡´ÉÇÑ °æ¿ì °Å¸® Ãâ·Â
+                    bw.write(distance[i] + "\n"); // ë„ë‹¬ ê°€ëŠ¥í•œ ê²½ìš° ê±°ë¦¬ ì¶œë ¥
                 }
             }
         }
         else {
-            // À½¼ö »çÀÌÅ¬ÀÌ Á¸ÀçÇÏ¸é -1 Ãâ·Â
+            // ìŒìˆ˜ ì‚¬ì´í´ì´ ì¡´ì¬í•˜ë©´ -1 ì¶œë ¥
             bw.write("-1\n");
         }
 
-        bw.flush(); // Ãâ·Â ¹öÆÛ ºñ¿ì±â
+        bw.flush(); // ì¶œë ¥ ë²„í¼ ë¹„ìš°ê¸°
     }
 }
 
-// °£¼± Á¤º¸¸¦ ÀúÀåÇÏ´Â Å¬·¡½º
+// ê°„ì„  ì •ë³´ë¥¼ ì €ì¥í•˜ëŠ” í´ë˜ìŠ¤
 class Node {
-    private int start;    // Ãâ¹ß ³ëµå
-    private int end;      // µµÂø ³ëµå
-    private long weight;  // °¡ÁßÄ¡ (À½¼ö °¡´É)
+    private int start;    // ì¶œë°œ ë…¸ë“œ
+    private int end;      // ë„ì°© ë…¸ë“œ
+    private long weight;  // ê°€ì¤‘ì¹˜ (ìŒìˆ˜ ê°€ëŠ¥)
 
     Node(int start, int end, long weight){
         this.start = start;
