@@ -20,9 +20,6 @@ public class Graph1 {
     static int [] visited;
     static ArrayList<Integer> result = new ArrayList<>();
 
-    import java.io.*;
-import java.util.*;
-
     public class Main {
         // 그래프를 저장할 인접 리스트 (2차원 ArrayList)
         static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
