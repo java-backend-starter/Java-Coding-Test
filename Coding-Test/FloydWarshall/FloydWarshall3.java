@@ -3,29 +3,29 @@ import java.util.*;
 
 public class FloydWarshall3 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-09
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 15:28
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-09
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 15:28
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1389
-     * ¹®Á¦ ÀÌ¸§ : ÄÉºó º£ÀÌÄÁÀÇ 6´Ü°è ¹ıÄ¢
-     * ¹®Á¦ ³­ÀÌµµ : ½Ç¹ö ¥°
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1389
+     * ë¬¸ì œ ì´ë¦„ : ì¼€ë¹ˆ ë² ì´ì»¨ì˜ 6ë‹¨ê³„ ë²•ì¹™
+     * ë¬¸ì œ ë‚œì´ë„ : ì‹¤ë²„ â… 
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìˆëŠ” ë¬¸ì œ í’€ì´
      *
      */
-    // Ä£±¸ °ü°è¸¦ ³ªÅ¸³»´Â ±×·¡ÇÁ ¹è¿­
+    // ì¹œêµ¬ ê´€ê³„ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ê·¸ë˜í”„ ë°°ì—´
     static int [][] graph;
 
-    // ÇÃ·ÎÀÌµå-¿ö¼È ¾Ë°í¸®Áò (¸ğµç Á¤Á¡ ½Ö °£ ÃÖ´Ü °Å¸® °è»ê)
+    // í”Œë¡œì´ë“œ-ì›Œì…œ ì•Œê³ ë¦¬ì¦˜ (ëª¨ë“  ì •ì  ìŒ ê°„ ìµœë‹¨ ê±°ë¦¬ ê³„ì‚°)
     static void floydWarshall(int [][] graph, int node){
-        for(int k = 1; k <= node; k++){ // °æÀ¯ ³ëµå
-            for(int i = 1; i <= node; i++){ // Ãâ¹ß ³ëµå
-                for(int j = 1; j <= node; j++){ // µµÂø ³ëµå
-                    // i -> jº¸´Ù i -> k -> j°¡ ´õ ÂªÀ¸¸é °»½Å
+        for(int k = 1; k <= node; k++){ // ê²½ìœ  ë…¸ë“œ
+            for(int i = 1; i <= node; i++){ // ì¶œë°œ ë…¸ë“œ
+                for(int j = 1; j <= node; j++){ // ë„ì°© ë…¸ë“œ
+                    // i -> jë³´ë‹¤ i -> k -> jê°€ ë” ì§§ìœ¼ë©´ ê°±ì‹ 
                     if(graph[i][j] > graph[i][k] + graph[k][j]){
                         graph[i][j] = graph[i][k] + graph[k][j];
                     }
@@ -38,55 +38,55 @@ public class FloydWarshall3 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int node = Integer.parseInt(st.nextToken());   // »ç¶÷ ¼ö (³ëµå ¼ö)
-        int friend = Integer.parseInt(st.nextToken()); // Ä£±¸ °ü°è ¼ö (°£¼± ¼ö)
+        int node = Integer.parseInt(st.nextToken());   // ì‚¬ëŒ ìˆ˜ (ë…¸ë“œ ìˆ˜)
+        int friend = Integer.parseInt(st.nextToken()); // ì¹œêµ¬ ê´€ê³„ ìˆ˜ (ê°„ì„  ìˆ˜)
 
-        graph = new int[node+1][node+1]; // ÀÎµ¦½º 1ºÎÅÍ »ç¿ë
+        graph = new int[node+1][node+1]; // ì¸ë±ìŠ¤ 1ë¶€í„° ì‚¬ìš©
 
-        // ±×·¡ÇÁ ÃÊ±âÈ­
+        // ê·¸ë˜í”„ ì´ˆê¸°í™”
         for(int i = 1; i <= node; i++){
             for(int j = 1; j <= node; j++){
                 if(i == j){
-                    graph[i][j] = 0; // ÀÚ±â ÀÚ½Å°úÀÇ °Å¸®´Â 0
+                    graph[i][j] = 0; // ìê¸° ìì‹ ê³¼ì˜ ê±°ë¦¬ëŠ” 0
                 }
                 else {
-                    graph[i][j] = 10000001; // ÃÊ±â°ªÀº ÃæºĞÈ÷ Å« ¼ö (¹«ÇÑ´ë ÀÇ¹Ì)
+                    graph[i][j] = 10000001; // ì´ˆê¸°ê°’ì€ ì¶©ë¶„íˆ í° ìˆ˜ (ë¬´í•œëŒ€ ì˜ë¯¸)
                 }
             }
         }
 
-        // Ä£±¸ °ü°è ÀÔ·Â
+        // ì¹œêµ¬ ê´€ê³„ ì…ë ¥
         for(int i = 0; i < friend; i++){
             st = new StringTokenizer(br.readLine());
-            int u = Integer.parseInt(st.nextToken()); // Ä£±¸ A
-            int v = Integer.parseInt(st.nextToken()); // Ä£±¸ B
+            int u = Integer.parseInt(st.nextToken()); // ì¹œêµ¬ A
+            int v = Integer.parseInt(st.nextToken()); // ì¹œêµ¬ B
 
-            graph[u][v] = 1; // A <-> B´Â °Å¸® 1
+            graph[u][v] = 1; // A <-> BëŠ” ê±°ë¦¬ 1
             graph[v][u] = 1;
         }
 
-        br.close(); // ÀÔ·Â ½ºÆ®¸² ´İ±â
+        br.close(); // ì…ë ¥ ìŠ¤íŠ¸ë¦¼ ë‹«ê¸°
 
-        // ¸ğµç ½Ö ÃÖ´Ü °Å¸® °è»ê
+        // ëª¨ë“  ìŒ ìµœë‹¨ ê±°ë¦¬ ê³„ì‚°
         floydWarshall(graph, node);
 
-        int min = Integer.MAX_VALUE; // °¡Àå ÀÛÀº °Å¸® ÇÕ ÀúÀå
-        int answer = -1;             // Á¤´ä ³ëµå ¹øÈ£
+        int min = Integer.MAX_VALUE; // ê°€ì¥ ì‘ì€ ê±°ë¦¬ í•© ì €ì¥
+        int answer = -1;             // ì •ë‹µ ë…¸ë“œ ë²ˆí˜¸
 
-        // °¢ »ç¶÷¸¶´Ù ´Ù¸¥ »ç¶÷µé°úÀÇ °Å¸® ÇÕ °è»ê
+        // ê° ì‚¬ëŒë§ˆë‹¤ ë‹¤ë¥¸ ì‚¬ëŒë“¤ê³¼ì˜ ê±°ë¦¬ í•© ê³„ì‚°
         for(int i = 1; i <= node; i++){
             int temp = 0;
             for(int j = 1; j <= node; j++){
-                temp += graph[i][j]; // i¹ø »ç¶÷ÀÇ ÀüÃ¼ °Å¸® ÇÕ
+                temp += graph[i][j]; // ië²ˆ ì‚¬ëŒì˜ ì „ì²´ ê±°ë¦¬ í•©
             }
-            // ÃÖ¼Ò °Å¸® ÇÕÀÌ¸é Á¤´ä °»½Å
+            // ìµœì†Œ ê±°ë¦¬ í•©ì´ë©´ ì •ë‹µ ê°±ì‹ 
             if(min > temp){
                 min = temp;
                 answer = i;
             }
         }
 
-        // ÄÉºó º£ÀÌÄÁ ¼ö°¡ °¡Àå ³·Àº »ç¶÷ ¹øÈ£ Ãâ·Â
+        // ì¼€ë¹ˆ ë² ì´ì»¨ ìˆ˜ê°€ ê°€ì¥ ë‚®ì€ ì‚¬ëŒ ë²ˆí˜¸ ì¶œë ¥
         System.out.println(answer);
     }
 }

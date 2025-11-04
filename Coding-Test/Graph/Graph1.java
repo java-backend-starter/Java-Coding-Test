@@ -3,18 +3,18 @@ import java.util.*;
 
 public class Graph1 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-04
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 12:33
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-04
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 12:33
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 18352
-     * ¹®Á¦ ÀÌ¸§ : Æ¯Á¤ °Å¸®ÀÇ µµ½Ã Ã£±â
-     * ¹®Á¦ ³­ÀÌµµ : ½Ç¹ö ¥±
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 18352
+     * ë¬¸ì œ ì´ë¦„ : íŠ¹ì • ê±°ë¦¬ì˜ ë„ì‹œ ì°¾ê¸°
+     * ë¬¸ì œ ë‚œì´ë„ : ì‹¤ë²„ â…¡
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * Ã¥¿¡ ÀÖ´Â ¹®Á¦ º¹½À
+     * ì±…ì— ìˆëŠ” ë¬¸ì œ ë³µìŠµ
      */
     static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
     static int [] visited;
@@ -24,60 +24,60 @@ public class Graph1 {
 import java.util.*;
 
     public class Main {
-        // ±×·¡ÇÁ¸¦ ÀúÀåÇÒ ÀÎÁ¢ ¸®½ºÆ® (2Â÷¿ø ArrayList)
+        // ê·¸ë˜í”„ë¥¼ ì €ì¥í•  ì¸ì ‘ ë¦¬ìŠ¤íŠ¸ (2ì°¨ì› ArrayList)
         static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
 
-        // ¹æ¹® ¿©ºÎ ¹× ÃÖ´Ü °Å¸® ÀúÀå ¹è¿­ (-1·Î ÃÊ±âÈ­)
+        // ë°©ë¬¸ ì—¬ë¶€ ë° ìµœë‹¨ ê±°ë¦¬ ì €ì¥ ë°°ì—´ (-1ë¡œ ì´ˆê¸°í™”)
         static int[] visited;
 
-        // Æ¯Á¤ °Å¸®(K)¿¡ ÇØ´çÇÏ´Â µµ½Ã¸¦ ÀúÀåÇÒ ¸®½ºÆ®
+        // íŠ¹ì • ê±°ë¦¬(K)ì— í•´ë‹¹í•˜ëŠ” ë„ì‹œë¥¼ ì €ì¥í•  ë¦¬ìŠ¤íŠ¸
         static ArrayList<Integer> result = new ArrayList<>();
 
-        // ³Êºñ ¿ì¼± Å½»ö (BFS)
+        // ë„ˆë¹„ ìš°ì„  íƒìƒ‰ (BFS)
         static void BFS(int node) {
-            Queue<Integer> queue = new LinkedList<>(); // BFS¸¦ À§ÇÑ Å¥ »ı¼º
-            visited[node] = 0; // ½ÃÀÛ ³ëµåÀÇ °Å¸®¸¦ 0À¸·Î ¼³Á¤
-            queue.add(node); // Å¥¿¡ ½ÃÀÛ ³ëµå »ğÀÔ
+            Queue<Integer> queue = new LinkedList<>(); // BFSë¥¼ ìœ„í•œ í ìƒì„±
+            visited[node] = 0; // ì‹œì‘ ë…¸ë“œì˜ ê±°ë¦¬ë¥¼ 0ìœ¼ë¡œ ì„¤ì •
+            queue.add(node); // íì— ì‹œì‘ ë…¸ë“œ ì‚½ì…
 
             while (!queue.isEmpty()) {
-                int now = queue.poll(); // ÇöÀç ³ëµå¸¦ ²¨³¿
+                int now = queue.poll(); // í˜„ì¬ ë…¸ë“œë¥¼ êº¼ëƒ„
 
-                // ÇöÀç ³ëµå¿Í ¿¬°áµÈ ¸ğµç ÀÎÁ¢ ³ëµå¸¦ È®ÀÎ
+                // í˜„ì¬ ë…¸ë“œì™€ ì—°ê²°ëœ ëª¨ë“  ì¸ì ‘ ë…¸ë“œë¥¼ í™•ì¸
                 for (int next : graph.get(now)) {
-                    // ¹æ¹®ÇÏÁö ¾ÊÀº ³ëµå¶ó¸é
+                    // ë°©ë¬¸í•˜ì§€ ì•Šì€ ë…¸ë“œë¼ë©´
                     if (visited[next] == -1) {
-                        visited[next] = visited[now] + 1; // ÃÖ´Ü °Å¸® °»½Å
-                        queue.add(next); // Å¥¿¡ Ãß°¡
+                        visited[next] = visited[now] + 1; // ìµœë‹¨ ê±°ë¦¬ ê°±ì‹ 
+                        queue.add(next); // íì— ì¶”ê°€
                     }
                 }
             }
         }
 
         public static void main(String[] args) throws IOException {
-            // ÀÔ·ÂÀ» ºü¸£°Ô ¹Ş±â À§ÇÑ BufferedReader
+            // ì…ë ¥ì„ ë¹ ë¥´ê²Œ ë°›ê¸° ìœ„í•œ BufferedReader
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            // Ãâ·ÂÀ» ºü¸£°Ô ÇÏ±â À§ÇÑ BufferedWriter
+            // ì¶œë ¥ì„ ë¹ ë¥´ê²Œ í•˜ê¸° ìœ„í•œ BufferedWriter
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-            // Ã¹ ¹øÂ° ÀÔ·Â ÁÙÀ» ÀĞ¾î¿Í¼­ °ø¹é ±âÁØÀ¸·Î ºĞ¸®
+            // ì²« ë²ˆì§¸ ì…ë ¥ ì¤„ì„ ì½ì–´ì™€ì„œ ê³µë°± ê¸°ì¤€ìœ¼ë¡œ ë¶„ë¦¬
             StringTokenizer st = new StringTokenizer(br.readLine());
 
-            // ÀÔ·Â°ª: µµ½Ã ¼ö, µµ·Î ¼ö, ¸ñÇ¥ °Å¸® K, Ãâ¹ß µµ½Ã ¹øÈ£ X
+            // ì…ë ¥ê°’: ë„ì‹œ ìˆ˜, ë„ë¡œ ìˆ˜, ëª©í‘œ ê±°ë¦¬ K, ì¶œë°œ ë„ì‹œ ë²ˆí˜¸ X
             int city = Integer.parseInt(st.nextToken());
             int load = Integer.parseInt(st.nextToken());
             int distance = Integer.parseInt(st.nextToken());
             int start = Integer.parseInt(st.nextToken());
 
-            // ¹æ¹® ¹è¿­ ÃÊ±âÈ­ (¸ğµç °ªÀ» -1·Î ¼³Á¤)
+            // ë°©ë¬¸ ë°°ì—´ ì´ˆê¸°í™” (ëª¨ë“  ê°’ì„ -1ë¡œ ì„¤ì •)
             visited = new int[city + 1];
             Arrays.fill(visited, -1);
 
-            // ±×·¡ÇÁ ÃÊ±âÈ­ (µµ½Ã °³¼ö¸¸Å­ ¸®½ºÆ® »ı¼º)
+            // ê·¸ë˜í”„ ì´ˆê¸°í™” (ë„ì‹œ ê°œìˆ˜ë§Œí¼ ë¦¬ìŠ¤íŠ¸ ìƒì„±)
             for (int i = 0; i <= city; i++) {
                 graph.add(new ArrayList<>());
             }
 
-            // µµ·Î Á¤º¸ ÀÔ·Â ¹Ş±â (´Ü¹æÇâ ±×·¡ÇÁ)
+            // ë„ë¡œ ì •ë³´ ì…ë ¥ ë°›ê¸° (ë‹¨ë°©í–¥ ê·¸ë˜í”„)
             for (int i = 0; i < load; i++) {
                 st = new StringTokenizer(br.readLine());
                 int u = Integer.parseInt(st.nextToken());
@@ -85,20 +85,20 @@ import java.util.*;
                 graph.get(u).add(v);
             }
 
-            // BFS ½ÇÇà (Ãâ¹ß µµ½ÃºÎÅÍ Å½»ö ½ÃÀÛ)
+            // BFS ì‹¤í–‰ (ì¶œë°œ ë„ì‹œë¶€í„° íƒìƒ‰ ì‹œì‘)
             BFS(start);
 
-            // ÃÖ´Ü °Å¸®°¡ KÀÎ µµ½Ã¸¦ °á°ú ¸®½ºÆ®¿¡ Ãß°¡
+            // ìµœë‹¨ ê±°ë¦¬ê°€ Kì¸ ë„ì‹œë¥¼ ê²°ê³¼ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
             for (int i = 0; i < visited.length; i++) {
                 if (visited[i] == distance) {
                     result.add(i);
                 }
             }
 
-            // °á°ú ¸®½ºÆ®¸¦ ¿À¸§Â÷¼ø Á¤·Ä
+            // ê²°ê³¼ ë¦¬ìŠ¤íŠ¸ë¥¼ ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬
             Collections.sort(result);
 
-            // °á°ú Ãâ·Â (°Å¸®°¡ KÀÎ µµ½Ã°¡ ¾ø´Ù¸é -1 Ãâ·Â)
+            // ê²°ê³¼ ì¶œë ¥ (ê±°ë¦¬ê°€ Kì¸ ë„ì‹œê°€ ì—†ë‹¤ë©´ -1 ì¶œë ¥)
             if (result.isEmpty()) {
                 bw.append("-1\n");
             } else {
@@ -107,7 +107,7 @@ import java.util.*;
                 }
             }
 
-            // Ãâ·Â ¹öÆÛ ºñ¿ì±â (flush)
+            // ì¶œë ¥ ë²„í¼ ë¹„ìš°ê¸° (flush)
             bw.flush();
         }
     }

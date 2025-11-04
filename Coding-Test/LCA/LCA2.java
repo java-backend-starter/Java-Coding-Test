@@ -3,25 +3,25 @@ import java.util.*;
 
 public class LCA2 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-17
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 13:14
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-17
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 13:14
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 11438
-     * ¹®Á¦ ÀÌ¸§ : LCA2
-     * ¹®Á¦ ³­ÀÌµµ : ÇÃ·¹Æ¼³Ñ ¥´
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 11438
+     * ë¬¸ì œ ì´ë¦„ : LCA2
+     * ë¬¸ì œ ë‚œì´ë„ : í”Œë ˆí‹°ë„˜ â…¤
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìˆëŠ” ë¬¸ì œ í’€ì´
      *
      */
     /*
-     * max : ÃÖ´ë 2^max ±íÀÌ±îÁö Á¶»óÀ» ÀúÀåÇÒ ¼ö ÀÖµµ·Ï ÇÏ´Â º¯¼ö (log2(node) + 1)
-     * depth[i] : i¹ø ³ëµåÀÇ ±íÀÌ
-     * parent[i][j] : i¹ø ³ëµåÀÇ 2^j¹øÂ° Á¶»ó
-     * tree : Æ®¸® ±¸Á¶¸¦ ÀÎÁ¢ ¸®½ºÆ® ÇüÅÂ·Î ÀúÀå
+     * max : ìµœëŒ€ 2^max ê¹Šì´ê¹Œì§€ ì¡°ìƒì„ ì €ì¥í•  ìˆ˜ ìˆë„ë¡ í•˜ëŠ” ë³€ìˆ˜ (log2(node) + 1)
+     * depth[i] : ië²ˆ ë…¸ë“œì˜ ê¹Šì´
+     * parent[i][j] : ië²ˆ ë…¸ë“œì˜ 2^jë²ˆì§¸ ì¡°ìƒ
+     * tree : íŠ¸ë¦¬ êµ¬ì¡°ë¥¼ ì¸ì ‘ ë¦¬ìŠ¤íŠ¸ í˜•íƒœë¡œ ì €ì¥
      */
     static int max;
     static int[] depth;
@@ -29,26 +29,26 @@ public class LCA2 {
     static ArrayList<ArrayList<Integer>> tree = new ArrayList<>();
 
     /**
-     * DFS¸¦ ÅëÇØ °¢ ³ëµåÀÇ ±íÀÌ¿Í 2^0¹øÂ° ºÎ¸ğ(Áï, ¹Ù·Î À§ ºÎ¸ğ)¸¦ ¼³Á¤
-     * @param node ÇöÀç ³ëµå
-     * @param par ÇöÀç ³ëµåÀÇ ºÎ¸ğ ³ëµå
-     * @param dep ÇöÀç ³ëµåÀÇ ±íÀÌ
+     * DFSë¥¼ í†µí•´ ê° ë…¸ë“œì˜ ê¹Šì´ì™€ 2^0ë²ˆì§¸ ë¶€ëª¨(ì¦‰, ë°”ë¡œ ìœ„ ë¶€ëª¨)ë¥¼ ì„¤ì •
+     * @param node í˜„ì¬ ë…¸ë“œ
+     * @param par í˜„ì¬ ë…¸ë“œì˜ ë¶€ëª¨ ë…¸ë“œ
+     * @param dep í˜„ì¬ ë…¸ë“œì˜ ê¹Šì´
      */
     static void DFS(int node, int par, int dep) {
-        depth[node] = dep;          // ÇöÀç ³ëµåÀÇ ±íÀÌ ¼³Á¤
-        parent[node][0] = par;      // ¹Ù·Î À§ ºÎ¸ğ ÀúÀå
+        depth[node] = dep;          // í˜„ì¬ ë…¸ë“œì˜ ê¹Šì´ ì„¤ì •
+        parent[node][0] = par;      // ë°”ë¡œ ìœ„ ë¶€ëª¨ ì €ì¥
 
         for (int next : tree.get(node)) {
             if (next != par) {
-                DFS(next, node, dep + 1); // ÀÚ½Ä ³ëµå·Î DFS Àç±Í È£Ãâ
+                DFS(next, node, dep + 1); // ìì‹ ë…¸ë“œë¡œ DFS ì¬ê·€ í˜¸ì¶œ
             }
         }
     }
 
     /**
-     * ÀÌÁø ¸®ÇÁÆÃÀ» À§ÇÑ parent ¹è¿­ ÃÊ±âÈ­
-     * parent[i][j] = i¹ø ³ëµåÀÇ 2^j¹øÂ° Á¶»ó
-     * @param size ³ëµå ¼ö
+     * ì´ì§„ ë¦¬í”„íŒ…ì„ ìœ„í•œ parent ë°°ì—´ ì´ˆê¸°í™”
+     * parent[i][j] = ië²ˆ ë…¸ë“œì˜ 2^jë²ˆì§¸ ì¡°ìƒ
+     * @param size ë…¸ë“œ ìˆ˜
      */
     static void init(int size) {
         for (int j = 1; j < max; j++) {
@@ -61,30 +61,30 @@ public class LCA2 {
     }
 
     /**
-     * µÎ ³ëµåÀÇ ÃÖ¼Ò °øÅë Á¶»ó(LCA)À» ±¸ÇÏ´Â ÇÔ¼ö
-     * @param u ³ëµå u
-     * @param v ³ëµå v
-     * @return u¿Í vÀÇ ÃÖ¼Ò °øÅë Á¶»ó
+     * ë‘ ë…¸ë“œì˜ ìµœì†Œ ê³µí†µ ì¡°ìƒ(LCA)ì„ êµ¬í•˜ëŠ” í•¨ìˆ˜
+     * @param u ë…¸ë“œ u
+     * @param v ë…¸ë“œ v
+     * @return uì™€ vì˜ ìµœì†Œ ê³µí†µ ì¡°ìƒ
      */
     static int LCA(int u, int v) {
-        // Ç×»ó u°¡ ´õ ±íÀº ³ëµå°¡ µÇµµ·Ï ¼³Á¤
+        // í•­ìƒ uê°€ ë” ê¹Šì€ ë…¸ë“œê°€ ë˜ë„ë¡ ì„¤ì •
         if (depth[u] < depth[v]) {
             int temp = u;
             u = v;
             v = temp;
         }
 
-        // u¸¦ vÀÇ ±íÀÌ±îÁö ²ø¾î¿Ã¸²
+        // uë¥¼ vì˜ ê¹Šì´ê¹Œì§€ ëŒì–´ì˜¬ë¦¼
         for (int i = max - 1; i >= 0; i--) {
             if (depth[u] - (1 << i) >= depth[v]) {
                 u = parent[u][i];
             }
         }
 
-        // ÀÌ¹Ì °øÅë Á¶»óÀÎ °æ¿ì
+        // ì´ë¯¸ ê³µí†µ ì¡°ìƒì¸ ê²½ìš°
         if (u == v) return u;
 
-        // °øÅë Á¶»óÀÌ µÉ ¶§±îÁö ÀÌÁø ¸®ÇÁÆÃ
+        // ê³µí†µ ì¡°ìƒì´ ë  ë•Œê¹Œì§€ ì´ì§„ ë¦¬í”„íŒ…
         for (int i = max - 1; i >= 0; i--) {
             if (parent[u][i] != parent[v][i]) {
                 u = parent[u][i];
@@ -92,7 +92,7 @@ public class LCA2 {
             }
         }
 
-        // ÃÖÁ¾ÀûÀ¸·Î °øÅë Á¶»óÀÇ ¹Ù·Î ¾Æ·¡¿¡ À§Ä¡ÇÑ µÎ ³ëµåÀÇ ºÎ¸ğ°¡ LCA
+        // ìµœì¢…ì ìœ¼ë¡œ ê³µí†µ ì¡°ìƒì˜ ë°”ë¡œ ì•„ë˜ì— ìœ„ì¹˜í•œ ë‘ ë…¸ë“œì˜ ë¶€ëª¨ê°€ LCA
         return parent[u][0];
     }
 
@@ -101,19 +101,19 @@ public class LCA2 {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
 
-        int node = Integer.parseInt(br.readLine()); // ³ëµå °³¼ö ÀÔ·Â
+        int node = Integer.parseInt(br.readLine()); // ë…¸ë“œ ê°œìˆ˜ ì…ë ¥
 
-        // ÃÖ´ë log2(node) ¸¸Å­ÀÇ Á¶»ó ÀúÀå ÇÊ¿ä
+        // ìµœëŒ€ log2(node) ë§Œí¼ì˜ ì¡°ìƒ ì €ì¥ í•„ìš”
         max = (int) Math.ceil(Math.log(node) / Math.log(2)) + 1;
 
-        // ¹è¿­ ÃÊ±âÈ­ (1¹ø ³ëµåºÎÅÍ »ç¿ë)
+        // ë°°ì—´ ì´ˆê¸°í™” (1ë²ˆ ë…¸ë“œë¶€í„° ì‚¬ìš©)
         depth = new int[node + 1];
         parent = new int[node + 1][max];
         for (int i = 0; i <= node; i++) {
             tree.add(new ArrayList<>());
         }
 
-        // °£¼± Á¤º¸ ÀÔ·Â
+        // ê°„ì„  ì •ë³´ ì…ë ¥
         for (int i = 0; i < node - 1; i++) {
             st = new StringTokenizer(br.readLine());
             int u = Integer.parseInt(st.nextToken());
@@ -122,20 +122,20 @@ public class LCA2 {
             tree.get(v).add(u);
         }
 
-        int query = Integer.parseInt(br.readLine()); // Äõ¸® ¼ö ÀÔ·Â
+        int query = Integer.parseInt(br.readLine()); // ì¿¼ë¦¬ ìˆ˜ ì…ë ¥
 
-        DFS(1, -1, 0); // ·çÆ® ³ëµå¸¦ ±âÁØÀ¸·Î DFS ¼öÇà
+        DFS(1, -1, 0); // ë£¨íŠ¸ ë…¸ë“œë¥¼ ê¸°ì¤€ìœ¼ë¡œ DFS ìˆ˜í–‰
 
-        init(node); // ÀÌÁø ¸®ÇÁÆÃÀ» À§ÇÑ parent Å×ÀÌºí ÃÊ±âÈ­
+        init(node); // ì´ì§„ ë¦¬í”„íŒ…ì„ ìœ„í•œ parent í…Œì´ë¸” ì´ˆê¸°í™”
 
-        // Äõ¸® Ã³¸®
+        // ì¿¼ë¦¬ ì²˜ë¦¬
         for (int i = 0; i < query; i++) {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-            bw.write(LCA(a, b) + "\n"); // ÃÖ¼Ò °øÅë Á¶»ó Ãâ·Â
+            bw.write(LCA(a, b) + "\n"); // ìµœì†Œ ê³µí†µ ì¡°ìƒ ì¶œë ¥
         }
 
-        bw.flush(); // Ãâ·Â ¹öÆÛ ºñ¿ì±â
+        bw.flush(); // ì¶œë ¥ ë²„í¼ ë¹„ìš°ê¸°
     }
 }

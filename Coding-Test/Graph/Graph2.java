@@ -3,26 +3,26 @@ import java.util.*;
 
 public class Graph2 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-04
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 13:25
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-04
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 13:25
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1325
-     * ¹®Á¦ ÀÌ¸§ : È¿À²ÀûÀÎ ÇØÅ·
-     * ¹®Á¦ ³­ÀÌµµ : ½Ç¹ö ¥°
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1325
+     * ë¬¸ì œ ì´ë¦„ : íš¨ìœ¨ì ì¸ í•´í‚¹
+     * ë¬¸ì œ ë‚œì´ë„ : ì‹¤ë²„ â… 
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * Ã¥¿¡ ÀÖ´Â ¹®Á¦ º¹½À
+     * ì±…ì— ìˆëŠ” ë¬¸ì œ ë³µìŠµ
      */
     static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
     static boolean[] visited;
     static int[] result;
 
     /*
-     * BFS: ½ÃÀÛ ³ëµå·ÎºÎÅÍ µµ´ŞÇÒ ¼ö ÀÖ´Â ¸ğµç ³ëµå¸¦ ¹æ¹®ÇÏ°í,
-     * ÇØ´ç ³ëµåÀÇ result °ªÀ» Áõ°¡½ÃÅ´
+     * BFS: ì‹œì‘ ë…¸ë“œë¡œë¶€í„° ë„ë‹¬í•  ìˆ˜ ìˆëŠ” ëª¨ë“  ë…¸ë“œë¥¼ ë°©ë¬¸í•˜ê³ ,
+     * í•´ë‹¹ ë…¸ë“œì˜ result ê°’ì„ ì¦ê°€ì‹œí‚´
     */
     static void BFS(int node) {
         Queue<Integer> queue = new LinkedList<>();
@@ -34,7 +34,7 @@ public class Graph2 {
             for (int next : graph.get(now)) {
                 if (!visited[next]) {
                     visited[next] = true;
-                    result[next]++;  // next ³ëµå´Â node·ÎºÎÅÍ µµ´Ş °¡´ÉÇÏ¹Ç·Î result Áõ°¡
+                    result[next]++;  // next ë…¸ë“œëŠ” nodeë¡œë¶€í„° ë„ë‹¬ ê°€ëŠ¥í•˜ë¯€ë¡œ result ì¦ê°€
                     queue.add(next);
                 }
             }
@@ -46,42 +46,42 @@ public class Graph2 {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int node = Integer.parseInt(st.nextToken()); // ³ëµå(ÄÄÇ»ÅÍ) ¼ö
-        int edge = Integer.parseInt(st.nextToken()); // °£¼±(½Å·Ú °ü°è) ¼ö
+        int node = Integer.parseInt(st.nextToken()); // ë…¸ë“œ(ì»´í“¨í„°) ìˆ˜
+        int edge = Integer.parseInt(st.nextToken()); // ê°„ì„ (ì‹ ë¢° ê´€ê³„) ìˆ˜
 
         result = new int[node + 1];
 
-        // ±×·¡ÇÁ ÃÊ±âÈ­
+        // ê·¸ë˜í”„ ì´ˆê¸°í™”
         for (int i = 0; i <= node; i++) {
             graph.add(new ArrayList<>());
         }
 
-        // ±×·¡ÇÁ ÀÔ·Â (u -> v: u°¡ v¸¦ ÇØÅ· °¡´É)
+        // ê·¸ë˜í”„ ì…ë ¥ (u -> v: uê°€ vë¥¼ í•´í‚¹ ê°€ëŠ¥)
         for (int i = 0; i < edge; i++) {
             st = new StringTokenizer(br.readLine());
             int u = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
-            graph.get(u).add(v); // ¹æÇâ ±×·¡ÇÁ ±¸¼º
+            graph.get(u).add(v); // ë°©í–¥ ê·¸ë˜í”„ êµ¬ì„±
         }
 
-        // °¢ ³ëµå¿¡¼­ BFS ¼öÇà
+        // ê° ë…¸ë“œì—ì„œ BFS ìˆ˜í–‰
         for (int i = 1; i <= node; i++) {
-            visited = new boolean[node + 1]; // ¹æ¹® ¹è¿­ ¸Å¹ø ÃÊ±âÈ­
-            BFS(i); // i¹ø ³ëµå¿¡¼­ BFS ¼öÇà
+            visited = new boolean[node + 1]; // ë°©ë¬¸ ë°°ì—´ ë§¤ë²ˆ ì´ˆê¸°í™”
+            BFS(i); // ië²ˆ ë…¸ë“œì—ì„œ BFS ìˆ˜í–‰
         }
 
-        // °¡Àå ¸¹ÀÌ ÇØÅ·´çÇÑ(µµ´ŞµÈ) È½¼ö Ã£±â
+        // ê°€ì¥ ë§ì´ í•´í‚¹ë‹¹í•œ(ë„ë‹¬ëœ) íšŸìˆ˜ ì°¾ê¸°
         int max = result[1];
         for (int i = 2; i <= node; i++) {
             max = Math.max(max, result[i]);
         }
 
-        // ÃÖ´ë ÇØÅ·´çÇÑ È½¼ö¸¦ °¡Áø ³ëµåµé Ãâ·Â
+        // ìµœëŒ€ í•´í‚¹ë‹¹í•œ íšŸìˆ˜ë¥¼ ê°€ì§„ ë…¸ë“œë“¤ ì¶œë ¥
         for (int i = 1; i <= node; i++) {
             if (result[i] == max) {
                 bw.append(i + " ");
             }
         }
-        bw.flush(); // Ãâ·Â ¹öÆÛ ºñ¿ì±â
+        bw.flush(); // ì¶œë ¥ ë²„í¼ ë¹„ìš°ê¸°
     }
 }

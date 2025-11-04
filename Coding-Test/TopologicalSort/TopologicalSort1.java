@@ -3,32 +3,32 @@ import java.util.*;
 
 public class TopologicalSort1 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-07
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 11:54
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-07
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 11:54
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 2252
-     * ¹®Á¦ ÀÌ¸§ : ÁÙ¼¼¿ì±â
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥²
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 2252
+     * ë¬¸ì œ ì´ë¦„ : ì¤„ì„¸ìš°ê¸°
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…¢
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìˆëŠ” ë¬¸ì œ í’€ì´
      */
     /*
-     * ¹æÇâ ±×·¡ÇÁ (»çÀÌÅ¬ ¾øÀ½)
-     * indegree: °¢ ³ëµåÀÇ ÁøÀÔ Â÷¼ö
-     * result: À§»ó Á¤·Ä °á°ú
+     * ë°©í–¥ ê·¸ë˜í”„ (ì‚¬ì´í´ ì—†ìŒ)
+     * indegree: ê° ë…¸ë“œì˜ ì§„ì… ì°¨ìˆ˜
+     * result: ìœ„ìƒ ì •ë ¬ ê²°ê³¼
      */
     static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
     static int[] indegree;
     static ArrayList<Integer> result = new ArrayList<>();
 
     /*
-     * À§»ó Á¤·Ä ¼öÇà
-     * - ÁøÀÔ Â÷¼ö°¡ 0ÀÎ ³ëµåºÎÅÍ ½ÃÀÛ
-     * - Å¥¸¦ ÀÌ¿ëÇØ ¼ø¼­´ë·Î Å½»ö
+     * ìœ„ìƒ ì •ë ¬ ìˆ˜í–‰
+     * - ì§„ì… ì°¨ìˆ˜ê°€ 0ì¸ ë…¸ë“œë¶€í„° ì‹œì‘
+     * - íë¥¼ ì´ìš©í•´ ìˆœì„œëŒ€ë¡œ íƒìƒ‰
      */
     static void topologicalSort() {
         Queue<Integer> queue = new LinkedList<>();
@@ -52,7 +52,7 @@ public class TopologicalSort1 {
     }
 
     /*
-     * À§»ó Á¤·Ä °á°ú Ãâ·Â
+     * ìœ„ìƒ ì •ë ¬ ê²°ê³¼ ì¶œë ¥
      */
     static void print(ArrayList<Integer> values) throws IOException {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -67,15 +67,15 @@ public class TopologicalSort1 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int node = Integer.parseInt(st.nextToken());   // ³ëµå ¼ö
-        int edge = Integer.parseInt(st.nextToken());   // °£¼± ¼ö
+        int node = Integer.parseInt(st.nextToken());   // ë…¸ë“œ ìˆ˜
+        int edge = Integer.parseInt(st.nextToken());   // ê°„ì„  ìˆ˜
 
         indegree = new int[node + 1];
         for (int i = 0; i <= node; i++) {
             graph.add(new ArrayList<>());
         }
 
-        // ±×·¡ÇÁ ±¸¼º ¹× ÁøÀÔ Â÷¼ö ÃÊ±âÈ­
+        // ê·¸ë˜í”„ êµ¬ì„± ë° ì§„ì… ì°¨ìˆ˜ ì´ˆê¸°í™”
         for (int i = 0; i < edge; i++) {
             st = new StringTokenizer(br.readLine());
             int u = Integer.parseInt(st.nextToken());
@@ -85,7 +85,7 @@ public class TopologicalSort1 {
             indegree[v]++;
         }
 
-        // Á¤Á¡ ¹æ¹® ¼ø¼­°¡ ÀÏÁ¤ÇÏµµ·Ï ÀÎÁ¢ ¸®½ºÆ® Á¤·Ä
+        // ì •ì  ë°©ë¬¸ ìˆœì„œê°€ ì¼ì •í•˜ë„ë¡ ì¸ì ‘ ë¦¬ìŠ¤íŠ¸ ì •ë ¬
         for (int i = 1; i <= node; i++) {
             Collections.sort(graph.get(i));
         }

@@ -3,29 +3,29 @@ import java.util.*;
 
 public class FloydWarshall2 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-09
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 15:02
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-09
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 15:02
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 11403
-     * ¹®Á¦ ÀÌ¸§ : °æ·Î Ã£±â
-     * ¹®Á¦ ³­ÀÌµµ : ½Ç¹ö ¥°
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 11403
+     * ë¬¸ì œ ì´ë¦„ : ê²½ë¡œ ì°¾ê¸°
+     * ë¬¸ì œ ë‚œì´ë„ : ì‹¤ë²„ â… 
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìˆëŠ” ë¬¸ì œ í’€ì´
      *
      */
-    // ±×·¡ÇÁ¸¦ ³ªÅ¸³»´Â 2Â÷¿ø ¹è¿­
+    // ê·¸ë˜í”„ë¥¼ ë‚˜íƒ€ë‚´ëŠ” 2ì°¨ì› ë°°ì—´
     static int [][] graph;
 
-    // ÇÃ·ÎÀÌµå-¿ö¼È ¾Ë°í¸®ÁòÀ» ÀÌ¿ëÇÑ °æ·Î Á¸Àç ¿©ºÎ °è»ê
+    // í”Œë¡œì´ë“œ-ì›Œì…œ ì•Œê³ ë¦¬ì¦˜ì„ ì´ìš©í•œ ê²½ë¡œ ì¡´ì¬ ì—¬ë¶€ ê³„ì‚°
     static void floydWarshall(int [][] graph, int node){
-        for(int k = 1; k <= node; k++){ // °æÀ¯ ³ëµå
-            for(int i = 1; i <= node; i++){ // Ãâ¹ß ³ëµå
-                for(int j = 1; j <= node; j++){ // µµÂø ³ëµå
-                    // i -> k, k -> j °æ·Î°¡ ¸ğµÎ Á¸ÀçÇÏ¸é i -> jµµ °æ·Î Á¸Àç
+        for(int k = 1; k <= node; k++){ // ê²½ìœ  ë…¸ë“œ
+            for(int i = 1; i <= node; i++){ // ì¶œë°œ ë…¸ë“œ
+                for(int j = 1; j <= node; j++){ // ë„ì°© ë…¸ë“œ
+                    // i -> k, k -> j ê²½ë¡œê°€ ëª¨ë‘ ì¡´ì¬í•˜ë©´ i -> jë„ ê²½ë¡œ ì¡´ì¬
                     if(graph[i][k] == 1 && graph[k][j] == 1){
                         graph[i][j] = 1;
                     }
@@ -34,30 +34,30 @@ public class FloydWarshall2 {
         }
     }
 
-    // °á°ú Ãâ·Â ÇÔ¼ö
+    // ê²°ê³¼ ì¶œë ¥ í•¨ìˆ˜
     static void print(int [][] graph, int node) throws IOException{
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         for(int i = 1; i <= node; i++){
             for(int j = 1; j <= node; j++){
-                // °æ·Î Á¸Àç ¿©ºÎ Ãâ·Â (1: Á¸Àç, 0: ¾øÀ½)
+                // ê²½ë¡œ ì¡´ì¬ ì—¬ë¶€ ì¶œë ¥ (1: ì¡´ì¬, 0: ì—†ìŒ)
                 bw.write(graph[i][j] + " ");
             }
             bw.write("\n");
         }
-        bw.flush(); // Ãâ·Â ¹öÆÛ ºñ¿ì±â
-        bw.close(); // Ãâ·Â ½ºÆ®¸² ´İ±â
+        bw.flush(); // ì¶œë ¥ ë²„í¼ ë¹„ìš°ê¸°
+        bw.close(); // ì¶œë ¥ ìŠ¤íŠ¸ë¦¼ ë‹«ê¸°
     }
 
     public static void main(String [] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
-        int node = Integer.parseInt(br.readLine()); // ³ëµå ¼ö ÀÔ·Â
+        int node = Integer.parseInt(br.readLine()); // ë…¸ë“œ ìˆ˜ ì…ë ¥
 
-        // ±×·¡ÇÁ ÃÊ±âÈ­ (1¹ø ÀÎµ¦½ººÎÅÍ »ç¿ë)
+        // ê·¸ë˜í”„ ì´ˆê¸°í™” (1ë²ˆ ì¸ë±ìŠ¤ë¶€í„° ì‚¬ìš©)
         graph = new int[node+1][node+1];
 
-        // ÀÎÁ¢ Çà·Ä ÀÔ·Â ¹Ş±â (0: °æ·Î ¾øÀ½, 1: °æ·Î ÀÖÀ½)
+        // ì¸ì ‘ í–‰ë ¬ ì…ë ¥ ë°›ê¸° (0: ê²½ë¡œ ì—†ìŒ, 1: ê²½ë¡œ ìˆìŒ)
         for(int i = 1; i <= node; i++){
             st = new StringTokenizer(br.readLine());
             for(int j = 1; j <= node; j++){
@@ -65,12 +65,12 @@ public class FloydWarshall2 {
             }
         }
 
-        br.close(); // ÀÔ·Â ½ºÆ®¸² ´İ±â
+        br.close(); // ì…ë ¥ ìŠ¤íŠ¸ë¦¼ ë‹«ê¸°
 
-        // °æ·Î Á¸Àç ¿©ºÎ °è»ê
+        // ê²½ë¡œ ì¡´ì¬ ì—¬ë¶€ ê³„ì‚°
         floydWarshall(graph, node);
 
-        // °á°ú Ãâ·Â
+        // ê²°ê³¼ ì¶œë ¥
         print(graph, node);
     }
 }

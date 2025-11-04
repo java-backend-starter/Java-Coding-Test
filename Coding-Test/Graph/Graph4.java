@@ -1,74 +1,74 @@
-/* ÇÊ¿äÇÑ ¶óÀÌºê·¯¸® import */
+/* í•„ìš”í•œ ë¼ì´ë¸ŒëŸ¬ë¦¬ import */
 import java.io.*;
 import java.util.*;
 
 public class Graph4 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-04
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 14:41
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-04
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 14:41
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 2251
-     * ¹®Á¦ ÀÌ¸§ : ¹°Åë
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥³
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 2251
+     * ë¬¸ì œ ì´ë¦„ : ë¬¼í†µ
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…£
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * Ã¥¿¡ ÀÖ´Â ¹®Á¦ º¹½À
+     * ì±…ì— ìˆëŠ” ë¬¸ì œ ë³µìŠµ
      */
 
     /*
-     * ¹°À» º×´Â 6°¡Áö °æ¿ì¸¦ À§ÇÑ sender, receiver ¹è¿­
-     * 0 -> A, 1 -> B, 2 -> C ¹°ÅëÀ» ÀÇ¹Ì
+     * ë¬¼ì„ ë¶“ëŠ” 6ê°€ì§€ ê²½ìš°ë¥¼ ìœ„í•œ sender, receiver ë°°ì—´
+     * 0 -> A, 1 -> B, 2 -> C ë¬¼í†µì„ ì˜ë¯¸
      */
     static int[] sender = { 0, 0, 1, 1, 2, 2 };
     static int[] receiver = { 1, 2, 0, 2, 0, 1 };
 
-    /* visited[a][b] : A, B ¹°ÅëÀÇ »óÅÂ¸¦ ¹æ¹®Çß´ÂÁö ¿©ºÎ (C´Â ÀüÃ¼ ¹° ¾ç - A - B·Î À¯Ãß °¡´É) */
+    /* visited[a][b] : A, B ë¬¼í†µì˜ ìƒíƒœë¥¼ ë°©ë¬¸í–ˆëŠ”ì§€ ì—¬ë¶€ (CëŠ” ì „ì²´ ë¬¼ ì–‘ - A - Bë¡œ ìœ ì¶” ê°€ëŠ¥) */
     static boolean[][] visited = new boolean[201][201];
 
-    /* result[i] : A°¡ ºñ¾úÀ» ¶§, C¿¡ i¸¸Å­ ¹°ÀÌ ÀÖÀ» ¼ö ÀÖ´ÂÁö¸¦ ÀúÀå */
+    /* result[i] : Aê°€ ë¹„ì—ˆì„ ë•Œ, Cì— ië§Œí¼ ë¬¼ì´ ìˆì„ ìˆ˜ ìˆëŠ”ì§€ë¥¼ ì €ì¥ */
     static boolean[] result = new boolean[201];
 
-    /* now[0] = A, now[1] = B, now[2] = C °¢°¢ÀÇ ¹°Åë ¿ë·® ÀúÀå */
+    /* now[0] = A, now[1] = B, now[2] = C ê°ê°ì˜ ë¬¼í†µ ìš©ëŸ‰ ì €ì¥ */
     static int[] now = new int[3];
 
-    /* BFS·Î ¸ğµç ¹°Åë »óÅÂ Å½»ö */
+    /* BFSë¡œ ëª¨ë“  ë¬¼í†µ ìƒíƒœ íƒìƒ‰ */
     static void BFS() {
         Queue<AB> queue = new LinkedList<>();
 
-        /* Ã³À½ »óÅÂ´Â A¿Í B°¡ ºñ¾î ÀÖ°í, C´Â °¡µæ Âù »óÅÂ */
+        /* ì²˜ìŒ ìƒíƒœëŠ” Aì™€ Bê°€ ë¹„ì–´ ìˆê³ , CëŠ” ê°€ë“ ì°¬ ìƒíƒœ */
         queue.add(new AB(0, 0));
         visited[0][0] = true;
-        result[now[2]] = true;  // A°¡ ºñ¾ú°í, CÀÇ ¹°ÀÌ ÀüºÎÀÌ¹Ç·Î ±â·Ï
+        result[now[2]] = true;  // Aê°€ ë¹„ì—ˆê³ , Cì˜ ë¬¼ì´ ì „ë¶€ì´ë¯€ë¡œ ê¸°ë¡
 
         while (!queue.isEmpty()) {
             AB ab = queue.poll();
             int A = ab.getA();
             int B = ab.getB();
-            int C = now[2] - A - B;  // ÃÑ ¹° ¾ç - A - B = C
+            int C = now[2] - A - B;  // ì´ ë¬¼ ì–‘ - A - B = C
 
-            /* 6°¡Áö ¹° º×´Â °æ¿ì ¸ğµÎ ½Ãµµ */
+            /* 6ê°€ì§€ ë¬¼ ë¶“ëŠ” ê²½ìš° ëª¨ë‘ ì‹œë„ */
             for (int i = 0; i < 6; i++) {
                 int[] next = { A, B, C };
 
-                /* ¹°À» º×±â: senderÀÇ ¹°À» receiver·Î ÀÌµ¿ */
+                /* ë¬¼ì„ ë¶“ê¸°: senderì˜ ë¬¼ì„ receiverë¡œ ì´ë™ */
                 next[receiver[i]] += next[sender[i]];
                 next[sender[i]] = 0;
 
-                /* receiver°¡ ³ÑÄ¡´Â °æ¿ì Á¶Á¤ */
+                /* receiverê°€ ë„˜ì¹˜ëŠ” ê²½ìš° ì¡°ì • */
                 if (next[receiver[i]] > now[receiver[i]]) {
                     next[sender[i]] = next[receiver[i]] - now[receiver[i]];
                     next[receiver[i]] = now[receiver[i]];
                 }
 
-                /* »õ·Î¿î »óÅÂ¶ó¸é Å¥¿¡ Ãß°¡ÇÏ°í ¹æ¹® Ã³¸® */
+                /* ìƒˆë¡œìš´ ìƒíƒœë¼ë©´ íì— ì¶”ê°€í•˜ê³  ë°©ë¬¸ ì²˜ë¦¬ */
                 if (!visited[next[0]][next[1]]) {
                     visited[next[0]][next[1]] = true;
                     queue.add(new AB(next[0], next[1]));
 
-                    /* A°¡ ºñ¾î ÀÖÀ» ¶§ CÀÇ ¹° ¾ç ±â·Ï */
+                    /* Aê°€ ë¹„ì–´ ìˆì„ ë•Œ Cì˜ ë¬¼ ì–‘ ê¸°ë¡ */
                     if (next[0] == 0) {
                         result[next[2]] = true;
                     }
@@ -77,32 +77,32 @@ public class Graph4 {
         }
     }
 
-    /* ¸ŞÀÎ ÇÔ¼ö */
+    /* ë©”ì¸ í•¨ìˆ˜ */
     public static void main(String[] args) throws IOException {
-        /* ÀÔ·ÂÀ» À§ÇÑ BufferedReader, Ãâ·ÂÀ» À§ÇÑ BufferedWriter */
+        /* ì…ë ¥ì„ ìœ„í•œ BufferedReader, ì¶œë ¥ì„ ìœ„í•œ BufferedWriter */
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        /* A, B, CÀÇ ¹°Åë ¿ë·® ÀÔ·Â */
+        /* A, B, Cì˜ ë¬¼í†µ ìš©ëŸ‰ ì…ë ¥ */
         now[0] = Integer.parseInt(st.nextToken());
         now[1] = Integer.parseInt(st.nextToken());
         now[2] = Integer.parseInt(st.nextToken());
 
-        /* BFS ½ÇÇà */
+        /* BFS ì‹¤í–‰ */
         BFS();
 
-        /* °¡´ÉÇÑ CÀÇ ¹° ¾ç °á°ú Ãâ·Â (A°¡ ºñ¾úÀ» ¶§¸¸) */
+        /* ê°€ëŠ¥í•œ Cì˜ ë¬¼ ì–‘ ê²°ê³¼ ì¶œë ¥ (Aê°€ ë¹„ì—ˆì„ ë•Œë§Œ) */
         for (int i = 0; i < result.length; i++) {
             if (result[i]) {
                 bw.append(i + " ");
             }
         }
-        bw.flush();  // Ãâ·Â ¹öÆÛ ºñ¿ì±â
+        bw.flush();  // ì¶œë ¥ ë²„í¼ ë¹„ìš°ê¸°
     }
 }
 
-/* A, B ¹°Åë »óÅÂ¸¦ ÀúÀåÇÏ´Â Å¬·¡½º */
+/* A, B ë¬¼í†µ ìƒíƒœë¥¼ ì €ì¥í•˜ëŠ” í´ë˜ìŠ¤ */
 class AB {
     private int A;
     private int B;

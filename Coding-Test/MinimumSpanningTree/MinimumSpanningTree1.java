@@ -3,26 +3,26 @@ import java.util.*;
 
 public class MinimumSpanningTree1 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-09
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 12:44
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-09
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 12:44
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1197
-     * ¹®Á¦ ÀÌ¸§ : ÃÖ¼Ò ½ºÆĞ´× Æ®¸®
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥³
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1197
+     * ë¬¸ì œ ì´ë¦„ : ìµœì†Œ ìŠ¤íŒ¨ë‹ íŠ¸ë¦¬
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…£
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìˆëŠ” ë¬¸ì œ í’€ì´
      *
      */
-    // ÃÖ¼Ò ½ÅÀå Æ®¸®¸¦ À§ÇÑ À¯´Ï¿Â ÆÄÀÎµå ÀÚ·á±¸Á¶
+    // ìµœì†Œ ì‹ ì¥ íŠ¸ë¦¬ë¥¼ ìœ„í•œ ìœ ë‹ˆì˜¨ íŒŒì¸ë“œ ìë£Œêµ¬ì¡°
     static int [] parent;
-    // °£¼± Á¤º¸¸¦ ÀúÀåÇÏ´Â ¿ì¼±¼øÀ§ Å¥ (°¡ÁßÄ¡°¡ ÀÛÀº ¼øÀ¸·Î Á¤·ÄµÊ)
+    // ê°„ì„  ì •ë³´ë¥¼ ì €ì¥í•˜ëŠ” ìš°ì„ ìˆœìœ„ í (ê°€ì¤‘ì¹˜ê°€ ì‘ì€ ìˆœìœ¼ë¡œ ì •ë ¬ë¨)
     static PriorityQueue<Node> queue = new PriorityQueue<>();
 
-    // find ÇÔ¼ö: ´ëÇ¥ ³ëµå¸¦ Ã£´Â ÇÔ¼ö (°æ·Î ¾ĞÃà ±â¹ı »ç¿ë)
+    // find í•¨ìˆ˜: ëŒ€í‘œ ë…¸ë“œë¥¼ ì°¾ëŠ” í•¨ìˆ˜ (ê²½ë¡œ ì••ì¶• ê¸°ë²• ì‚¬ìš©)
     static int find(int a){
         if(parent[a] == a){
             return a;
@@ -30,7 +30,7 @@ public class MinimumSpanningTree1 {
         return parent[a] = find(parent[a]);
     }
 
-    // union ÇÔ¼ö: µÎ ³ëµå¸¦ °°Àº ÁıÇÕÀ¸·Î ÇÕÄ§
+    // union í•¨ìˆ˜: ë‘ ë…¸ë“œë¥¼ ê°™ì€ ì§‘í•©ìœ¼ë¡œ í•©ì¹¨
     static void union(int a, int b){
         a = find(a);
         b = find(b);
@@ -42,17 +42,17 @@ public class MinimumSpanningTree1 {
         }
     }
 
-    // Å©·ç½ºÄ® ¾Ë°í¸®ÁòÀ» ¼öÇàÇÏ¿© ÃÖ¼Ò ½ÅÀå Æ®¸®ÀÇ °¡ÁßÄ¡ ÇÕÀ» ±¸ÇÔ
+    // í¬ë£¨ìŠ¤ì¹¼ ì•Œê³ ë¦¬ì¦˜ì„ ìˆ˜í–‰í•˜ì—¬ ìµœì†Œ ì‹ ì¥ íŠ¸ë¦¬ì˜ ê°€ì¤‘ì¹˜ í•©ì„ êµ¬í•¨
     static int kruskal(){
         int total = 0;
 
-        // ¿ì¼±¼øÀ§ Å¥°¡ ºô ¶§±îÁö ¹İº¹
+        // ìš°ì„ ìˆœìœ„ íê°€ ë¹Œ ë•Œê¹Œì§€ ë°˜ë³µ
         while(!queue.isEmpty()){
             Node now = queue.poll();
-            // »çÀÌÅ¬ÀÌ »ı±âÁö ¾Ê´Â °æ¿ì¿¡¸¸ °£¼±À» ¼±ÅÃ
+            // ì‚¬ì´í´ì´ ìƒê¸°ì§€ ì•ŠëŠ” ê²½ìš°ì—ë§Œ ê°„ì„ ì„ ì„ íƒ
             if(find(now.getStart()) != find(now.getEnd())){
                 union(now.getStart(), now.getEnd());
-                total += now.getWeight(); // °£¼±ÀÇ °¡ÁßÄ¡¸¦ ÇÕ»ê
+                total += now.getWeight(); // ê°„ì„ ì˜ ê°€ì¤‘ì¹˜ë¥¼ í•©ì‚°
             }
         }
         return total;
@@ -62,30 +62,30 @@ public class MinimumSpanningTree1 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int node = Integer.parseInt(st.nextToken()); // ³ëµå °³¼ö
-        int edge = Integer.parseInt(st.nextToken()); // °£¼± °³¼ö
+        int node = Integer.parseInt(st.nextToken()); // ë…¸ë“œ ê°œìˆ˜
+        int edge = Integer.parseInt(st.nextToken()); // ê°„ì„  ê°œìˆ˜
 
-        // °¢ ³ëµåÀÇ ºÎ¸ğ¸¦ ÀÚ±â ÀÚ½ÅÀ¸·Î ÃÊ±âÈ­
+        // ê° ë…¸ë“œì˜ ë¶€ëª¨ë¥¼ ìê¸° ìì‹ ìœ¼ë¡œ ì´ˆê¸°í™”
         parent = new int[node + 1];
         for(int i = 1; i <= node; i++){
             parent[i] = i;
         }
 
-        // °£¼± Á¤º¸¸¦ ÀÔ·Â¹Ş¾Æ ¿ì¼±¼øÀ§ Å¥¿¡ ÀúÀå
+        // ê°„ì„  ì •ë³´ë¥¼ ì…ë ¥ë°›ì•„ ìš°ì„ ìˆœìœ„ íì— ì €ì¥
         for(int i = 0; i < edge; i++){
             st = new StringTokenizer(br.readLine());
-            int u = Integer.parseInt(st.nextToken()); // ½ÃÀÛ ³ëµå
-            int v = Integer.parseInt(st.nextToken()); // ³¡ ³ëµå
-            int w = Integer.parseInt(st.nextToken()); // °¡ÁßÄ¡
+            int u = Integer.parseInt(st.nextToken()); // ì‹œì‘ ë…¸ë“œ
+            int v = Integer.parseInt(st.nextToken()); // ë ë…¸ë“œ
+            int w = Integer.parseInt(st.nextToken()); // ê°€ì¤‘ì¹˜
 
             queue.add(new Node(u, v, w));
         }
 
-        // ÃÖ¼Ò ½ÅÀå Æ®¸®ÀÇ °¡ÁßÄ¡ ÇÕ Ãâ·Â
+        // ìµœì†Œ ì‹ ì¥ íŠ¸ë¦¬ì˜ ê°€ì¤‘ì¹˜ í•© ì¶œë ¥
         System.out.println(kruskal());
     }
 
-    // °£¼± Á¤º¸¸¦ ÀúÀåÇÏ´Â Å¬·¡½º (¿ì¼±¼øÀ§ Å¥¿¡¼­ »ç¿ëÇÏ±â À§ÇØ Comparable ÀÎÅÍÆäÀÌ½º ±¸Çö)
+    // ê°„ì„  ì •ë³´ë¥¼ ì €ì¥í•˜ëŠ” í´ë˜ìŠ¤ (ìš°ì„ ìˆœìœ„ íì—ì„œ ì‚¬ìš©í•˜ê¸° ìœ„í•´ Comparable ì¸í„°í˜ì´ìŠ¤ êµ¬í˜„)
     class Node implements Comparable<Node>{
         private int start;
         private int end;
@@ -109,7 +109,7 @@ public class MinimumSpanningTree1 {
             return weight;
         }
 
-        // °¡ÁßÄ¡¸¦ ±âÁØÀ¸·Î ¿À¸§Â÷¼ø Á¤·ÄÇÏ±â À§ÇÑ compareTo ¸Ş¼­µå ¿À¹ö¶óÀÌµù
+        // ê°€ì¤‘ì¹˜ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬í•˜ê¸° ìœ„í•œ compareTo ë©”ì„œë“œ ì˜¤ë²„ë¼ì´ë”©
         @Override
         public int compareTo(Node obj){
             return this.weight - obj.weight;

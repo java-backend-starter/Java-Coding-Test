@@ -3,27 +3,27 @@ import java.util.*;
 
 public class Tree2 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-14
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 14:04
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ìž‘ì„±ì¼ì‹œ : 2025-04-14
+     * ìµœì´ˆ ìž‘ì„±ì‹œê°„ : 14:04
+     * ìµœì´ˆ ìž‘ì„±ìž : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1068
-     * ¹®Á¦ ÀÌ¸§ : Æ®¸®
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥´
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1068
+     * ë¬¸ì œ ì´ë¦„ : íŠ¸ë¦¬
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…¤
      *
-     * ÀÛ¼º ¸ñÀû
+     * ìž‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìžˆëŠ” ë¬¸ì œ í’€ì´
      *
      */
     /*
-     * tree: Æ®¸® ±¸Á¶¸¦ ÀúÀåÇÏ´Â ÀÎÁ¢ ¸®½ºÆ®
-     * visited: ³ëµå ¹æ¹® ¿©ºÎ È®ÀÎ ¹è¿­
-     * node: ÀüÃ¼ ³ëµå ¼ö
-     * root: ·çÆ® ³ëµå ¹øÈ£
-     * deleted: »èÁ¦ÇÒ ³ëµå ¹øÈ£
-     * answer: ¸®ÇÁ ³ëµå °³¼ö °á°ú
+     * tree: íŠ¸ë¦¬ êµ¬ì¡°ë¥¼ ì €ìž¥í•˜ëŠ” ì¸ì ‘ ë¦¬ìŠ¤íŠ¸
+     * visited: ë…¸ë“œ ë°©ë¬¸ ì—¬ë¶€ í™•ì¸ ë°°ì—´
+     * node: ì „ì²´ ë…¸ë“œ ìˆ˜
+     * root: ë£¨íŠ¸ ë…¸ë“œ ë²ˆí˜¸
+     * deleted: ì‚­ì œí•  ë…¸ë“œ ë²ˆí˜¸
+     * answer: ë¦¬í”„ ë…¸ë“œ ê°œìˆ˜ ê²°ê³¼
      */
     static ArrayList<ArrayList<Integer>> tree = new ArrayList<>();
     static boolean[] visited;
@@ -34,10 +34,10 @@ public class Tree2 {
     static int answer = 0;
 
     /*
-     * DFS(±íÀÌ ¿ì¼± Å½»ö)
-     * ¸ñÀû: »èÁ¦µÈ ³ëµå¸¦ Á¦¿ÜÇÑ Æ®¸®¿¡¼­ ¸®ÇÁ ³ëµå °³¼ö¸¦ °è»ê
-     * ¹æ¹ý: ÀÚ½Ä ³ëµå¸¦ Å½»öÇÏ¸ç, ÀÚ½ÄÀÌ ¾ø´Â °æ¿ì(=child == 0)¿¡ ¸®ÇÁ ³ëµå·Î °£ÁÖÇÏ¿© answer Áõ°¡
-     * Á¶°Ç: »èÁ¦µÈ ³ëµå´Â Å½»öÇÏÁö ¾ÊÀ½ (next != deleted)
+     * DFS(ê¹Šì´ ìš°ì„  íƒìƒ‰)
+     * ëª©ì : ì‚­ì œëœ ë…¸ë“œë¥¼ ì œì™¸í•œ íŠ¸ë¦¬ì—ì„œ ë¦¬í”„ ë…¸ë“œ ê°œìˆ˜ë¥¼ ê³„ì‚°
+     * ë°©ë²•: ìžì‹ ë…¸ë“œë¥¼ íƒìƒ‰í•˜ë©°, ìžì‹ì´ ì—†ëŠ” ê²½ìš°(=child == 0)ì— ë¦¬í”„ ë…¸ë“œë¡œ ê°„ì£¼í•˜ì—¬ answer ì¦ê°€
+     * ì¡°ê±´: ì‚­ì œëœ ë…¸ë“œëŠ” íƒìƒ‰í•˜ì§€ ì•ŠìŒ (next != deleted)
      */
     static void DFS(int node) {
         visited[node] = true;
@@ -50,7 +50,7 @@ public class Tree2 {
             }
         }
 
-        // ÀÚ½Ä ³ëµå°¡ ¾øÀ¸¸é ¸®ÇÁ ³ëµå·Î ÆÇ´Ü
+        // ìžì‹ ë…¸ë“œê°€ ì—†ìœ¼ë©´ ë¦¬í”„ ë…¸ë“œë¡œ íŒë‹¨
         if (child == 0) {
             answer++;
         }
@@ -60,18 +60,18 @@ public class Tree2 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
-        // ³ëµå °³¼ö ÀÔ·Â
+        // ë…¸ë“œ ê°œìˆ˜ ìž…ë ¥
         node = Integer.parseInt(br.readLine());
         visited = new boolean[node];
 
-        // Æ®¸® ÃÊ±âÈ­ (³ëµå ¼ö¸¸Å­ ¸®½ºÆ® »ý¼º)
+        // íŠ¸ë¦¬ ì´ˆê¸°í™” (ë…¸ë“œ ìˆ˜ë§Œí¼ ë¦¬ìŠ¤íŠ¸ ìƒì„±)
         for (int i = 0; i < node; i++) {
             tree.add(new ArrayList<>());
         }
 
-        // °¢ ³ëµåÀÇ ºÎ¸ð Á¤º¸ ÀÔ·Â
-        // -1ÀÌ¸é ·çÆ® ³ëµå
-        // ¹«¹æÇâ ±×·¡ÇÁÃ³·³ ¾ç¹æÇâ ¿¬°á (ÀÚ½Ä-ºÎ¸ð °ü°è ¸ðµÎ ÀúÀå)
+        // ê° ë…¸ë“œì˜ ë¶€ëª¨ ì •ë³´ ìž…ë ¥
+        // -1ì´ë©´ ë£¨íŠ¸ ë…¸ë“œ
+        // ë¬´ë°©í–¥ ê·¸ëž˜í”„ì²˜ëŸ¼ ì–‘ë°©í–¥ ì—°ê²° (ìžì‹-ë¶€ëª¨ ê´€ê³„ ëª¨ë‘ ì €ìž¥)
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < node; i++) {
             int parent = Integer.parseInt(st.nextToken());
@@ -83,14 +83,14 @@ public class Tree2 {
             }
         }
 
-        // »èÁ¦ÇÒ ³ëµå ¹øÈ£ ÀÔ·Â
+        // ì‚­ì œí•  ë…¸ë“œ ë²ˆí˜¸ ìž…ë ¥
         deleted = Integer.parseInt(br.readLine());
 
-        // »èÁ¦ÇÒ ³ëµå°¡ ·çÆ®ÀÏ °æ¿ì ÀüÃ¼ Æ®¸®°¡ »èÁ¦µÇ¹Ç·Î ¸®ÇÁ ³ëµå´Â 0°³
+        // ì‚­ì œí•  ë…¸ë“œê°€ ë£¨íŠ¸ì¼ ê²½ìš° ì „ì²´ íŠ¸ë¦¬ê°€ ì‚­ì œë˜ë¯€ë¡œ ë¦¬í”„ ë…¸ë“œëŠ” 0ê°œ
         if (deleted == root) {
             System.out.println(0);
         } else {
-            // DFS ½ÇÇà ÈÄ ¸®ÇÁ ³ëµå °³¼ö Ãâ·Â
+            // DFS ì‹¤í–‰ í›„ ë¦¬í”„ ë…¸ë“œ ê°œìˆ˜ ì¶œë ¥
             DFS(root);
             System.out.println(answer);
         }

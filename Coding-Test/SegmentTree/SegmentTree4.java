@@ -3,17 +3,17 @@ import java.util.*;
 
 public class SegmentTree3 {
     /*
-     * ÀÛ¼ºÀÏ½Ã : 2025-04-16
-     * ÀÛ¼º½Ã°£ : 17:15
-     * ÀÛ¼ºÀÚ : Àå¼ºÈ¯
+     * ì‘ì„±ì¼ì‹œ : 2025-04-16
+     * ì‘ì„±ì‹œê°„ : 17:15
+     * ì‘ì„±ì : ì¥ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 11505
-     * ¹®Á¦ ÀÌ¸§ : ±¸°£ °ö ±¸ÇÏ±â
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå I
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 11505
+     * ë¬¸ì œ ì´ë¦„ : êµ¬ê°„ ê³± êµ¬í•˜ê¸°
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ I
      *
-     * ÀÛ¼º ¸ñÀû :
-     * ¼¼±×¸ÕÆ® Æ®¸® °ü·Ã ¹éÁØ ¹®Á¦ Ç®ÀÌ
+     * ì‘ì„± ëª©ì  :
+     * ì„¸ê·¸ë¨¼íŠ¸ íŠ¸ë¦¬ ê´€ë ¨ ë°±ì¤€ ë¬¸ì œ í’€ì´
      */
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -21,10 +21,10 @@ public class SegmentTree3 {
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         /*
-         * node   : ÀÔ·Â¹ŞÀ» µ¥ÀÌÅÍ °³¼ö
-         * change : °ª º¯°æ È½¼ö
-         * sum    : ±¸°£°ö ±¸ÇÏ±â È½¼ö
-         * count  : ÃÑ ÁúÀÇ °³¼ö
+         * node   : ì…ë ¥ë°›ì„ ë°ì´í„° ê°œìˆ˜
+         * change : ê°’ ë³€ê²½ íšŸìˆ˜
+         * sum    : êµ¬ê°„ê³± êµ¬í•˜ê¸° íšŸìˆ˜
+         * count  : ì´ ì§ˆì˜ ê°œìˆ˜
          */
         int node = Integer.parseInt(st.nextToken());
         int change = Integer.parseInt(st.nextToken());
@@ -32,7 +32,7 @@ public class SegmentTree3 {
         int count = change + sum;
 
         /*
-         * values : ÀÔ·ÂµÈ ¿øº» ¹è¿­ (1-indexed)
+         * values : ì…ë ¥ëœ ì›ë³¸ ë°°ì—´ (1-indexed)
          */
         long[] values = new long[node + 1];
         for (int i = 1; i <= node; i++) {
@@ -40,14 +40,14 @@ public class SegmentTree3 {
         }
 
         /*
-         * ¼¼±×¸ÕÆ® Æ®¸® »ı¼º
+         * ì„¸ê·¸ë¨¼íŠ¸ íŠ¸ë¦¬ ìƒì„±
          */
         SegmentTree tree = new SegmentTree(values, node);
 
         /*
-         * ÁúÀÇ Ã³¸®
-         * 1. query == 1 : Æ¯Á¤ ÀÎµ¦½ºÀÇ °ªÀ» ¼öÁ¤
-         * 2. query == 2 : Æ¯Á¤ ±¸°£ÀÇ °öÀ» ±¸ÇÔ
+         * ì§ˆì˜ ì²˜ë¦¬
+         * 1. query == 1 : íŠ¹ì • ì¸ë±ìŠ¤ì˜ ê°’ì„ ìˆ˜ì •
+         * 2. query == 2 : íŠ¹ì • êµ¬ê°„ì˜ ê³±ì„ êµ¬í•¨
          */
         for (int i = 0; i < count; i++) {
             st = new StringTokenizer(br.readLine());
@@ -71,10 +71,10 @@ public class SegmentTree3 {
 
 class SegmentTree {
     /*
-     * values : ¿øº» ¹è¿­
-     * tree   : ¼¼±×¸ÕÆ® Æ®¸® ¹è¿­ (±¸°£ÇÕ ÀúÀå)
-     * size   : ¿øº» ¹è¿­ÀÇ Å©±â
-     * MOD    : ±¸°£°öÀÇ Å©±â°¡ ³Ê¹« Ä¿Áö´Â °ÍÀ» ¹æÁöÇÏ±â À§ÇÑ º¸Á¤°ª(== ¿À¹öÇÃ·Î¿ì »çÀü ¿¹¹æ)
+     * values : ì›ë³¸ ë°°ì—´
+     * tree   : ì„¸ê·¸ë¨¼íŠ¸ íŠ¸ë¦¬ ë°°ì—´ (êµ¬ê°„í•© ì €ì¥)
+     * size   : ì›ë³¸ ë°°ì—´ì˜ í¬ê¸°
+     * MOD    : êµ¬ê°„ê³±ì˜ í¬ê¸°ê°€ ë„ˆë¬´ ì»¤ì§€ëŠ” ê²ƒì„ ë°©ì§€í•˜ê¸° ìœ„í•œ ë³´ì •ê°’(== ì˜¤ë²„í”Œë¡œìš° ì‚¬ì „ ì˜ˆë°©)
      */
     private long[] values;
     private long[] tree;
@@ -82,10 +82,10 @@ class SegmentTree {
     private static final long MOD = 1000000007;
 
     /*
-     * »ı¼ºÀÚ ¿ªÇÒ:
-     * 1. Æ®¸® ³ôÀÌ¸¦ °è»êÇÏ°í tree ¹è¿­À» ÃÊ±âÈ­ÇÔ
-     * 2. ¿øº» ¹è¿­ º¹»ç
-     * 3. ¼¼±×¸ÕÆ® Æ®¸® ÃÊ±âÈ­ ¼öÇà
+     * ìƒì„±ì ì—­í• :
+     * 1. íŠ¸ë¦¬ ë†’ì´ë¥¼ ê³„ì‚°í•˜ê³  tree ë°°ì—´ì„ ì´ˆê¸°í™”í•¨
+     * 2. ì›ë³¸ ë°°ì—´ ë³µì‚¬
+     * 3. ì„¸ê·¸ë¨¼íŠ¸ íŠ¸ë¦¬ ì´ˆê¸°í™” ìˆ˜í–‰
      */
     SegmentTree(long[] values, int size) {
         this.size = size;
@@ -97,9 +97,9 @@ class SegmentTree {
     }
 
     /*
-     * ¼¼±×¸ÕÆ® Æ®¸® ÃÊ±âÈ­
-     * ¸®ÇÁ ³ëµå: ¿øº» °ª ÀúÀå
-     * ³»ºÎ ³ëµå: ÁÂ/¿ì ÀÚ½ÄÀÇ °ö ÀúÀå
+     * ì„¸ê·¸ë¨¼íŠ¸ íŠ¸ë¦¬ ì´ˆê¸°í™”
+     * ë¦¬í”„ ë…¸ë“œ: ì›ë³¸ ê°’ ì €ì¥
+     * ë‚´ë¶€ ë…¸ë“œ: ì¢Œ/ìš° ìì‹ì˜ ê³± ì €ì¥
      */
     private long init(int node, int start, int end) {
         if (start == end) {
@@ -111,21 +111,21 @@ class SegmentTree {
     }
 
     /*
-     * °ª ¼öÁ¤
-     * index À§Ä¡ÀÇ °ªÀ» value·Î º¯°æÇÏ°í °ü·ÃµÈ ±¸°£°ö °»½Å
+     * ê°’ ìˆ˜ì •
+     * index ìœ„ì¹˜ì˜ ê°’ì„ valueë¡œ ë³€ê²½í•˜ê³  ê´€ë ¨ëœ êµ¬ê°„ê³± ê°±ì‹ 
      */
     public void update(int node, int start, int end, int index, long value) {
-        // ¹üÀ§ ¹ÛÀÎ °æ¿ì ¹«½Ã
+        // ë²”ìœ„ ë°–ì¸ ê²½ìš° ë¬´ì‹œ
         if (index < start || index > end) return;
 
-        // ¸®ÇÁ ³ëµå: ½ÇÁ¦ °ª °»½Å
+        // ë¦¬í”„ ë…¸ë“œ: ì‹¤ì œ ê°’ ê°±ì‹ 
         if (start == end) {
             values[index] = value;
             tree[node] = value;
             return;
         }
 
-        // ³»ºÎ ³ëµå: ÇÏÀ§ Æ®¸® Àç±ÍÀûÀ¸·Î °»½Å ÈÄ ±¸°£°ö °»½Å
+        // ë‚´ë¶€ ë…¸ë“œ: í•˜ìœ„ íŠ¸ë¦¬ ì¬ê·€ì ìœ¼ë¡œ ê°±ì‹  í›„ êµ¬ê°„ê³± ê°±ì‹ 
         int mid = (start + end) / 2;
         update(node * 2, start, mid, index, value);
         update(node * 2 + 1, mid + 1, end, index, value);
@@ -133,17 +133,17 @@ class SegmentTree {
     }
 
     /*
-     * ±¸°£°ö °è»ê
-     * ±¸°£ [left, right]¿¡ ´ëÇÑ °öÀ» ¹İÈ¯
+     * êµ¬ê°„ê³± ê³„ì‚°
+     * êµ¬ê°„ [left, right]ì— ëŒ€í•œ ê³±ì„ ë°˜í™˜
      */
     public long prefixMultiple(int node, int start, int end, int left, int right) {
-        // ±¸°£ÀÌ ÀüÇô °ãÄ¡Áö ¾ÊÀ¸¸é 1 ¹İÈ¯
+        // êµ¬ê°„ì´ ì „í˜€ ê²¹ì¹˜ì§€ ì•Šìœ¼ë©´ 1 ë°˜í™˜
         if (end < left || start > right) return 1;
 
-        // ¿ÏÀüÈ÷ Æ÷ÇÔµÇ´Â ±¸°£ÀÌ¸é ¹Ù·Î ¹İÈ¯
+        // ì™„ì „íˆ í¬í•¨ë˜ëŠ” êµ¬ê°„ì´ë©´ ë°”ë¡œ ë°˜í™˜
         if (left <= start && end <= right) return tree[node];
 
-        // ÀÏºÎ¸¸ Æ÷ÇÔµÉ °æ¿ì ÁÂ/¿ì ÀÚ½Ä ³ëµå Àç±Í Å½»öÇÏ¿© ÇÕ»ê
+        // ì¼ë¶€ë§Œ í¬í•¨ë  ê²½ìš° ì¢Œ/ìš° ìì‹ ë…¸ë“œ ì¬ê·€ íƒìƒ‰í•˜ì—¬ í•©ì‚°
         int mid = (start + end) / 2;
         return (prefixMultiple(node * 2, start, mid, left, right)
                 * prefixMultiple(node * 2 + 1, mid + 1, end, left, right)) % MOD;

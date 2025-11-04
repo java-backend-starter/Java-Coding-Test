@@ -3,71 +3,71 @@ import java.util.*;
 
 public class Graph3 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-04
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 14:33
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-04
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 14:33
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1707
-     * ¹®Á¦ ÀÌ¸§ : ÀÌºĞ ±×·¡ÇÁ
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥³
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1707
+     * ë¬¸ì œ ì´ë¦„ : ì´ë¶„ ê·¸ë˜í”„
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…£
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * Ã¥¿¡ ÀÖ´Â ¹®Á¦ º¹½À
+     * ì±…ì— ìˆëŠ” ë¬¸ì œ ë³µìŠµ
      */
-    // ÀÎÁ¢ ¸®½ºÆ®·Î ±×·¡ÇÁ ÀúÀå
+    // ì¸ì ‘ ë¦¬ìŠ¤íŠ¸ë¡œ ê·¸ë˜í”„ ì €ì¥
     static ArrayList<ArrayList<Integer>> graph;
-    // ¹æ¹® ¿©ºÎ ÀúÀå ¹è¿­
+    // ë°©ë¬¸ ì—¬ë¶€ ì €ì¥ ë°°ì—´
     static boolean[] visited;
-    // °¢ ³ëµåÀÇ »ö±ò (0 ¶Ç´Â 1)
+    // ê° ë…¸ë“œì˜ ìƒ‰ê¹” (0 ë˜ëŠ” 1)
     static int[] check;
-    // ÀÌºĞ ±×·¡ÇÁ ¿©ºÎ ÆÇ´Ü º¯¼ö
+    // ì´ë¶„ ê·¸ë˜í”„ ì—¬ë¶€ íŒë‹¨ ë³€ìˆ˜
     static boolean isEven;
 
-    // DFS¸¦ ÅëÇØ ±×·¡ÇÁ Å½»ö ¹× ÀÌºĞ ±×·¡ÇÁÀÎÁö °Ë»ç
+    // DFSë¥¼ í†µí•´ ê·¸ë˜í”„ íƒìƒ‰ ë° ì´ë¶„ ê·¸ë˜í”„ì¸ì§€ ê²€ì‚¬
     static void DFS(int node) {
-        visited[node] = true; // ÇöÀç ³ëµå ¹æ¹® Ã³¸®
+        visited[node] = true; // í˜„ì¬ ë…¸ë“œ ë°©ë¬¸ ì²˜ë¦¬
 
-        // ÀÎÁ¢ ³ëµåµé ¼øÈ¸
+        // ì¸ì ‘ ë…¸ë“œë“¤ ìˆœíšŒ
         for (int next : graph.get(node)) {
             if (!visited[next]) {
-                // ¹æ¹®ÇÏÁö ¾ÊÀº °æ¿ì, ÇöÀç ³ëµå¿Í ´Ù¸¥ »ö ÁöÁ¤
+                // ë°©ë¬¸í•˜ì§€ ì•Šì€ ê²½ìš°, í˜„ì¬ ë…¸ë“œì™€ ë‹¤ë¥¸ ìƒ‰ ì§€ì •
                 visited[next] = true;
                 check[next] = (check[node] + 1) % 2;
-                DFS(next); // Àç±ÍÀûÀ¸·Î ´ÙÀ½ ³ëµå Å½»ö
+                DFS(next); // ì¬ê·€ì ìœ¼ë¡œ ë‹¤ìŒ ë…¸ë“œ íƒìƒ‰
             } else if (check[next] == check[node]) {
-                // ÀÌ¹Ì ¹æ¹®Çß°í »öÀÌ °°´Ù¸é ÀÌºĞ ±×·¡ÇÁ°¡ ¾Æ´Ô
+                // ì´ë¯¸ ë°©ë¬¸í–ˆê³  ìƒ‰ì´ ê°™ë‹¤ë©´ ì´ë¶„ ê·¸ë˜í”„ê°€ ì•„ë‹˜
                 isEven = false;
             }
         }
     }
 
-    // ¸ŞÀÎ ¸Ş¼­µå
+    // ë©”ì¸ ë©”ì„œë“œ
     public static void main(String[] args) throws IOException {
-        // ÀÔ·ÂÀ» À§ÇÑ BufferedReader, Ãâ·Â¿ë BufferedWriter
+        // ì…ë ¥ì„ ìœ„í•œ BufferedReader, ì¶œë ¥ìš© BufferedWriter
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int testcase = Integer.parseInt(br.readLine()); // Å×½ºÆ®ÄÉÀÌ½º °³¼ö ÀÔ·Â
+        int testcase = Integer.parseInt(br.readLine()); // í…ŒìŠ¤íŠ¸ì¼€ì´ìŠ¤ ê°œìˆ˜ ì…ë ¥
         StringTokenizer st;
 
         for (int i = 0; i < testcase; i++) {
             st = new StringTokenizer(br.readLine());
-            int node = Integer.parseInt(st.nextToken()); // ³ëµå ¼ö
-            int edge = Integer.parseInt(st.nextToken()); // °£¼± ¼ö
+            int node = Integer.parseInt(st.nextToken()); // ë…¸ë“œ ìˆ˜
+            int edge = Integer.parseInt(st.nextToken()); // ê°„ì„  ìˆ˜
 
-            // ÃÊ±âÈ­
+            // ì´ˆê¸°í™”
             graph = new ArrayList<>();
             visited = new boolean[node + 1];
             check = new int[node + 1];
 
-            // ±×·¡ÇÁ ¸®½ºÆ® ÃÊ±âÈ­
+            // ê·¸ë˜í”„ ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
             for (int j = 0; j <= node; j++) {
                 graph.add(new ArrayList<>());
             }
 
-            // °£¼± Á¤º¸ ÀÔ·Â ¹× ¾ç¹æÇâ ¿¬°á
+            // ê°„ì„  ì •ë³´ ì…ë ¥ ë° ì–‘ë°©í–¥ ì—°ê²°
             for (int j = 0; j < edge; j++) {
                 st = new StringTokenizer(br.readLine());
                 int u = Integer.parseInt(st.nextToken());
@@ -76,22 +76,22 @@ public class Graph3 {
                 graph.get(v).add(u);
             }
 
-            // ÀÌºĞ ±×·¡ÇÁ ¿©ºÎ ÃÊ±âÈ­
+            // ì´ë¶„ ê·¸ë˜í”„ ì—¬ë¶€ ì´ˆê¸°í™”
             isEven = true;
 
-            // ±×·¡ÇÁÀÇ ¸ğµç Á¤Á¡À» °Ë»ç
+            // ê·¸ë˜í”„ì˜ ëª¨ë“  ì •ì ì„ ê²€ì‚¬
             for (int j = 1; j <= node; j++) {
-                if (!visited[j]) { // ¾ÆÁ÷ ¹æ¹®ÇÏÁö ¾Ê¾Ò´Ù¸é Å½»ö ½ÃÀÛ
-                    check[j] = 0;  // ½ÃÀÛ ³ëµå »ö ¼³Á¤
+                if (!visited[j]) { // ì•„ì§ ë°©ë¬¸í•˜ì§€ ì•Šì•˜ë‹¤ë©´ íƒìƒ‰ ì‹œì‘
+                    check[j] = 0;  // ì‹œì‘ ë…¸ë“œ ìƒ‰ ì„¤ì •
                     DFS(j);
                 }
 
-                if (!isEven) break; // ÀÌ¹Ì ÀÌºĞ ±×·¡ÇÁ ¾Æ´ÔÀÌ ÆÇº°µÇ¸é Á¾·á
+                if (!isEven) break; // ì´ë¯¸ ì´ë¶„ ê·¸ë˜í”„ ì•„ë‹˜ì´ íŒë³„ë˜ë©´ ì¢…ë£Œ
             }
 
-            // °á°ú Ãâ·Â
+            // ê²°ê³¼ ì¶œë ¥
             bw.append((isEven ? "YES" : "NO") + "\n");
         }
-        bw.flush(); // Ãâ·Â ¹öÆÛ ºñ¿ì±â
+        bw.flush(); // ì¶œë ¥ ë²„í¼ ë¹„ìš°ê¸°
     }
 }

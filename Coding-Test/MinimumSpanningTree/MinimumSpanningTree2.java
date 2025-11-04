@@ -3,53 +3,53 @@ import java.util.*;
 
 public class MinimumSpanningTree2 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-09
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 13:37
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-09
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 13:37
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 17472
-     * ¹®Á¦ ÀÌ¸§ : ´Ù¸® ¸¸µé±â 2
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥°
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 17472
+     * ë¬¸ì œ ì´ë¦„ : ë‹¤ë¦¬ ë§Œë“¤ê¸° 2
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â… 
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìˆëŠ” ë¬¸ì œ í’€ì´
      *
      */
-    // »ç¹æ Å½»öÀ» À§ÇÑ ¹æÇâ º¤ÅÍ (¿À, ¿Ş, À§, ¾Æ·¡)
+    // ì‚¬ë°© íƒìƒ‰ì„ ìœ„í•œ ë°©í–¥ ë²¡í„° (ì˜¤, ì™¼, ìœ„, ì•„ë˜)
     static int[] dr = {0, 0, -1, 1};
     static int[] dc = {1, -1, 0, 0};
 
-    static int[][] map; // ÀÔ·Â¹ŞÀº ¸Ê (¼¶°ú ¹Ù´Ù)
-    static boolean[][] visited; // BFS¸¦ À§ÇÑ ¹æ¹® ¹è¿­
-    static int N, M; // ¸ÊÀÇ ¼¼·Î(N), °¡·Î(M)
-    static ArrayList<ArrayList<int[]>> islands = new ArrayList<>(); // ¼¶ ÁÂÇ¥ ¸®½ºÆ®
-    static ArrayList<int[]> island; // ÇÏ³ªÀÇ ¼¶À» ±¸¼ºÇÏ´Â ÁÂÇ¥µé
-    static int[] parent; // Å©·ç½ºÄ® ¾Ë°í¸®Áò¿ë À¯´Ï¿Â ÆÄÀÎµå ºÎ¸ğ ¹è¿­
-    static PriorityQueue<Node> edges = new PriorityQueue<>(); // °£¼±(´Ù¸®) ¸®½ºÆ® (°¡ÁßÄ¡ ¿À¸§Â÷¼ø)
+    static int[][] map; // ì…ë ¥ë°›ì€ ë§µ (ì„¬ê³¼ ë°”ë‹¤)
+    static boolean[][] visited; // BFSë¥¼ ìœ„í•œ ë°©ë¬¸ ë°°ì—´
+    static int N, M; // ë§µì˜ ì„¸ë¡œ(N), ê°€ë¡œ(M)
+    static ArrayList<ArrayList<int[]>> islands = new ArrayList<>(); // ì„¬ ì¢Œí‘œ ë¦¬ìŠ¤íŠ¸
+    static ArrayList<int[]> island; // í•˜ë‚˜ì˜ ì„¬ì„ êµ¬ì„±í•˜ëŠ” ì¢Œí‘œë“¤
+    static int[] parent; // í¬ë£¨ìŠ¤ì¹¼ ì•Œê³ ë¦¬ì¦˜ìš© ìœ ë‹ˆì˜¨ íŒŒì¸ë“œ ë¶€ëª¨ ë°°ì—´
+    static PriorityQueue<Node> edges = new PriorityQueue<>(); // ê°„ì„ (ë‹¤ë¦¬) ë¦¬ìŠ¤íŠ¸ (ê°€ì¤‘ì¹˜ ì˜¤ë¦„ì°¨ìˆœ)
 
-    // ¼¶À» ½Äº°ÇÏ°í islands ¸®½ºÆ®¸¦ ÃÊ±âÈ­
+    // ì„¬ì„ ì‹ë³„í•˜ê³  islands ë¦¬ìŠ¤íŠ¸ë¥¼ ì´ˆê¸°í™”
     static void init() {
-        int num = 2; // ¼¶ ¹øÈ£´Â 2ºÎÅÍ ½ÃÀÛ (0: ¹Ù´Ù, 1: ¹Ì¹æ¹® ¼¶)
+        int num = 2; // ì„¬ ë²ˆí˜¸ëŠ” 2ë¶€í„° ì‹œì‘ (0: ë°”ë‹¤, 1: ë¯¸ë°©ë¬¸ ì„¬)
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 if (map[i][j] == 1 && !visited[i][j]) {
                     island = new ArrayList<>();
-                    BFS(i, j, num); // BFS·Î ¼¶ Å½»ö ¹× ¹øÈ£ ºÎ¿©
-                    islands.add(island); // ½Äº°µÈ ¼¶ ¸®½ºÆ®¿¡ Ãß°¡
+                    BFS(i, j, num); // BFSë¡œ ì„¬ íƒìƒ‰ ë° ë²ˆí˜¸ ë¶€ì—¬
+                    islands.add(island); // ì‹ë³„ëœ ì„¬ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
                     num++;
                 }
             }
         }
     }
 
-    // BFS¸¦ ÅëÇØ ¼¶ ¹øÈ£¸¦ ºÎ¿©ÇÏ°í ÇØ´ç ¼¶À» island ¸®½ºÆ®¿¡ ÀúÀå
+    // BFSë¥¼ í†µí•´ ì„¬ ë²ˆí˜¸ë¥¼ ë¶€ì—¬í•˜ê³  í•´ë‹¹ ì„¬ì„ island ë¦¬ìŠ¤íŠ¸ì— ì €ì¥
     static void BFS(int r, int c, int num) {
         Queue<int[]> queue = new LinkedList<>();
         queue.add(new int[]{r, c});
         visited[r][c] = true;
-        map[r][c] = num; // ¼¶ ¹øÈ£ ÁöÁ¤
+        map[r][c] = num; // ì„¬ ë²ˆí˜¸ ì§€ì •
         island.add(new int[]{r, c});
 
         while (!queue.isEmpty()) {
@@ -70,7 +70,7 @@ public class MinimumSpanningTree2 {
         }
     }
 
-    // ¸ğµç ¼¶¿¡¼­ ¸¸µé ¼ö ÀÖ´Â ´Ù¸®¸¦ Å½»öÇÏ°í edges ¸®½ºÆ®¿¡ ÀúÀå
+    // ëª¨ë“  ì„¬ì—ì„œ ë§Œë“¤ ìˆ˜ ìˆëŠ” ë‹¤ë¦¬ë¥¼ íƒìƒ‰í•˜ê³  edges ë¦¬ìŠ¤íŠ¸ì— ì €ì¥
     static void makeEdgeList() {
         for (int i = 0; i < islands.size(); i++) {
             for (int[] start : islands.get(i)) {
@@ -78,7 +78,7 @@ public class MinimumSpanningTree2 {
                 int c = start[1];
                 int startIsland = map[r][c];
 
-                // 4¹æÇâÀ¸·Î °¡´ÉÇÑ ´Ù¸®¸¦ Å½»ö
+                // 4ë°©í–¥ìœ¼ë¡œ ê°€ëŠ¥í•œ ë‹¤ë¦¬ë¥¼ íƒìƒ‰
                 for (int d = 0; d < 4; d++) {
                     int length = 0;
                     int nr = r + dr[d];
@@ -86,13 +86,13 @@ public class MinimumSpanningTree2 {
 
                     while (nr >= 0 && nr < N && nc >= 0 && nc < M) {
                         if (map[nr][nc] == 0) {
-                            length++; // ¹Ù´ÙÀÌ¸é ´Ù¸® ±æÀÌ Áõ°¡
+                            length++; // ë°”ë‹¤ì´ë©´ ë‹¤ë¦¬ ê¸¸ì´ ì¦ê°€
                         } else {
                             if (map[nr][nc] != startIsland && length >= 2) {
-                                // ´Ù¸¥ ¼¶¿¡ µµ´ŞÇß°í ±æÀÌ°¡ 2 ÀÌ»óÀÌ¸é À¯È¿ÇÑ ´Ù¸®
+                                // ë‹¤ë¥¸ ì„¬ì— ë„ë‹¬í–ˆê³  ê¸¸ì´ê°€ 2 ì´ìƒì´ë©´ ìœ íš¨í•œ ë‹¤ë¦¬
                                 edges.add(new Node(startIsland - 2, map[nr][nc] - 2, length));
                             }
-                            break; // °°Àº ¼¶ÀÌ°Å³ª ¼¶ µµ´Ş ½Ã Áß´Ü
+                            break; // ê°™ì€ ì„¬ì´ê±°ë‚˜ ì„¬ ë„ë‹¬ ì‹œ ì¤‘ë‹¨
                         }
                         nr += dr[d];
                         nc += dc[d];
@@ -102,15 +102,15 @@ public class MinimumSpanningTree2 {
         }
     }
 
-    // Å©·ç½ºÄ® ¾Ë°í¸®ÁòÀ¸·Î MST ±¸ÇÏ°í ´Ù¸® ±æÀÌ ÃÑÇÕ ¹İÈ¯
+    // í¬ë£¨ìŠ¤ì¹¼ ì•Œê³ ë¦¬ì¦˜ìœ¼ë¡œ MST êµ¬í•˜ê³  ë‹¤ë¦¬ ê¸¸ì´ ì´í•© ë°˜í™˜
     static int kruskal(int islandCount) {
         parent = new int[islandCount];
         for (int i = 0; i < islandCount; i++) {
-            parent[i] = i; // °¢ ¼¶À» µ¶¸³ ÁıÇÕÀ¸·Î ÃÊ±âÈ­
+            parent[i] = i; // ê° ì„¬ì„ ë…ë¦½ ì§‘í•©ìœ¼ë¡œ ì´ˆê¸°í™”
         }
 
-        int useEdge = 0; // »ç¿ëÇÑ °£¼± ¼ö
-        int result = 0; // ÃÑ ´Ù¸® ±æÀÌ
+        int useEdge = 0; // ì‚¬ìš©í•œ ê°„ì„  ìˆ˜
+        int result = 0; // ì´ ë‹¤ë¦¬ ê¸¸ì´
 
         while (!edges.isEmpty()) {
             Node now = edges.poll();
@@ -121,24 +121,24 @@ public class MinimumSpanningTree2 {
             }
         }
 
-        // ¸ğµç ¼¶ÀÌ ¿¬°áµÇ¾ú´ÂÁö È®ÀÎ (MST´Â V-1°³ÀÇ °£¼±)
+        // ëª¨ë“  ì„¬ì´ ì—°ê²°ë˜ì—ˆëŠ”ì§€ í™•ì¸ (MSTëŠ” V-1ê°œì˜ ê°„ì„ )
         return useEdge == islandCount - 1 ? result : -1;
     }
 
-    // À¯´Ï¿Â ÆÄÀÎµå: ´ëÇ¥ ³ëµå Ã£±â
+    // ìœ ë‹ˆì˜¨ íŒŒì¸ë“œ: ëŒ€í‘œ ë…¸ë“œ ì°¾ê¸°
     static int find(int a) {
         if (parent[a] == a) return a;
         return parent[a] = find(parent[a]);
     }
 
-    // À¯´Ï¿Â ÆÄÀÎµå: µÎ ÁıÇÕÀ» ÇÕÄ¡±â
+    // ìœ ë‹ˆì˜¨ íŒŒì¸ë“œ: ë‘ ì§‘í•©ì„ í•©ì¹˜ê¸°
     static void union(int a, int b) {
         a = find(a);
         b = find(b);
         if (a != b) parent[b] = a;
     }
 
-    // ÀÔ·Â ¹× Ã³¸® ¸ŞÀÎ ÇÔ¼ö
+    // ì…ë ¥ ë° ì²˜ë¦¬ ë©”ì¸ í•¨ìˆ˜
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
@@ -150,7 +150,7 @@ public class MinimumSpanningTree2 {
         map = new int[N][M];
         visited = new boolean[N][M];
 
-        // Áöµµ Á¤º¸ ÀÔ·Â
+        // ì§€ë„ ì •ë³´ ì…ë ¥
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < M; j++) {
@@ -158,15 +158,15 @@ public class MinimumSpanningTree2 {
             }
         }
 
-        init(); // ¼¶ ½Äº° ¹× ¹øÈ£ ºÎ¿©
-        makeEdgeList(); // ´Ù¸® ÈÄº¸ °£¼± »ı¼º
-        int result = kruskal(islands.size()); // MST·Î ÃÖ¼Ò ´Ù¸® ±æÀÌ °è»ê
+        init(); // ì„¬ ì‹ë³„ ë° ë²ˆí˜¸ ë¶€ì—¬
+        makeEdgeList(); // ë‹¤ë¦¬ í›„ë³´ ê°„ì„  ìƒì„±
+        int result = kruskal(islands.size()); // MSTë¡œ ìµœì†Œ ë‹¤ë¦¬ ê¸¸ì´ ê³„ì‚°
 
         System.out.println(result);
     }
 }
 
-// °£¼± Å¬·¡½º (¼¶°ú ¼¶À» ¿¬°áÇÏ´Â ´Ù¸® Á¤º¸ ÀúÀå)
+// ê°„ì„  í´ë˜ìŠ¤ (ì„¬ê³¼ ì„¬ì„ ì—°ê²°í•˜ëŠ” ë‹¤ë¦¬ ì •ë³´ ì €ì¥)
 class Node implements Comparable<Node> {
     private int start;
     private int end;
@@ -192,6 +192,6 @@ class Node implements Comparable<Node> {
 
     @Override
     public int compareTo(Node o) {
-        return this.weight - o.weight; // °¡ÁßÄ¡ ±âÁØ ¿À¸§Â÷¼ø Á¤·Ä
+        return this.weight - o.weight; // ê°€ì¤‘ì¹˜ ê¸°ì¤€ ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬
     }
 }

@@ -3,26 +3,26 @@ import java.util.*;
 
 public class Euclidean3 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-03-30
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 00:02
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-03-30
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 00:02
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1033
-     * ¹®Á¦ ÀÌ¸§ : Ä¬Å×ÀÏ
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥±
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1033
+     * ë¬¸ì œ ì´ë¦„ : ì¹µí…Œì¼
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…¡
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * Ã¥¿¡ ÀÖ´Â ¹®Á¦ º¹½À
+     * ì±…ì— ìˆëŠ” ë¬¸ì œ ë³µìŠµ
      */
-    // ±×·¡ÇÁ¸¦ ÀÎÁ¢ ¸®½ºÆ® ÇüÅÂ·Î ÀúÀå
+    // ê·¸ë˜í”„ë¥¼ ì¸ì ‘ ë¦¬ìŠ¤íŠ¸ í˜•íƒœë¡œ ì €ì¥
     static ArrayList<ArrayList<Node>> values = new ArrayList<>();
-    static long lcm = 1; // ¸ğµç °Å¸®µéÀÇ ÃÖ¼Ò°ø¹è¼ö (LCM)
-    static boolean[] visited; // ¹æ¹® ¿©ºÎ Ã¼Å© ¹è¿­
-    static long[] distance; // °¢ ³ëµåÀÇ °Å¸®°ª ÀúÀå ¹è¿­
+    static long lcm = 1; // ëª¨ë“  ê±°ë¦¬ë“¤ì˜ ìµœì†Œê³µë°°ìˆ˜ (LCM)
+    static boolean[] visited; // ë°©ë¬¸ ì—¬ë¶€ ì²´í¬ ë°°ì—´
+    static long[] distance; // ê° ë…¸ë“œì˜ ê±°ë¦¬ê°’ ì €ì¥ ë°°ì—´
 
-    // ÃÖ´ë°ø¾à¼ö(GCD) °è»ê (À¯Å¬¸®µå È£Á¦¹ı »ç¿ë)
+    // ìµœëŒ€ê³µì•½ìˆ˜(GCD) ê³„ì‚° (ìœ í´ë¦¬ë“œ í˜¸ì œë²• ì‚¬ìš©)
     static long gcd(long a, long b) {
         while (b != 0) {
             long temp = b;
@@ -32,11 +32,11 @@ public class Euclidean3 {
         return a;
     }
 
-    // ±íÀÌ ¿ì¼± Å½»ö(DFS) ½ÇÇà -> °Å¸®°ª °è»ê
+    // ê¹Šì´ ìš°ì„  íƒìƒ‰(DFS) ì‹¤í–‰ -> ê±°ë¦¬ê°’ ê³„ì‚°
     static void DFS(int node) {
-        visited[node] = true; // ÇöÀç ³ëµå ¹æ¹® Ç¥½Ã
+        visited[node] = true; // í˜„ì¬ ë…¸ë“œ ë°©ë¬¸ í‘œì‹œ
         for (Node next : values.get(node)) {
-            if (!visited[next.getB()]) { // ¹æ¹®ÇÏÁö ¾ÊÀº ³ëµå¶ó¸é °Å¸® °è»ê ÈÄ DFS ÁøÇà
+            if (!visited[next.getB()]) { // ë°©ë¬¸í•˜ì§€ ì•Šì€ ë…¸ë“œë¼ë©´ ê±°ë¦¬ ê³„ì‚° í›„ DFS ì§„í–‰
                 distance[next.getB()] = (distance[node] * next.getQ()) / next.getP();
                 DFS(next.getB());
             }
@@ -48,54 +48,54 @@ public class Euclidean3 {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
 
-        int size = Integer.parseInt(br.readLine()); // ³ëµå °³¼ö ÀÔ·Â
+        int size = Integer.parseInt(br.readLine()); // ë…¸ë“œ ê°œìˆ˜ ì…ë ¥
         for (int i = 0; i < size; i++) {
-            values.add(new ArrayList<>()); // ÀÎÁ¢ ¸®½ºÆ® ÃÊ±âÈ­
+            values.add(new ArrayList<>()); // ì¸ì ‘ ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
         }
-        visited = new boolean[size]; // ¹æ¹® ¹è¿­ ÃÊ±âÈ­
-        distance = new long[size]; // °Å¸®°ª ¹è¿­ ÃÊ±âÈ­
+        visited = new boolean[size]; // ë°©ë¬¸ ë°°ì—´ ì´ˆê¸°í™”
+        distance = new long[size]; // ê±°ë¦¬ê°’ ë°°ì—´ ì´ˆê¸°í™”
 
-        // °£¼± Á¤º¸ ÀÔ·Â ¹× ÃÖ¼Ò°ø¹è¼ö(LCM) °è»ê
+        // ê°„ì„  ì •ë³´ ì…ë ¥ ë° ìµœì†Œê³µë°°ìˆ˜(LCM) ê³„ì‚°
         for (int i = 0; i < size - 1; i++) {
             st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken()); // ³ëµå A
-            int b = Integer.parseInt(st.nextToken()); // ³ëµå B
-            int p = Integer.parseInt(st.nextToken()); // ºñÀ² P
-            int q = Integer.parseInt(st.nextToken()); // ºñÀ² Q
+            int a = Integer.parseInt(st.nextToken()); // ë…¸ë“œ A
+            int b = Integer.parseInt(st.nextToken()); // ë…¸ë“œ B
+            int p = Integer.parseInt(st.nextToken()); // ë¹„ìœ¨ P
+            int q = Integer.parseInt(st.nextToken()); // ë¹„ìœ¨ Q
 
-            // ¾ç¹æÇâ ¿¬°á (A-B¿Í B-A °£ÀÇ ºñÀ²ÀÌ ¹İ´ë)
+            // ì–‘ë°©í–¥ ì—°ê²° (A-Bì™€ B-A ê°„ì˜ ë¹„ìœ¨ì´ ë°˜ëŒ€)
             values.get(a).add(new Node(b, p, q));
             values.get(b).add(new Node(a, q, p));
 
-            // ÃÖ¼Ò°ø¹è¼ö ´©Àû °è»ê (°¢ ºñÀ²ÀÇ ÃÖ¼Ò°ø¹è¼ö À¯Áö)
+            // ìµœì†Œê³µë°°ìˆ˜ ëˆ„ì  ê³„ì‚° (ê° ë¹„ìœ¨ì˜ ìµœì†Œê³µë°°ìˆ˜ ìœ ì§€)
             lcm = lcm * (p * q / gcd(p, q));
         }
 
-        distance[0] = lcm; // ½ÃÀÛ ³ëµåÀÇ °Å¸®°ªÀ» ÃÖ¼Ò°ø¹è¼ö·Î ¼³Á¤
-        Arrays.fill(visited, false); // ¹æ¹® ¹è¿­ ÃÊ±âÈ­
-        DFS(0); // DFS ½ÇÇàÇÏ¿© ¸ğµç ³ëµåÀÇ °Å¸®°ª °è»ê
+        distance[0] = lcm; // ì‹œì‘ ë…¸ë“œì˜ ê±°ë¦¬ê°’ì„ ìµœì†Œê³µë°°ìˆ˜ë¡œ ì„¤ì •
+        Arrays.fill(visited, false); // ë°©ë¬¸ ë°°ì—´ ì´ˆê¸°í™”
+        DFS(0); // DFS ì‹¤í–‰í•˜ì—¬ ëª¨ë“  ë…¸ë“œì˜ ê±°ë¦¬ê°’ ê³„ì‚°
 
-        // ¸ğµç °Å¸®°ªµéÀÇ ÃÖ´ë°ø¾à¼ö(GCD) ±¸ÇÏ±â
+        // ëª¨ë“  ê±°ë¦¬ê°’ë“¤ì˜ ìµœëŒ€ê³µì•½ìˆ˜(GCD) êµ¬í•˜ê¸°
         long mgcd = distance[0];
         for (int i = 1; i < size; i++) {
             mgcd = gcd(mgcd, distance[i]);
         }
 
-        // ¸ğµç °Å¸®°ªÀ» ÃÖ´ë°ø¾à¼ö·Î ³ª´²¼­ Ãâ·Â
+        // ëª¨ë“  ê±°ë¦¬ê°’ì„ ìµœëŒ€ê³µì•½ìˆ˜ë¡œ ë‚˜ëˆ ì„œ ì¶œë ¥
         for (int i = 0; i < size; i++) {
             bw.write((distance[i] / mgcd) + " ");
         }
 
-        bw.flush(); // Ãâ·Â ¹öÆÛ ºñ¿ì±â
-        bw.close(); // ½ºÆ®¸² ´İ±â
+        bw.flush(); // ì¶œë ¥ ë²„í¼ ë¹„ìš°ê¸°
+        bw.close(); // ìŠ¤íŠ¸ë¦¼ ë‹«ê¸°
     }
 }
 
-// ±×·¡ÇÁÀÇ °£¼±À» ³ªÅ¸³»´Â Å¬·¡½º
+// ê·¸ë˜í”„ì˜ ê°„ì„ ì„ ë‚˜íƒ€ë‚´ëŠ” í´ë˜ìŠ¤
 class Node {
-    private int b; // ¿¬°áµÈ ³ëµå
-    private int p; // ºñÀ² P
-    private int q; // ºñÀ² Q
+    private int b; // ì—°ê²°ëœ ë…¸ë“œ
+    private int p; // ë¹„ìœ¨ P
+    private int q; // ë¹„ìœ¨ Q
 
     Node(int b, int p, int q) {
         this.b = b;

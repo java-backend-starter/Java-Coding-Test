@@ -3,18 +3,18 @@ import java.util.*;
 
 public class Trie1 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-15
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 13:43
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-15
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 13:43
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 14425
-     * ¹®Á¦ ÀÌ¸§ : ¹®ÀÚ¿­ ÁıÇÕ
-     * ¹®Á¦ ³­ÀÌµµ : ½Ç¹ö ¥³
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 14425
+     * ë¬¸ì œ ì´ë¦„ : ë¬¸ìì—´ ì§‘í•©
+     * ë¬¸ì œ ë‚œì´ë„ : ì‹¤ë²„ â…£
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìˆëŠ” ë¬¸ì œ í’€ì´
      *
      */
     public static void main(String [] args) throws IOException {
@@ -22,14 +22,14 @@ public class Trie1 {
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         /*
-         * strs : ÀÔ·ÂÇÒ ¹®ÀÚ¿­ °³¼ö
-         * checks : ¹®ÀÚ¿­ °Ë»ö È½¼ö
+         * strs : ì…ë ¥í•  ë¬¸ìì—´ ê°œìˆ˜
+         * checks : ë¬¸ìì—´ ê²€ìƒ‰ íšŸìˆ˜
          */
         int strs = Integer.parseInt(st.nextToken());
         int checks = Integer.parseInt(st.nextToken());
 
         /*
-         * ¹®ÀÚ¿­ ÀÔ·Â
+         * ë¬¸ìì—´ ì…ë ¥
          */
         Trie trie = new Trie();
         for(int i = 0; i < strs; i++){
@@ -37,7 +37,7 @@ public class Trie1 {
         }
 
         /*
-         * ¹®ÀÚ¿­ °Ë»ö
+         * ë¬¸ìì—´ ê²€ìƒ‰
          */
         int count = 0;
         for(int i = 0; i < checks; i++){
@@ -51,101 +51,101 @@ public class Trie1 {
 }
 
 /*
- * Trie ÀÚ·á±¸Á¶ Å¬·¡½º
- * Æ®¶óÀÌ(Trie)´Â ¹®ÀÚ¿­À» È¿À²ÀûÀ¸·Î ÀúÀåÇÏ°í °Ë»öÇÒ ¼ö ÀÖ´Â ÀÚ·á±¸Á¶
- * »çÀü Ã£±â³ª ÀÚµ¿ ¿Ï¼º µîÀÇ ±â´É¿¡ À¯¿ë
+ * Trie ìë£Œêµ¬ì¡° í´ë˜ìŠ¤
+ * íŠ¸ë¼ì´(Trie)ëŠ” ë¬¸ìì—´ì„ íš¨ìœ¨ì ìœ¼ë¡œ ì €ì¥í•˜ê³  ê²€ìƒ‰í•  ìˆ˜ ìˆëŠ” ìë£Œêµ¬ì¡°
+ * ì‚¬ì „ ì°¾ê¸°ë‚˜ ìë™ ì™„ì„± ë“±ì˜ ê¸°ëŠ¥ì— ìœ ìš©
  */
 class Trie {
-    private Node root; // Æ®¸®ÀÇ ·çÆ® ³ëµå
+    private Node root; // íŠ¸ë¦¬ì˜ ë£¨íŠ¸ ë…¸ë“œ
 
-    // »ı¼ºÀÚ: Æ®¶óÀÌ¸¦ ÃÊ±âÈ­ÇÏ¸ç ·çÆ® ³ëµå¸¦ »ı¼º
+    // ìƒì„±ì: íŠ¸ë¼ì´ë¥¼ ì´ˆê¸°í™”í•˜ë©° ë£¨íŠ¸ ë…¸ë“œë¥¼ ìƒì„±
     Trie(){
-        root = new Node('\0', false); // ·çÆ® ³ëµå´Â Æ¯º°ÇÑ °ª(ºó ¹®ÀÚ)°ú ³¡ÀÌ ¾Æ´Ñ »óÅÂ·Î ÃÊ±âÈ­
+        root = new Node('\0', false); // ë£¨íŠ¸ ë…¸ë“œëŠ” íŠ¹ë³„í•œ ê°’(ë¹ˆ ë¬¸ì)ê³¼ ëì´ ì•„ë‹Œ ìƒíƒœë¡œ ì´ˆê¸°í™”
     }
 
-    // ¹®ÀÚ¿­À» Æ®¶óÀÌ¿¡ »ğÀÔÇÏ´Â ¸Ş¼­µå
+    // ë¬¸ìì—´ì„ íŠ¸ë¼ì´ì— ì‚½ì…í•˜ëŠ” ë©”ì„œë“œ
     public void insert(String str){
         int size = str.length();
         if(size == 0){
-            return; // ºó ¹®ÀÚ¿­Àº »ğÀÔÇÏÁö ¾ÊÀ½
+            return; // ë¹ˆ ë¬¸ìì—´ì€ ì‚½ì…í•˜ì§€ ì•ŠìŒ
         }
-        char key = str.charAt(0); // ¹®ÀÚ¿­ÀÇ Ã¹ ¹®ÀÚ¸¦ °¡Á®¿È
-        insertProcess(root.add(key, false), str, size, 1); // ·çÆ®¿¡¼­ ½ÃÀÛÇÏ¿© ¹®ÀÚ¿­À» »ğÀÔÇÏ´Â Àç±Í È£Ãâ
+        char key = str.charAt(0); // ë¬¸ìì—´ì˜ ì²« ë¬¸ìë¥¼ ê°€ì ¸ì˜´
+        insertProcess(root.add(key, false), str, size, 1); // ë£¨íŠ¸ì—ì„œ ì‹œì‘í•˜ì—¬ ë¬¸ìì—´ì„ ì‚½ì…í•˜ëŠ” ì¬ê·€ í˜¸ì¶œ
     }
 
-    // ¹®ÀÚ¿­ »ğÀÔÀ» ½ÇÁ¦·Î Ã³¸®ÇÏ´Â Àç±Í ¸Ş¼­µå
+    // ë¬¸ìì—´ ì‚½ì…ì„ ì‹¤ì œë¡œ ì²˜ë¦¬í•˜ëŠ” ì¬ê·€ ë©”ì„œë“œ
     private void insertProcess(Node node, String str, int size, int index){
-        if(size == index){ // ¹®ÀÚ¿­ ³¡¿¡ µµ´ŞÇÑ °æ¿ì
-            node.setData(str); // ÇØ´ç ³ëµå¿¡ ¹®ÀÚ¿­ µ¥ÀÌÅÍ¸¦ ÀúÀå
-            node.setEnd(true); // ³¡ ³ëµåÀÓÀ» Ç¥½Ã
+        if(size == index){ // ë¬¸ìì—´ ëì— ë„ë‹¬í•œ ê²½ìš°
+            node.setData(str); // í•´ë‹¹ ë…¸ë“œì— ë¬¸ìì—´ ë°ì´í„°ë¥¼ ì €ì¥
+            node.setEnd(true); // ë ë…¸ë“œì„ì„ í‘œì‹œ
             return;
         }
-        char key = str.charAt(index); // ÇöÀç ¹®ÀÚ
-        insertProcess(node.add(key, false), str, size, index+1); // ÀÚ½Ä ³ëµå·Î ÀÌµ¿ÇÏ¿© Àç±Í È£Ãâ
+        char key = str.charAt(index); // í˜„ì¬ ë¬¸ì
+        insertProcess(node.add(key, false), str, size, index+1); // ìì‹ ë…¸ë“œë¡œ ì´ë™í•˜ì—¬ ì¬ê·€ í˜¸ì¶œ
     }
 
-    // Æ®¶óÀÌ¿¡¼­ ¹®ÀÚ¿­À» °Ë»öÇÏ´Â ¸Ş¼­µå
+    // íŠ¸ë¼ì´ì—ì„œ ë¬¸ìì—´ì„ ê²€ìƒ‰í•˜ëŠ” ë©”ì„œë“œ
     public boolean search(String str){
         if(str.length() == 0) {
-            return false; // ºó ¹®ÀÚ¿­Àº °Ë»öÇÏÁö ¾ÊÀ½
+            return false; // ë¹ˆ ë¬¸ìì—´ì€ ê²€ìƒ‰í•˜ì§€ ì•ŠìŒ
         }
-        return searchProcess(root, str, str.length(), 0); // ·çÆ®¿¡¼­ ½ÃÀÛÇÏ¿© ¹®ÀÚ¿­À» °Ë»öÇÏ´Â Àç±Í È£Ãâ
+        return searchProcess(root, str, str.length(), 0); // ë£¨íŠ¸ì—ì„œ ì‹œì‘í•˜ì—¬ ë¬¸ìì—´ì„ ê²€ìƒ‰í•˜ëŠ” ì¬ê·€ í˜¸ì¶œ
     }
 
-    // ¹®ÀÚ¿­ °Ë»öÀ» ½ÇÁ¦·Î Ã³¸®ÇÏ´Â Àç±Í ¸Ş¼­µå
+    // ë¬¸ìì—´ ê²€ìƒ‰ì„ ì‹¤ì œë¡œ ì²˜ë¦¬í•˜ëŠ” ì¬ê·€ ë©”ì„œë“œ
     private boolean searchProcess(Node node, String str, int size, int index){
-        if(size == index) { // ¹®ÀÚ¿­ ³¡¿¡ µµ´ŞÇÑ °æ¿ì
-            return node.isEnd(); // ÇØ´ç ³ëµå°¡ ³¡ ³ëµåÀÎÁö ¿©ºÎ¸¦ ¹İÈ¯
+        if(size == index) { // ë¬¸ìì—´ ëì— ë„ë‹¬í•œ ê²½ìš°
+            return node.isEnd(); // í•´ë‹¹ ë…¸ë“œê°€ ë ë…¸ë“œì¸ì§€ ì—¬ë¶€ë¥¼ ë°˜í™˜
         }
-        Node child = node.find(str.charAt(index)); // ÇöÀç ¹®ÀÚÀÇ ÀÚ½Ä ³ëµå¸¦ Ã£À½
-        if(child == null) return false; // ÀÚ½Ä ³ëµå°¡ ¾øÀ¸¸é °Ë»ö ½ÇÆĞ
-        return searchProcess(child, str, size, index+1); // ÀÚ½Ä ³ëµå¿¡¼­ Àç±ÍÀûÀ¸·Î °Ë»ö
+        Node child = node.find(str.charAt(index)); // í˜„ì¬ ë¬¸ìì˜ ìì‹ ë…¸ë“œë¥¼ ì°¾ìŒ
+        if(child == null) return false; // ìì‹ ë…¸ë“œê°€ ì—†ìœ¼ë©´ ê²€ìƒ‰ ì‹¤íŒ¨
+        return searchProcess(child, str, size, index+1); // ìì‹ ë…¸ë“œì—ì„œ ì¬ê·€ì ìœ¼ë¡œ ê²€ìƒ‰
     }
 }
 
-// Trie¿¡ ÀúÀåµÇ´Â ³ëµå Å¬·¡½º
+// Trieì— ì €ì¥ë˜ëŠ” ë…¸ë“œ í´ë˜ìŠ¤
 class Node {
-    private char key; // ³ëµåÀÇ ¹®ÀÚ °ª
-    private String data; // ¹®ÀÚ¿­ µ¥ÀÌÅÍ (´Ü¾î°¡ ³¡³¯ ¶§ ÀúÀå)
-    private Node [] child; // ÀÚ½Ä ³ëµå ¹è¿­ (26°³ÀÇ ÀÚ½Ä ³ëµå, ¾ËÆÄºª ¼Ò¹®ÀÚ ±âÁØ)
-    private boolean isEnd; // ´Ü¾îÀÇ ³¡À» ³ªÅ¸³»´Â ÇÃ·¡±×
+    private char key; // ë…¸ë“œì˜ ë¬¸ì ê°’
+    private String data; // ë¬¸ìì—´ ë°ì´í„° (ë‹¨ì–´ê°€ ëë‚  ë•Œ ì €ì¥)
+    private Node [] child; // ìì‹ ë…¸ë“œ ë°°ì—´ (26ê°œì˜ ìì‹ ë…¸ë“œ, ì•ŒíŒŒë²³ ì†Œë¬¸ì ê¸°ì¤€)
+    private boolean isEnd; // ë‹¨ì–´ì˜ ëì„ ë‚˜íƒ€ë‚´ëŠ” í”Œë˜ê·¸
 
-    // »ı¼ºÀÚ: key °ª°ú ³¡ ¿©ºÎ¸¦ ÃÊ±âÈ­
+    // ìƒì„±ì: key ê°’ê³¼ ë ì—¬ë¶€ë¥¼ ì´ˆê¸°í™”
     Node(char key, boolean isEnd){
         this.key = key;
         this.isEnd = isEnd;
-        child = new Node[26]; // ¾ËÆÄºª ¼Ò¹®ÀÚ 26°³¸¦ À§ÇÑ ¹è¿­
+        child = new Node[26]; // ì•ŒíŒŒë²³ ì†Œë¬¸ì 26ê°œë¥¼ ìœ„í•œ ë°°ì—´
     }
 
-    // ÀÚ½Ä ³ëµå¸¦ Ãß°¡ÇÏ´Â ¸Ş¼­µå
+    // ìì‹ ë…¸ë“œë¥¼ ì¶”ê°€í•˜ëŠ” ë©”ì„œë“œ
     public Node add(char key, boolean isEnd){
-        if(this.child[key - 'a'] == null){ // ÇØ´ç ¹®ÀÚÀÇ ÀÚ½Ä ³ëµå°¡ ¾øÀ¸¸é
-            child[key - 'a'] = new Node(key, isEnd); // »õ ³ëµå¸¦ »ı¼º
+        if(this.child[key - 'a'] == null){ // í•´ë‹¹ ë¬¸ìì˜ ìì‹ ë…¸ë“œê°€ ì—†ìœ¼ë©´
+            child[key - 'a'] = new Node(key, isEnd); // ìƒˆ ë…¸ë“œë¥¼ ìƒì„±
         }
-        return child[key - 'a']; // ÇØ´ç ¹®ÀÚÀÇ ÀÚ½Ä ³ëµå¸¦ ¹İÈ¯
+        return child[key - 'a']; // í•´ë‹¹ ë¬¸ìì˜ ìì‹ ë…¸ë“œë¥¼ ë°˜í™˜
     }
 
-    // ÀÚ½Ä ³ëµå¸¦ Ã£´Â ¸Ş¼­µå
+    // ìì‹ ë…¸ë“œë¥¼ ì°¾ëŠ” ë©”ì„œë“œ
     public Node find(char key){
-        return child[key - 'a']; // ÇØ´ç ¹®ÀÚÀÇ ÀÚ½Ä ³ëµå¸¦ ¹İÈ¯
+        return child[key - 'a']; // í•´ë‹¹ ë¬¸ìì˜ ìì‹ ë…¸ë“œë¥¼ ë°˜í™˜
     }
 
-    // µ¥ÀÌÅÍ(´Ü¾î) ¼³Á¤
+    // ë°ì´í„°(ë‹¨ì–´) ì„¤ì •
     public void setData(String data) {
         this.data = data;
     }
 
-    // ³¡ ³ëµå ¼³Á¤
+    // ë ë…¸ë“œ ì„¤ì •
     public void setEnd(boolean end) {
         isEnd = end;
     }
 
-    // µ¥ÀÌÅÍ(´Ü¾î) ¹İÈ¯
+    // ë°ì´í„°(ë‹¨ì–´) ë°˜í™˜
     public String getData() {
         return data;
     }
 
-    // ³¡ ³ëµå ¿©ºÎ ¹İÈ¯
+    // ë ë…¸ë“œ ì—¬ë¶€ ë°˜í™˜
     public boolean isEnd() {
         return isEnd;
     }

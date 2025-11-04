@@ -3,98 +3,98 @@ import java.util.*;
 
 public class LCA1 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-17
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 11:41
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-17
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 11:41
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 11437
-     * ¹®Á¦ ÀÌ¸§ : LCA
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥²
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 11437
+     * ë¬¸ì œ ì´ë¦„ : LCA
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…¢
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìˆëŠ” ë¬¸ì œ í’€ì´
      *
      */
-    // Æ®¸®¸¦ ÀÎÁ¢ ¸®½ºÆ® ÇüÅÂ·Î ÀúÀå
+    // íŠ¸ë¦¬ë¥¼ ì¸ì ‘ ë¦¬ìŠ¤íŠ¸ í˜•íƒœë¡œ ì €ì¥
     static ArrayList<ArrayList<Integer>> tree = new ArrayList<>();
 
     /*
-     * depth[i] : i¹ø ³ëµåÀÇ ±íÀÌ (·çÆ®´Â 0)
-     * parent[i] : i¹ø ³ëµåÀÇ ºÎ¸ğ ³ëµå ¹øÈ£
-     * visited[i] : BFS ¼öÇà Áß ¹æ¹® ¿©ºÎ¸¦ Ã¼Å©
+     * depth[i] : ië²ˆ ë…¸ë“œì˜ ê¹Šì´ (ë£¨íŠ¸ëŠ” 0)
+     * parent[i] : ië²ˆ ë…¸ë“œì˜ ë¶€ëª¨ ë…¸ë“œ ë²ˆí˜¸
+     * visited[i] : BFS ìˆ˜í–‰ ì¤‘ ë°©ë¬¸ ì—¬ë¶€ë¥¼ ì²´í¬
      */
     static int[] depth;
     static int[] parent;
     static boolean[] visited;
 
     /**
-     * µÎ ³ëµåÀÇ ÃÖ¼Ò °øÅë Á¶»ó(LCA: Lowest Common Ancestor)À» ±¸ÇÏ´Â ÇÔ¼ö
-     * @param a ³ëµå a
-     * @param b ³ëµå b
-     * @return ³ëµå a¿Í bÀÇ ÃÖ¼Ò °øÅë Á¶»ó
+     * ë‘ ë…¸ë“œì˜ ìµœì†Œ ê³µí†µ ì¡°ìƒ(LCA: Lowest Common Ancestor)ì„ êµ¬í•˜ëŠ” í•¨ìˆ˜
+     * @param a ë…¸ë“œ a
+     * @param b ë…¸ë“œ b
+     * @return ë…¸ë“œ aì™€ bì˜ ìµœì†Œ ê³µí†µ ì¡°ìƒ
      */
     static int lca(int a, int b) {
-        // Ç×»ó a°¡ ´õ ±íÀº ³ëµå°¡ µÇµµ·Ï ¼³Á¤
+        // í•­ìƒ aê°€ ë” ê¹Šì€ ë…¸ë“œê°€ ë˜ë„ë¡ ì„¤ì •
         if (depth[a] < depth[b]) {
             int temp = a;
             a = b;
             b = temp;
         }
 
-        // ±íÀÌ¸¦ ¸ÂÃß±â À§ÇØ a¸¦ ºÎ¸ğ ¹æÇâÀ¸·Î ÀÌµ¿
+        // ê¹Šì´ë¥¼ ë§ì¶”ê¸° ìœ„í•´ aë¥¼ ë¶€ëª¨ ë°©í–¥ìœ¼ë¡œ ì´ë™
         while (depth[a] != depth[b]) {
             a = parent[a];
         }
 
-        // µÎ ³ëµå°¡ °°¾ÆÁú ¶§±îÁö µ¿½Ã¿¡ ºÎ¸ğ¸¦ µû¶ó ÀÌµ¿
+        // ë‘ ë…¸ë“œê°€ ê°™ì•„ì§ˆ ë•Œê¹Œì§€ ë™ì‹œì— ë¶€ëª¨ë¥¼ ë”°ë¼ ì´ë™
         while (a != b) {
             a = parent[a];
             b = parent[b];
         }
 
-        // °á±¹ a¿Í b°¡ ¸¸³ª´Â ÁöÁ¡ÀÌ ÃÖ¼Ò °øÅë Á¶»ó
+        // ê²°êµ­ aì™€ bê°€ ë§Œë‚˜ëŠ” ì§€ì ì´ ìµœì†Œ ê³µí†µ ì¡°ìƒ
         return a;
     }
 
     /**
-     * BFS(³Êºñ ¿ì¼± Å½»ö)¸¦ ÅëÇØ °¢ ³ëµåÀÇ ±íÀÌ(depth)¿Í ºÎ¸ğ(parent)¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
-     * @param node Å½»ö ½ÃÀÛ ³ëµå (º¸Åë ·çÆ® ³ëµå 1¹ø)
+     * BFS(ë„ˆë¹„ ìš°ì„  íƒìƒ‰)ë¥¼ í†µí•´ ê° ë…¸ë“œì˜ ê¹Šì´(depth)ì™€ ë¶€ëª¨(parent)ë¥¼ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
+     * @param node íƒìƒ‰ ì‹œì‘ ë…¸ë“œ (ë³´í†µ ë£¨íŠ¸ ë…¸ë“œ 1ë²ˆ)
      */
     static void BFS(int node) {
         Queue<Integer> queue = new LinkedList<>();
-        queue.add(node);         // ½ÃÀÛ ³ëµå¸¦ Å¥¿¡ Ãß°¡
-        visited[node] = true;    // ½ÃÀÛ ³ëµå¸¦ ¹æ¹® Ã³¸®
+        queue.add(node);         // ì‹œì‘ ë…¸ë“œë¥¼ íì— ì¶”ê°€
+        visited[node] = true;    // ì‹œì‘ ë…¸ë“œë¥¼ ë°©ë¬¸ ì²˜ë¦¬
 
         /*
-         * level : ÇöÀç Å½»ö ÁßÀÎ ±íÀÌ
-         * nowSize : ÇöÀç ·¹º§¿¡¼­ÀÇ ³ëµå ¼ö
-         * count : ÇöÀç ±íÀÌ¿¡¼­ Ã³¸®ÇÑ ³ëµå ¼ö
+         * level : í˜„ì¬ íƒìƒ‰ ì¤‘ì¸ ê¹Šì´
+         * nowSize : í˜„ì¬ ë ˆë²¨ì—ì„œì˜ ë…¸ë“œ ìˆ˜
+         * count : í˜„ì¬ ê¹Šì´ì—ì„œ ì²˜ë¦¬í•œ ë…¸ë“œ ìˆ˜
          */
         int level = 1;
         int nowSize = 1;
         int count = 0;
 
         while (!queue.isEmpty()) {
-            int now = queue.poll();  // Å¥¿¡¼­ ³ëµå¸¦ ²¨³¿
+            int now = queue.poll();  // íì—ì„œ ë…¸ë“œë¥¼ êº¼ëƒ„
 
             for (int next : tree.get(now)) {
                 if (!visited[next]) {
-                    visited[next] = true;     // ¹æ¹® Ã³¸®
-                    queue.add(next);          // ÀÚ½Ä ³ëµå Å¥¿¡ Ãß°¡
-                    parent[next] = now;       // ÇöÀç ³ëµå¸¦ ÀÚ½ÄÀÇ ºÎ¸ğ·Î ÀúÀå
-                    depth[next] = level;      // ÀÚ½Ä ³ëµåÀÇ ±íÀÌ¸¦ ÇöÀç ·¹º§·Î ÀúÀå
+                    visited[next] = true;     // ë°©ë¬¸ ì²˜ë¦¬
+                    queue.add(next);          // ìì‹ ë…¸ë“œ íì— ì¶”ê°€
+                    parent[next] = now;       // í˜„ì¬ ë…¸ë“œë¥¼ ìì‹ì˜ ë¶€ëª¨ë¡œ ì €ì¥
+                    depth[next] = level;      // ìì‹ ë…¸ë“œì˜ ê¹Šì´ë¥¼ í˜„ì¬ ë ˆë²¨ë¡œ ì €ì¥
                 }
             }
 
-            count++;  // ÇöÀç ±íÀÌ¿¡¼­ Ã³¸®ÇÑ ³ëµå ¼ö Áõ°¡
+            count++;  // í˜„ì¬ ê¹Šì´ì—ì„œ ì²˜ë¦¬í•œ ë…¸ë“œ ìˆ˜ ì¦ê°€
 
-            // ÇöÀç ±íÀÌÀÇ ¸ğµç ³ëµå¸¦ Ã³¸®ÇßÀ¸¸é ´ÙÀ½ ±íÀÌ·Î ÀÌµ¿
+            // í˜„ì¬ ê¹Šì´ì˜ ëª¨ë“  ë…¸ë“œë¥¼ ì²˜ë¦¬í–ˆìœ¼ë©´ ë‹¤ìŒ ê¹Šì´ë¡œ ì´ë™
             if (count == nowSize) {
                 count = 0;
-                nowSize = queue.size(); // ´ÙÀ½ ±íÀÌ¿¡ ÀÖ´Â ³ëµå ¼ö
-                level++;                // ±íÀÌ Áõ°¡
+                nowSize = queue.size(); // ë‹¤ìŒ ê¹Šì´ì— ìˆëŠ” ë…¸ë“œ ìˆ˜
+                level++;                // ê¹Šì´ ì¦ê°€
             }
         }
     }
@@ -104,43 +104,43 @@ public class LCA1 {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
 
-        int node = Integer.parseInt(br.readLine()); // ³ëµåÀÇ °³¼ö ÀÔ·Â
+        int node = Integer.parseInt(br.readLine()); // ë…¸ë“œì˜ ê°œìˆ˜ ì…ë ¥
 
         /*
-         * Æ®¸® Á¤º¸ ÃÊ±âÈ­ (1¹ø ³ëµåºÎÅÍ ½ÃÀÛÇÏ±â À§ÇØ node+1 Å©±â·Î ¹è¿­ »ı¼º)
+         * íŠ¸ë¦¬ ì •ë³´ ì´ˆê¸°í™” (1ë²ˆ ë…¸ë“œë¶€í„° ì‹œì‘í•˜ê¸° ìœ„í•´ node+1 í¬ê¸°ë¡œ ë°°ì—´ ìƒì„±)
          */
         depth = new int[node + 1];
         parent = new int[node + 1];
         visited = new boolean[node + 1];
 
-        // ÀÎÁ¢ ¸®½ºÆ® ÃÊ±âÈ­
+        // ì¸ì ‘ ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
         for (int i = 0; i <= node; i++) {
             tree.add(new ArrayList<>());
         }
 
-        // °£¼± Á¤º¸ ÀÔ·Â (Æ®¸®´Â node - 1°³ÀÇ °£¼±À¸·Î ±¸¼º)
+        // ê°„ì„  ì •ë³´ ì…ë ¥ (íŠ¸ë¦¬ëŠ” node - 1ê°œì˜ ê°„ì„ ìœ¼ë¡œ êµ¬ì„±)
         for (int i = 0; i < node - 1; i++) {
             st = new StringTokenizer(br.readLine());
             int u = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
 
-            tree.get(u).add(v); // u¿Í v´Â ¾ç¹æÇâ ¿¬°á
+            tree.get(u).add(v); // uì™€ vëŠ” ì–‘ë°©í–¥ ì—°ê²°
             tree.get(v).add(u);
         }
 
-        int query = Integer.parseInt(br.readLine()); // ÃÖ¼Ò °øÅë Á¶»óÀ» ±¸ÇÒ Äõ¸® ¼ö
+        int query = Integer.parseInt(br.readLine()); // ìµœì†Œ ê³µí†µ ì¡°ìƒì„ êµ¬í•  ì¿¼ë¦¬ ìˆ˜
 
-        BFS(1); // ·çÆ® ³ëµå(1¹ø)¸¦ ±âÁØÀ¸·Î Æ®¸® Å½»öÇÏ¿© depth¿Í parent ¼³Á¤
+        BFS(1); // ë£¨íŠ¸ ë…¸ë“œ(1ë²ˆ)ë¥¼ ê¸°ì¤€ìœ¼ë¡œ íŠ¸ë¦¬ íƒìƒ‰í•˜ì—¬ depthì™€ parent ì„¤ì •
 
-        // °¢ Äõ¸®¸¶´Ù ÃÖ¼Ò °øÅë Á¶»ó Ãâ·Â
+        // ê° ì¿¼ë¦¬ë§ˆë‹¤ ìµœì†Œ ê³µí†µ ì¡°ìƒ ì¶œë ¥
         for (int i = 0; i < query; i++) {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
 
-            bw.write(lca(a, b) + "\n"); // ÃÖ¼Ò °øÅë Á¶»óÀ» Ãâ·Â
+            bw.write(lca(a, b) + "\n"); // ìµœì†Œ ê³µí†µ ì¡°ìƒì„ ì¶œë ¥
         }
 
-        bw.flush(); // Ãâ·Â ¹öÆÛ ºñ¿ì±â
+        bw.flush(); // ì¶œë ¥ ë²„í¼ ë¹„ìš°ê¸°
     }
 }

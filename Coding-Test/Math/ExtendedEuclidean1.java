@@ -3,44 +3,44 @@ import java.util.*;
 
 public class ExtendedEuclidean1 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-03
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 13:11
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-03
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 13:11
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 21568
-     * ¹®Á¦ ÀÌ¸§ : Ax+By=C
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥°
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 21568
+     * ë¬¸ì œ ì´ë¦„ : Ax+By=C
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â… 
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * Ã¥¿¡ ÀÖ´Â ¹®Á¦ º¹½À
+     * ì±…ì— ìˆëŠ” ë¬¸ì œ ë³µìŠµ
      */
     /*
-     * È®Àå À¯Å¬¸®µå È£Á¦¹ı(Extended Euclidean Algorithm) ±¸Çö
+     * í™•ì¥ ìœ í´ë¦¬ë“œ í˜¸ì œë²•(Extended Euclidean Algorithm) êµ¬í˜„
      *
-     * È®Àå À¯Å¬¸®µå È£Á¦¹ıÀº ax + by = gcd(a, b)¸¦ ¸¸Á·ÇÏ´Â x, y¸¦ Ã£´Â ¾Ë°í¸®ÁòÀÌ´Ù.
-     * ÀÏ¹İÀûÀÎ À¯Å¬¸®µå È£Á¦¹ıÀ» È®ÀåÇÏ¿© º£ÁÖ Ç×µî½Ä(B?zout's identity)À» Àû¿ëÇÑ °Í.
+     * í™•ì¥ ìœ í´ë¦¬ë“œ í˜¸ì œë²•ì€ ax + by = gcd(a, b)ë¥¼ ë§Œì¡±í•˜ëŠ” x, yë¥¼ ì°¾ëŠ” ì•Œê³ ë¦¬ì¦˜ì´ë‹¤.
+     * ì¼ë°˜ì ì¸ ìœ í´ë¦¬ë“œ í˜¸ì œë²•ì„ í™•ì¥í•˜ì—¬ ë² ì£¼ í•­ë“±ì‹(B?zout's identity)ì„ ì ìš©í•œ ê²ƒ.
      */
     static long[] extendedEuclidean(long a, long b) {
-        // b°¡ 0ÀÌ¸é, gcd(a, 0) = aÀÌ°í, x = 1, y = 0ÀÌ ¼º¸³ÇÑ´Ù.
+        // bê°€ 0ì´ë©´, gcd(a, 0) = aì´ê³ , x = 1, y = 0ì´ ì„±ë¦½í•œë‹¤.
         if (b == 0) {
             return new long[]{a, 1, 0}; // {gcd, x, y}
         }
 
-        // Àç±ÍÀûÀ¸·Î gcd(b, a % b)¸¦ ±¸ÇÏ°í x, y °ªÀ» °»½Å
+        // ì¬ê·€ì ìœ¼ë¡œ gcd(b, a % b)ë¥¼ êµ¬í•˜ê³  x, y ê°’ì„ ê°±ì‹ 
         long[] next = extendedEuclidean(b, a % b);
         long gcd = next[0]; // gcd(a, b)
-        long x = next[2];   // ÀÌÀü ´Ü°èÀÇ y °ªÀÌ »õ·Î¿î x °ª
-        long y = next[1] - (a / b) * next[2]; // º£ÁÖ Ç×µî½ÄÀ» »ç¿ëÇÏ¿© y °ª °»½Å
+        long x = next[2];   // ì´ì „ ë‹¨ê³„ì˜ y ê°’ì´ ìƒˆë¡œìš´ x ê°’
+        long y = next[1] - (a / b) * next[2]; // ë² ì£¼ í•­ë“±ì‹ì„ ì‚¬ìš©í•˜ì—¬ y ê°’ ê°±ì‹ 
 
-        return new long[]{gcd, x, y}; // {gcd, x, y} ¹İÈ¯
+        return new long[]{gcd, x, y}; // {gcd, x, y} ë°˜í™˜
     }
 
     /*
-     * À¯Å¬¸®µå È£Á¦¹ı(Euclidean Algorithm) ±¸Çö
+     * ìœ í´ë¦¬ë“œ í˜¸ì œë²•(Euclidean Algorithm) êµ¬í˜„
      *
-     * µÎ ¼ö a, bÀÇ ÃÖ´ë°ø¾à¼ö(GCD)¸¦ ±¸ÇÏ´Â ÇÔ¼ö
+     * ë‘ ìˆ˜ a, bì˜ ìµœëŒ€ê³µì•½ìˆ˜(GCD)ë¥¼ êµ¬í•˜ëŠ” í•¨ìˆ˜
      */
     static long gcd(long a, long b) {
         if (b == 0) {
@@ -50,35 +50,35 @@ public class ExtendedEuclidean1 {
     }
 
     public static void main(String[] args) throws IOException {
-        // ºü¸¥ ÀÔ·ÂÀ» À§ÇÑ BufferedReader »ç¿ë
+        // ë¹ ë¥¸ ì…ë ¥ì„ ìœ„í•œ BufferedReader ì‚¬ìš©
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        // ÀÔ·Â°ª ÀĞ±â (a, b, c)
+        // ì…ë ¥ê°’ ì½ê¸° (a, b, c)
         StringTokenizer st = new StringTokenizer(br.readLine());
         long a = Long.parseLong(st.nextToken());
         long b = Long.parseLong(st.nextToken());
         long c = Long.parseLong(st.nextToken());
 
-        // a¿Í bÀÇ ÃÖ´ë°ø¾à¼ö(GCD) °è»ê
+        // aì™€ bì˜ ìµœëŒ€ê³µì•½ìˆ˜(GCD) ê³„ì‚°
         long gcd = gcd(a, b);
 
-        // c°¡ gcd(a, b)ÀÇ ¹è¼ö°¡ ¾Æ´Ï¸é Á¤¼ö ÇØ°¡ Á¸ÀçÇÏÁö ¾ÊÀ½
+        // cê°€ gcd(a, b)ì˜ ë°°ìˆ˜ê°€ ì•„ë‹ˆë©´ ì •ìˆ˜ í•´ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŒ
         if (c % gcd != 0) {
-            System.out.println("-1"); // Á¤¼ö ÇØ°¡ ¾øÀ½À» ÀÇ¹Ì
+            System.out.println("-1"); // ì •ìˆ˜ í•´ê°€ ì—†ìŒì„ ì˜ë¯¸
         } else {
-            // c¸¦ gcd·Î ³ª´« ¸ò (È®Àå À¯Å¬¸®µå ¾Ë°í¸®ÁòÀ» Àû¿ëÇÒ ¹è¼ö)
+            // cë¥¼ gcdë¡œ ë‚˜ëˆˆ ëª« (í™•ì¥ ìœ í´ë¦¬ë“œ ì•Œê³ ë¦¬ì¦˜ì„ ì ìš©í•  ë°°ìˆ˜)
             long divisor = c / gcd;
 
-            // È®Àå À¯Å¬¸®µå ¾Ë°í¸®Áò ½ÇÇàÇÏ¿© x, y ±¸ÇÏ±â
+            // í™•ì¥ ìœ í´ë¦¬ë“œ ì•Œê³ ë¦¬ì¦˜ ì‹¤í–‰í•˜ì—¬ x, y êµ¬í•˜ê¸°
             long [] result = extendedEuclidean(a, b);
-            long x = result[1] * divisor; // x °ªÀ» c/gcd ¹è¸¸Å­ Á¶Á¤
-            long y = result[2] * divisor; // y °ªÀ» c/gcd ¹è¸¸Å­ Á¶Á¤
+            long x = result[1] * divisor; // x ê°’ì„ c/gcd ë°°ë§Œí¼ ì¡°ì •
+            long y = result[2] * divisor; // y ê°’ì„ c/gcd ë°°ë§Œí¼ ì¡°ì •
 
-            // °á°ú Ãâ·Â (Ax + By = CÀÇ Á¤¼öÇØ)
+            // ê²°ê³¼ ì¶œë ¥ (Ax + By = Cì˜ ì •ìˆ˜í•´)
             System.out.println(x + " " + y);
         }
 
-        // ¸®¼Ò½º Á¤¸®
+        // ë¦¬ì†ŒìŠ¤ ì •ë¦¬
         br.close();
     }
 }

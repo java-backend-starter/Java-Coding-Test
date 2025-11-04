@@ -2,57 +2,57 @@ import java.util.*;
 
 public class Totient1 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-03-25
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 14:30
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ìž‘ì„±ì¼ì‹œ : 2025-03-25
+     * ìµœì´ˆ ìž‘ì„±ì‹œê°„ : 14:30
+     * ìµœì´ˆ ìž‘ì„±ìž : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 11689
-     * ¹®Á¦ ÀÌ¸§ : GCD(n, k) = 1
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥°
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 11689
+     * ë¬¸ì œ ì´ë¦„ : GCD(n, k) = 1
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â… 
      *
-     * ÀÛ¼º ¸ñÀû
+     * ìž‘ì„± ëª©ì 
      *
-     * Ã¥¿¡ ÀÖ´Â ¹®Á¦ º¹½À
+     * ì±…ì— ìžˆëŠ” ë¬¸ì œ ë³µìŠµ
      */
     /*
-     * ¿ÀÀÏ·¯ÀÇ ÇÇ ¾Ë°í¸®Áò (Euler's Totient Function)
-     * ¿ÀÀÏ·¯ÀÇ ÇÇ ÇÔ¼ö(¥õ(n))´Â 1ºÎÅÍ n±îÁöÀÇ ¼ýÀÚ Áß n°ú ¼­·Î¼ÒÀÎ ¼ýÀÚÀÇ °³¼ö¸¦ ±¸ÇÏ´Â ÇÔ¼öÀÌ´Ù.
+     * ì˜¤ì¼ëŸ¬ì˜ í”¼ ì•Œê³ ë¦¬ì¦˜ (Euler's Totient Function)
+     * ì˜¤ì¼ëŸ¬ì˜ í”¼ í•¨ìˆ˜(Ï†(n))ëŠ” 1ë¶€í„° nê¹Œì§€ì˜ ìˆ«ìž ì¤‘ nê³¼ ì„œë¡œì†Œì¸ ìˆ«ìžì˜ ê°œìˆ˜ë¥¼ êµ¬í•˜ëŠ” í•¨ìˆ˜ì´ë‹¤.
      *
-     * ¿ÀÀÏ·¯ÀÇ ÇÇ ÇÔ¼öÀÇ °è»ê¹ý:
-     * 1. nÀÇ ¼ÒÀÎ¼ö¸¦ Ã£´Â´Ù.
-     * 2. °¢ ¼ÒÀÎ¼ö p¿¡ ´ëÇØ ¥õ(n) = n * (1 - 1/p) ¸¦ Àû¿ëÇÑ´Ù.
-     * 3. ³²Àº nÀÌ ¼Ò¼ö¶ó¸é, ÇÑ ¹ø ´õ Ã³¸®ÇÑ´Ù.
+     * ì˜¤ì¼ëŸ¬ì˜ í”¼ í•¨ìˆ˜ì˜ ê³„ì‚°ë²•:
+     * 1. nì˜ ì†Œì¸ìˆ˜ë¥¼ ì°¾ëŠ”ë‹¤.
+     * 2. ê° ì†Œì¸ìˆ˜ pì— ëŒ€í•´ Ï†(n) = n * (1 - 1/p) ë¥¼ ì ìš©í•œë‹¤.
+     * 3. ë‚¨ì€ nì´ ì†Œìˆ˜ë¼ë©´, í•œ ë²ˆ ë” ì²˜ë¦¬í•œë‹¤.
      *
-     * ½Ã°£º¹Àâµµ:
-     * - ÀÌ ±¸ÇöÀº O(¡în)À¸·Î µ¿ÀÛÇÏ¸ç, ¼ÒÀÎ¼öºÐÇØ¸¦ ±â¹ÝÀ¸·Î ÇÑ´Ù.
+     * ì‹œê°„ë³µìž¡ë„:
+     * - ì´ êµ¬í˜„ì€ O(âˆšn)ìœ¼ë¡œ ë™ìž‘í•˜ë©°, ì†Œì¸ìˆ˜ë¶„í•´ë¥¼ ê¸°ë°˜ìœ¼ë¡œ í•œë‹¤.
      *
-     * ´Ù¸¥ ±¸Çö ¹æ¹ý
-     * 1. ±âº»ÀûÀÎ Á¤ÀÇ¸¦ ÀÌ¿ëÇÑ O(n) ºê·çÆ®Æ÷½º ¹æ¹ý
-     * 2. ¿¡¶óÅä½ºÅ×³×½ºÀÇ Ã¼¸¦ ÀÌ¿ëÇÑ O(n log log n) ÀüÃ³¸® ¹æ¹ý
+     * ë‹¤ë¥¸ êµ¬í˜„ ë°©ë²•
+     * 1. ê¸°ë³¸ì ì¸ ì •ì˜ë¥¼ ì´ìš©í•œ O(n) ë¸Œë£¨íŠ¸í¬ìŠ¤ ë°©ë²•
+     * 2. ì—ë¼í† ìŠ¤í…Œë„¤ìŠ¤ì˜ ì²´ë¥¼ ì´ìš©í•œ O(n log log n) ì „ì²˜ë¦¬ ë°©ë²•
      */
     static long Totient(long value) {
-        long result = value; // °á°ú°ª ÃÊ±âÈ­ (ÃÊ±â°ª: value)
+        long result = value; // ê²°ê³¼ê°’ ì´ˆê¸°í™” (ì´ˆê¸°ê°’: value)
 
-        // 2ºÎÅÍ sqrt(value)±îÁöÀÇ ¸ðµç °ª(i)¿¡ ´ëÇØ °Ë»ç
+        // 2ë¶€í„° sqrt(value)ê¹Œì§€ì˜ ëª¨ë“  ê°’(i)ì— ëŒ€í•´ ê²€ì‚¬
         for (long i = 2; i <= Math.sqrt(value); i++) {
-            // value°¡ i·Î ³ª´©¾î ¶³¾îÁø´Ù¸é (Áï, i°¡ valueÀÇ ¼ÒÀÎ¼ö¶ó¸é)
+            // valueê°€ ië¡œ ë‚˜ëˆ„ì–´ ë–¨ì–´ì§„ë‹¤ë©´ (ì¦‰, iê°€ valueì˜ ì†Œì¸ìˆ˜ë¼ë©´)
             if (value % i == 0) {
-                result -= result / i; // ¿ÀÀÏ·¯ÀÇ ÇÇ °ø½Ä Àû¿ë: result *= (1 - 1/i)
+                result -= result / i; // ì˜¤ì¼ëŸ¬ì˜ í”¼ ê³µì‹ ì ìš©: result *= (1 - 1/i)
 
-                // value¿¡¼­ ÇØ´ç ¼ÒÀÎ¼ö i¸¦ ¸ðµÎ Á¦°Å
+                // valueì—ì„œ í•´ë‹¹ ì†Œì¸ìˆ˜ ië¥¼ ëª¨ë‘ ì œê±°
                 while (value % i == 0) {
                     value /= i;
                 }
             }
         }
 
-        // ¸¶Áö¸· ³²Àº °ªÀÌ 1º¸´Ù Å©´Ù¸é, ÀÌ´Â ¼Ò¼öÀÌ¹Ç·Î Ãß°¡ Ã³¸®
+        // ë§ˆì§€ë§‰ ë‚¨ì€ ê°’ì´ 1ë³´ë‹¤ í¬ë‹¤ë©´, ì´ëŠ” ì†Œìˆ˜ì´ë¯€ë¡œ ì¶”ê°€ ì²˜ë¦¬
         if (value > 1) {
             result -= result / value;
         }
 
-        return result; // ¿ÀÀÏ·¯ÀÇ ÇÇ ÇÔ¼ö °ª ¹ÝÈ¯
+        return result; // ì˜¤ì¼ëŸ¬ì˜ í”¼ í•¨ìˆ˜ ê°’ ë°˜í™˜
     }
 
 

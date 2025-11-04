@@ -3,32 +3,32 @@ import java.util.*;
 
 public class TopologicalSort3 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-07
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 13:01
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-07
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 13:01
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1948
-     * ¹®Á¦ ÀÌ¸§ : ÀÓ°è °æ·Î
-     * ¹®Á¦ ³­ÀÌµµ : ÇÃ·¹Æ¼³Ñ ¥´
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1948
+     * ë¬¸ì œ ì´ë¦„ : ì„ê³„ ê²½ë¡œ
+     * ë¬¸ì œ ë‚œì´ë„ : í”Œë ˆí‹°ë„˜ â…¤
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìˆëŠ” ë¬¸ì œ í’€ì´
      */
-    // graph: Á¤¹æÇâ ±×·¡ÇÁ (µµ·Î Á¤º¸ ÀúÀå)
-    // reverse: ¿ª¹æÇâ ±×·¡ÇÁ (ÀÓ°è °æ·Î ÃßÀû¿ë)
+    // graph: ì •ë°©í–¥ ê·¸ë˜í”„ (ë„ë¡œ ì •ë³´ ì €ì¥)
+    // reverse: ì—­ë°©í–¥ ê·¸ë˜í”„ (ì„ê³„ ê²½ë¡œ ì¶”ì ìš©)
     static ArrayList<ArrayList<Node>> graph = new ArrayList<>();
     static ArrayList<ArrayList<Node>> reverse = new ArrayList<>();
 
-    static int[] indegree;    // °¢ ³ëµåÀÇ ÁøÀÔ Â÷¼ö
-    static boolean[] visited; // ¿ª¹æÇâ Å½»ö ½Ã ¹æ¹® ¿©ºÎ
-    static int[] result;      // Ãâ¹ßÁö¿¡¼­ °¢ ³ëµå±îÁö µµ´ŞÇÏ´Â µ¥ °É¸®´Â ÃÖ´ë ½Ã°£
-    static int count = 0;     // ÀÓ°è °æ·Î¿¡ Æ÷ÇÔµÈ °£¼± ¼ö
+    static int[] indegree;    // ê° ë…¸ë“œì˜ ì§„ì… ì°¨ìˆ˜
+    static boolean[] visited; // ì—­ë°©í–¥ íƒìƒ‰ ì‹œ ë°©ë¬¸ ì—¬ë¶€
+    static int[] result;      // ì¶œë°œì§€ì—ì„œ ê° ë…¸ë“œê¹Œì§€ ë„ë‹¬í•˜ëŠ” ë° ê±¸ë¦¬ëŠ” ìµœëŒ€ ì‹œê°„
+    static int count = 0;     // ì„ê³„ ê²½ë¡œì— í¬í•¨ëœ ê°„ì„  ìˆ˜
 
     /*
-     * À§»ó Á¤·ÄÀ» ¼öÇàÇÏ¸ç °¢ ³ëµå±îÁö µµ´ŞÇÏ´Â ÃÖ´ë ½Ã°£À» °è»ê
-     * Ãâ¹ß µµ½Ã¿¡¼­ ½ÃÀÛÇÏ¿© °¡´ÉÇÑ ¸ğµç °æ·Î¸¦ µû¶ó°¡¸ç ÃÖ´ë°ª °»½Å
+     * ìœ„ìƒ ì •ë ¬ì„ ìˆ˜í–‰í•˜ë©° ê° ë…¸ë“œê¹Œì§€ ë„ë‹¬í•˜ëŠ” ìµœëŒ€ ì‹œê°„ì„ ê³„ì‚°
+     * ì¶œë°œ ë„ì‹œì—ì„œ ì‹œì‘í•˜ì—¬ ê°€ëŠ¥í•œ ëª¨ë“  ê²½ë¡œë¥¼ ë”°ë¼ê°€ë©° ìµœëŒ€ê°’ ê°±ì‹ 
      */
     static void topologicalSort(int start) {
         Queue<Integer> queue = new LinkedList<>();
@@ -41,10 +41,10 @@ public class TopologicalSort3 {
                 int nextNode = next.getNode();
                 int time = next.getWeight();
 
-                // ÇöÀç °æ·Î¸¦ ÅëÇÑ ½Ã°£ °»½Å
+                // í˜„ì¬ ê²½ë¡œë¥¼ í†µí•œ ì‹œê°„ ê°±ì‹ 
                 result[nextNode] = Math.max(result[nextNode], result[now] + time);
 
-                // ÁøÀÔ Â÷¼ö °¨¼Ò
+                // ì§„ì… ì°¨ìˆ˜ ê°ì†Œ
                 indegree[nextNode]--;
                 if (indegree[nextNode] == 0) {
                     queue.offer(nextNode);
@@ -54,9 +54,9 @@ public class TopologicalSort3 {
     }
 
     /*
-     * ¿ª¹æÇâ BFS¸¦ ÅëÇØ ÃÖÀå °æ·Î¿¡ Æ÷ÇÔµÈ °£¼±ÀÇ ¼ö¸¦ ¼¼´Â °úÁ¤
-     * µµÂø µµ½ÃºÎÅÍ ½ÃÀÛÇØ¼­ Ãâ¹ß µµ½Ã±îÁö °Å²Ù·Î ÃßÀû
-     * Á¶°Ç: ÇØ´ç °£¼±ÀÌ ÃÖÀå °æ·ÎÀÇ ÀÏºÎÀÎÁö È®ÀÎ(result[now] == result[prevNode] + time)
+     * ì—­ë°©í–¥ BFSë¥¼ í†µí•´ ìµœì¥ ê²½ë¡œì— í¬í•¨ëœ ê°„ì„ ì˜ ìˆ˜ë¥¼ ì„¸ëŠ” ê³¼ì •
+     * ë„ì°© ë„ì‹œë¶€í„° ì‹œì‘í•´ì„œ ì¶œë°œ ë„ì‹œê¹Œì§€ ê±°ê¾¸ë¡œ ì¶”ì 
+     * ì¡°ê±´: í•´ë‹¹ ê°„ì„ ì´ ìµœì¥ ê²½ë¡œì˜ ì¼ë¶€ì¸ì§€ í™•ì¸(result[now] == result[prevNode] + time)
      */
     static void BFS(int start) {
         Queue<Integer> queue = new LinkedList<>();
@@ -70,11 +70,11 @@ public class TopologicalSort3 {
                 int prevNode = prev.getNode();
                 int time = prev.getWeight();
 
-                // ÀÓ°è °æ·Î Á¶°Ç ¸¸Á· ½Ã °£¼± ¼ö Áõ°¡
+                // ì„ê³„ ê²½ë¡œ ì¡°ê±´ ë§Œì¡± ì‹œ ê°„ì„  ìˆ˜ ì¦ê°€
                 if (result[now] == result[prevNode] + time) {
                     count++;
 
-                    // ¹æ¹®ÇÏÁö ¾ÊÀº ³ëµå´Â Å¥¿¡ Ãß°¡
+                    // ë°©ë¬¸í•˜ì§€ ì•Šì€ ë…¸ë“œëŠ” íì— ì¶”ê°€
                     if (!visited[prevNode]) {
                         visited[prevNode] = true;
                         queue.offer(prevNode);
@@ -88,50 +88,50 @@ public class TopologicalSort3 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
-        int city = Integer.parseInt(br.readLine());  // µµ½Ã ¼ö
-        int load = Integer.parseInt(br.readLine());  // µµ·Î ¼ö
+        int city = Integer.parseInt(br.readLine());  // ë„ì‹œ ìˆ˜
+        int load = Integer.parseInt(br.readLine());  // ë„ë¡œ ìˆ˜
 
         indegree = new int[city + 1];
         visited = new boolean[city + 1];
         result = new int[city + 1];
 
-        // ±×·¡ÇÁ ÃÊ±âÈ­
+        // ê·¸ë˜í”„ ì´ˆê¸°í™”
         for (int i = 0; i <= city; i++) {
             graph.add(new ArrayList<>());
             reverse.add(new ArrayList<>());
         }
 
-        // µµ·Î Á¤º¸ ÀÔ·Â
+        // ë„ë¡œ ì •ë³´ ì…ë ¥
         for (int i = 0; i < load; i++) {
             st = new StringTokenizer(br.readLine());
-            int u = Integer.parseInt(st.nextToken()); // Ãâ¹ß µµ½Ã
-            int v = Integer.parseInt(st.nextToken()); // µµÂø µµ½Ã
-            int w = Integer.parseInt(st.nextToken()); // ¼Ò¿ä ½Ã°£
+            int u = Integer.parseInt(st.nextToken()); // ì¶œë°œ ë„ì‹œ
+            int v = Integer.parseInt(st.nextToken()); // ë„ì°© ë„ì‹œ
+            int w = Integer.parseInt(st.nextToken()); // ì†Œìš” ì‹œê°„
 
             graph.get(u).add(new Node(v, w));
             reverse.get(v).add(new Node(u, w));
-            indegree[v]++;  // µµÂø µµ½ÃÀÇ ÁøÀÔ Â÷¼ö Áõ°¡
+            indegree[v]++;  // ë„ì°© ë„ì‹œì˜ ì§„ì… ì°¨ìˆ˜ ì¦ê°€
         }
 
-        // Ãâ¹ß µµ½Ã¿Í µµÂø µµ½Ã ÀÔ·Â
+        // ì¶œë°œ ë„ì‹œì™€ ë„ì°© ë„ì‹œ ì…ë ¥
         st = new StringTokenizer(br.readLine());
         int start = Integer.parseInt(st.nextToken());
         int end = Integer.parseInt(st.nextToken());
 
-        // À§»ó Á¤·ÄÀ» ÅëÇØ ÃÖÀå °æ·Î °è»ê
+        // ìœ„ìƒ ì •ë ¬ì„ í†µí•´ ìµœì¥ ê²½ë¡œ ê³„ì‚°
         topologicalSort(start);
 
-        // ÃÖÀå °æ·Î¿¡ Æ÷ÇÔµÈ °£¼± ¼ö °è»ê
+        // ìµœì¥ ê²½ë¡œì— í¬í•¨ëœ ê°„ì„  ìˆ˜ ê³„ì‚°
         BFS(end);
 
-        // °á°ú Ãâ·Â: ÃÑ ¼Ò¿ä ½Ã°£, ÀÓ°è °æ·Î °£¼± ¼ö
+        // ê²°ê³¼ ì¶œë ¥: ì´ ì†Œìš” ì‹œê°„, ì„ê³„ ê²½ë¡œ ê°„ì„  ìˆ˜
         System.out.println(result[end]);
         System.out.println(count);
     }
 }
 
 /*
- * Node: ¿¬°áµÈ µµ½Ã¿Í ¼Ò¿ä ½Ã°£ Á¤º¸¸¦ ´ã´Â Å¬·¡½º
+ * Node: ì—°ê²°ëœ ë„ì‹œì™€ ì†Œìš” ì‹œê°„ ì •ë³´ë¥¼ ë‹´ëŠ” í´ë˜ìŠ¤
  */
 class Node {
     private int node;

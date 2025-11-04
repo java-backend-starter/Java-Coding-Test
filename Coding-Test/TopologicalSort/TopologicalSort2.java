@@ -3,28 +3,28 @@ import java.util.*;
 
 public class TopologicalSort2 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-07
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 12:18
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-07
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 12:18
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 2252
-     * ¹®Á¦ ÀÌ¸§ : °ÔÀÓ °³¹ß
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥²
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 2252
+     * ë¬¸ì œ ì´ë¦„ : ê²Œì„ ê°œë°œ
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…¢
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìˆëŠ” ë¬¸ì œ í’€ì´
      */
     static ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
-    static int[] indegree;     // °¢ °Ç¹°ÀÇ ÁøÀÔ Â÷¼ö
-    static int[] buildCost;    // °¢ °Ç¹°ÀÇ °Ç¼³ ºñ¿ë
-    static int[] result;       // ´©Àû °Ç¼³ ½Ã°£ (¼±Çà °Ç¹° Æ÷ÇÔ)
+    static int[] indegree;     // ê° ê±´ë¬¼ì˜ ì§„ì… ì°¨ìˆ˜
+    static int[] buildCost;    // ê° ê±´ë¬¼ì˜ ê±´ì„¤ ë¹„ìš©
+    static int[] result;       // ëˆ„ì  ê±´ì„¤ ì‹œê°„ (ì„ í–‰ ê±´ë¬¼ í¬í•¨)
 
     /*
-     * À§»ó Á¤·Ä ¼öÇà
-     * - ÁøÀÔ Â÷¼ö°¡ 0ÀÎ ³ëµåºÎÅÍ ½ÃÀÛ
-     * - ÀÎÁ¢ ³ëµå ¹æ¹® ½Ã ÁøÀÔ Â÷¼ö °¨¼Ò ¹× ´©Àû ½Ã°£ °»½Å
+     * ìœ„ìƒ ì •ë ¬ ìˆ˜í–‰
+     * - ì§„ì… ì°¨ìˆ˜ê°€ 0ì¸ ë…¸ë“œë¶€í„° ì‹œì‘
+     * - ì¸ì ‘ ë…¸ë“œ ë°©ë¬¸ ì‹œ ì§„ì… ì°¨ìˆ˜ ê°ì†Œ ë° ëˆ„ì  ì‹œê°„ ê°±ì‹ 
      */
     static void topologicalSort() {
         Queue<Integer> queue = new LinkedList<>();
@@ -48,8 +48,8 @@ public class TopologicalSort2 {
     }
 
     /*
-     * °á°ú Ãâ·Â
-     * - ´©Àû ½Ã°£(result) + ÀÚ½ÅÀÇ °Ç¼³ ºñ¿ë(buildCost)À» Ãâ·Â
+     * ê²°ê³¼ ì¶œë ¥
+     * - ëˆ„ì  ì‹œê°„(result) + ìì‹ ì˜ ê±´ì„¤ ë¹„ìš©(buildCost)ì„ ì¶œë ¥
      */
     static void print(int[] values, int[] costs) throws IOException {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -68,13 +68,13 @@ public class TopologicalSort2 {
         buildCost = new int[buildings + 1];
         result = new int[buildings + 1];
 
-        // ±×·¡ÇÁ ÃÊ±âÈ­
+        // ê·¸ë˜í”„ ì´ˆê¸°í™”
         for (int i = 0; i <= buildings; i++) {
             graph.add(new ArrayList<>());
         }
 
-        // ÀÔ·Â Ã³¸®
-        // Ã¹ °ªÀº °Ç¼³ ½Ã°£, ÀÌÈÄ °ªµéÀº ¼±Çà °Ç¹° ¹øÈ£ (-1·Î Á¾·á)
+        // ì…ë ¥ ì²˜ë¦¬
+        // ì²« ê°’ì€ ê±´ì„¤ ì‹œê°„, ì´í›„ ê°’ë“¤ì€ ì„ í–‰ ê±´ë¬¼ ë²ˆí˜¸ (-1ë¡œ ì¢…ë£Œ)
         StringTokenizer st;
         for (int i = 1; i <= buildings; i++) {
             st = new StringTokenizer(br.readLine());
