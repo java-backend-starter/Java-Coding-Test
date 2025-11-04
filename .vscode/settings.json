@@ -4,5 +4,7 @@
         ".idea/Coding-Test/StackAndQueue",
         ".idea/Coding-Test/PrefixSum",
         ".idea/Coding-Test/Sort"
-    ]
+    ],
+    "files.encoding": "utf8",
+    "java.project.encoding": "utf8"
 }
