@@ -3,25 +3,25 @@ import java.util.*;
 
 public class DisjointSet1 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-05
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 11:13
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ìž‘ì„±ì¼ì‹œ : 2025-04-05
+     * ìµœì´ˆ ìž‘ì„±ì‹œê°„ : 11:13
+     * ìµœì´ˆ ìž‘ì„±ìž : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1717
-     * ¹®Á¦ ÀÌ¸§ : ÁýÇÕÀÇ Ç¥Çö
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥´
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1717
+     * ë¬¸ì œ ì´ë¦„ : ì§‘í•©ì˜ í‘œí˜„
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…¤
      *
-     * ÀÛ¼º ¸ñÀû
+     * ìž‘ì„± ëª©ì 
      *
-     * Ã¥¿¡ ÀÖ´Â ¹®Á¦ º¹½À
+     * ì±…ì— ìžˆëŠ” ë¬¸ì œ ë³µìŠµ
      */
     /*
-     * »óÈ£¹èÅ¸Àû ÁýÇÕ(Disjoint Set) ±¸Çö
-     * ÁÖ¿ä ¿¬»ê: makeSet, findSet (with path compression), union
+     * ìƒí˜¸ë°°íƒ€ì  ì§‘í•©(Disjoint Set) êµ¬í˜„
+     * ì£¼ìš” ì—°ì‚°: makeSet, findSet (with path compression), union
      */
     static int[] makeSet(int size) {
-        // °¢ ¿ø¼Ò°¡ ÀÚ±â ÀÚ½ÅÀ» ´ëÇ¥·Î °¡Áö´Â ÁýÇÕ ÃÊ±âÈ­
+        // ê° ì›ì†Œê°€ ìžê¸° ìžì‹ ì„ ëŒ€í‘œë¡œ ê°€ì§€ëŠ” ì§‘í•© ì´ˆê¸°í™”
         int[] set = new int[size];
         for (int i = 0; i < size; i++) {
             set[i] = i;
@@ -30,7 +30,7 @@ public class DisjointSet1 {
     }
 
     static int findSet(int[] set, int x) {
-        // °æ·Î ¾ÐÃàÀ» Àû¿ëÇÏ¿© ´ëÇ¥ ³ëµå¸¦ Ã£À½
+        // ê²½ë¡œ ì••ì¶•ì„ ì ìš©í•˜ì—¬ ëŒ€í‘œ ë…¸ë“œë¥¼ ì°¾ìŒ
         if (set[x] != x) {
             set[x] = findSet(set, set[x]);
         }
@@ -38,7 +38,7 @@ public class DisjointSet1 {
     }
 
     static void union(int[] set, int x, int y) {
-        // x¿Í y°¡ ¼ÓÇÑ ÁýÇÕÀÇ ´ëÇ¥ ³ëµå¸¦ Ã£°í, ¼­·Î ´Ù¸£¸é ÇÕÄ§
+        // xì™€ yê°€ ì†í•œ ì§‘í•©ì˜ ëŒ€í‘œ ë…¸ë“œë¥¼ ì°¾ê³ , ì„œë¡œ ë‹¤ë¥´ë©´ í•©ì¹¨
         int rootX = findSet(set, x);
         int rootY = findSet(set, y);
         if (rootX != rootY) {
@@ -51,11 +51,11 @@ public class DisjointSet1 {
 //        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 //        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        // ¿ø¼Ò °³¼ö¿Í ÁúÀÇ ¼ö ÀÔ·Â
+        // ì›ì†Œ ê°œìˆ˜ì™€ ì§ˆì˜ ìˆ˜ ìž…ë ¥
         int size = Integer.parseInt(st.nextToken());
         int queries = Integer.parseInt(st.nextToken());
 
-        // 1¹øºÎÅÍ size¹ø±îÁö »ç¿ëÇÒ ¼ö ÀÖµµ·Ï size + 1 Å©±âÀÇ ¹è¿­ »ý¼º
+        // 1ë²ˆë¶€í„° sizeë²ˆê¹Œì§€ ì‚¬ìš©í•  ìˆ˜ ìžˆë„ë¡ size + 1 í¬ê¸°ì˜ ë°°ì—´ ìƒì„±
         int[] set = makeSet(size + 1);
 
         for (int i = 0; i < queries; i++) {
@@ -65,10 +65,10 @@ public class DisjointSet1 {
             int y = Integer.parseInt(st.nextToken());
 
             if (query == 0) {
-                // ÇÕÁýÇÕ ¿¬»ê
+                // í•©ì§‘í•© ì—°ì‚°
                 union(set, x, y);
             } else if (query == 1) {
-                // °°Àº ÁýÇÕ¿¡ ¼ÓÇÏ´ÂÁö ¿©ºÎ Ãâ·Â
+                // ê°™ì€ ì§‘í•©ì— ì†í•˜ëŠ”ì§€ ì—¬ë¶€ ì¶œë ¥
                 bw.write(findSet(set, x) == findSet(set, y) ? "YES\n" : "NO\n");
             }
         }

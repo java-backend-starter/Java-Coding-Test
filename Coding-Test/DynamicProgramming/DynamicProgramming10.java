@@ -3,82 +3,82 @@ import java.util.*;
 
 public class DynamicProgramming10 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-05-13
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 22:02
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ìž‘ì„±ì¼ì‹œ : 2025-05-13
+     * ìµœì´ˆ ìž‘ì„±ì‹œê°„ : 22:02
+     * ìµœì´ˆ ìž‘ì„±ìž : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 2342
-     * ¹®Á¦ ÀÌ¸§ : Dance Dance Revolution
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥²
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 2342
+     * ë¬¸ì œ ì´ë¦„ : Dance Dance Revolution
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…¢
      *
-     * ÀÛ¼º ¸ñÀû : ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ìž‘ì„± ëª©ì  : ë°±ì¤€ì— ìžˆëŠ” ë¬¸ì œ í’€ì´
      */
     /*
-     * ¹®Á¦ ¼³¸í:
+     * ë¬¸ì œ ì„¤ëª…:
      *
-     * DDR(Dance Dance Revolution) ±â°è´Â ³× ¹æÇâ(1~4)ÀÇ ÆÐ³ÎÀÌ ÀÖ°í,
-     * »ç¿ëÀÚ´Â µÎ ¹ßÀ» ÀÌ¿ëÇÏ¿© Áö½Ã¿¡ µû¶ó ÇØ´ç ¹æÇâÀ» ¹â´Â´Ù.
+     * DDR(Dance Dance Revolution) ê¸°ê³„ëŠ” ë„¤ ë°©í–¥(1~4)ì˜ íŒ¨ë„ì´ ìžˆê³ ,
+     * ì‚¬ìš©ìžëŠ” ë‘ ë°œì„ ì´ìš©í•˜ì—¬ ì§€ì‹œì— ë”°ë¼ í•´ë‹¹ ë°©í–¥ì„ ë°ŸëŠ”ë‹¤.
      *
-     * Áö½Ã ÀÔ·ÂÀº 1~4ÀÇ ¼ö·Î ÁÖ¾îÁö¸ç, 0ÀÌ ÀÔ·ÂµÇ¸é Á¾·á¸¦ ÀÇ¹ÌÇÑ´Ù.
-     * µÎ ¹ßÀº µ¿½Ã¿¡ °°Àº À§Ä¡¿¡ ¿Ã ¼ö ¾ø´Ù.
-     * ÃÊ±â¿¡´Â ¾ç¹ßÀÌ Áß¾Ó(0)¿¡ À§Ä¡ÇÑ´Ù.
+     * ì§€ì‹œ ìž…ë ¥ì€ 1~4ì˜ ìˆ˜ë¡œ ì£¼ì–´ì§€ë©°, 0ì´ ìž…ë ¥ë˜ë©´ ì¢…ë£Œë¥¼ ì˜ë¯¸í•œë‹¤.
+     * ë‘ ë°œì€ ë™ì‹œì— ê°™ì€ ìœ„ì¹˜ì— ì˜¬ ìˆ˜ ì—†ë‹¤.
+     * ì´ˆê¸°ì—ëŠ” ì–‘ë°œì´ ì¤‘ì•™(0)ì— ìœ„ì¹˜í•œë‹¤.
      *
-     * °¢ ¹ßÀ» ÀÌµ¿½ÃÅ°´Â µ¥ µå´Â ¿¡³ÊÁö´Â ´ÙÀ½°ú °°´Ù:
-     * - °°Àº À§Ä¡¸¦ ¿¬¼ÓÀ¸·Î ¹âÀ» °æ¿ì: 1
-     * - Áß¾Ó(0) ¡æ ¹æÇâ ÀÌµ¿: 2
-     * - ÀÎÁ¢ÇÑ ¹æÇâ ÀÌµ¿: 3
-     * - ¹Ý´ë ¹æÇâ ÀÌµ¿: 4
+     * ê° ë°œì„ ì´ë™ì‹œí‚¤ëŠ” ë° ë“œëŠ” ì—ë„ˆì§€ëŠ” ë‹¤ìŒê³¼ ê°™ë‹¤:
+     * - ê°™ì€ ìœ„ì¹˜ë¥¼ ì—°ì†ìœ¼ë¡œ ë°Ÿì„ ê²½ìš°: 1
+     * - ì¤‘ì•™(0) â†’ ë°©í–¥ ì´ë™: 2
+     * - ì¸ì ‘í•œ ë°©í–¥ ì´ë™: 3
+     * - ë°˜ëŒ€ ë°©í–¥ ì´ë™: 4
      *
-     * ÁÖ¾îÁø ÀÔ·Â¿¡ µû¶ó Áö½Ã¸¦ ¼ø¼­´ë·Î ¹âÀ» ¶§, ¹ßÀÇ ¿òÁ÷ÀÓÀ» Àß Á¶ÀýÇÏ¿©
-     * **ÇÊ¿äÇÑ ÃÖ¼Ò ¿¡³ÊÁö ¼Òºñ·®**À» ±¸ÇÏ´Â ¹®Á¦ÀÌ´Ù.
+     * ì£¼ì–´ì§„ ìž…ë ¥ì— ë”°ë¼ ì§€ì‹œë¥¼ ìˆœì„œëŒ€ë¡œ ë°Ÿì„ ë•Œ, ë°œì˜ ì›€ì§ìž„ì„ ìž˜ ì¡°ì ˆí•˜ì—¬
+     * **í•„ìš”í•œ ìµœì†Œ ì—ë„ˆì§€ ì†Œë¹„ëŸ‰**ì„ êµ¬í•˜ëŠ” ë¬¸ì œì´ë‹¤.
      *
-     * ¿¹Á¦ ÀÔ·Â:
+     * ì˜ˆì œ ìž…ë ¥:
      * 1 2 2 4 0
-     * Ãâ·Â:
+     * ì¶œë ¥:
      * 8
      *
-     * Á¦ÇÑ:
-     * - Áö½Ã ¼ö´Â ÃÖ´ë 100,000°³
-     * - ½Ã°£ Á¦ÇÑ: 2ÃÊ
+     * ì œí•œ:
+     * - ì§€ì‹œ ìˆ˜ëŠ” ìµœëŒ€ 100,000ê°œ
+     * - ì‹œê°„ ì œí•œ: 2ì´ˆ
      */
 
-    // dp[step][left][right] = step¹øÂ° ¸í·É±îÁö ¼öÇàÇÑ »óÅÂ¿¡¼­
-    // ¿Þ¹ßÀÌ left, ¿À¸¥¹ßÀÌ right¿¡ ÀÖÀ» ¶§ÀÇ ÃÖ¼Ò ¿¡³ÊÁö
+    // dp[step][left][right] = stepë²ˆì§¸ ëª…ë ¹ê¹Œì§€ ìˆ˜í–‰í•œ ìƒíƒœì—ì„œ
+    // ì™¼ë°œì´ left, ì˜¤ë¥¸ë°œì´ rightì— ìžˆì„ ë•Œì˜ ìµœì†Œ ì—ë„ˆì§€
     static int[][][] dp = new int[100001][5][5];
 
-    // energy[i][j] = i À§Ä¡¿¡¼­ j À§Ä¡·Î ÀÌµ¿ÇÒ ¶§ µå´Â ¿¡³ÊÁö
+    // energy[i][j] = i ìœ„ì¹˜ì—ì„œ j ìœ„ì¹˜ë¡œ ì´ë™í•  ë•Œ ë“œëŠ” ì—ë„ˆì§€
     static final int[][] energy = {
-            { 0, 2, 2, 2, 2 },  // 0¹ø(Áß¾Ó)¿¡¼­ °¢ ¹æÇâÀ¸·Î
-            { 2, 1, 3, 4, 3 },  // 1¹ø¿¡¼­ °¢ ¹æÇâÀ¸·Î
-            { 2, 3, 1, 3, 4 },  // 2¹ø¿¡¼­ °¢ ¹æÇâÀ¸·Î
-            { 2, 4, 3, 1, 3 },  // 3¹ø¿¡¼­ °¢ ¹æÇâÀ¸·Î
-            { 2, 3, 4, 3, 1 }   // 4¹ø¿¡¼­ °¢ ¹æÇâÀ¸·Î
+            { 0, 2, 2, 2, 2 },  // 0ë²ˆ(ì¤‘ì•™)ì—ì„œ ê° ë°©í–¥ìœ¼ë¡œ
+            { 2, 1, 3, 4, 3 },  // 1ë²ˆì—ì„œ ê° ë°©í–¥ìœ¼ë¡œ
+            { 2, 3, 1, 3, 4 },  // 2ë²ˆì—ì„œ ê° ë°©í–¥ìœ¼ë¡œ
+            { 2, 4, 3, 1, 3 },  // 3ë²ˆì—ì„œ ê° ë°©í–¥ìœ¼ë¡œ
+            { 2, 3, 4, 3, 1 }   // 4ë²ˆì—ì„œ ê° ë°©í–¥ìœ¼ë¡œ
     };
 
-    // dp ¹è¿­ ÃÊ±âÈ­ (Å« °ªÀ¸·Î ÃÊ±âÈ­ÇÏ¿© ÃÖ¼Ò°ª ºñ±³ °¡´ÉÇÏ°Ô)
+    // dp ë°°ì—´ ì´ˆê¸°í™” (í° ê°’ìœ¼ë¡œ ì´ˆê¸°í™”í•˜ì—¬ ìµœì†Œê°’ ë¹„êµ ê°€ëŠ¥í•˜ê²Œ)
     static void init() {
         for (int k = 0; k < 100001; k++) {
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 5; j++) {
-                    dp[k][i][j] = 100001 * 4; // Å« °ªÀ¸·Î ÃÊ±âÈ­
+                    dp[k][i][j] = 100001 * 4; // í° ê°’ìœ¼ë¡œ ì´ˆê¸°í™”
                 }
             }
         }
     }
 
-    // ÀÔ·Â Áö½Ã¸¦ ÀÐ°í DP Å×ÀÌºíÀ» Ã¤¿ì´Â ÇÔ¼ö
+    // ìž…ë ¥ ì§€ì‹œë¥¼ ì½ê³  DP í…Œì´ë¸”ì„ ì±„ìš°ëŠ” í•¨ìˆ˜
     static int mamoize(StringTokenizer st) {
-        dp[0][0][0] = 0; // ÃÊ±â »óÅÂ: ¾ç¹ßÀÌ Áß¾Ó(0)¿¡ ÀÖÀ» ¶§ ¿¡³ÊÁö 0
+        dp[0][0][0] = 0; // ì´ˆê¸° ìƒíƒœ: ì–‘ë°œì´ ì¤‘ì•™(0)ì— ìžˆì„ ë•Œ ì—ë„ˆì§€ 0
         int step = 1;
 
         while (true) {
             int num = Integer.parseInt(st.nextToken());
-            if (num == 0) break; // 0ÀÌ ³ª¿À¸é ÀÔ·Â Á¾·á
+            if (num == 0) break; // 0ì´ ë‚˜ì˜¤ë©´ ìž…ë ¥ ì¢…ë£Œ
 
-            // ¿Þ¹ß °íÁ¤, ¿À¸¥¹ß ÀÌµ¿
+            // ì™¼ë°œ ê³ ì •, ì˜¤ë¥¸ë°œ ì´ë™
             for (int i = 0; i < 5; i++) {
-                if (num == i) continue; // ¾ç¹ßÀÌ °°Àº À§Ä¡¿¡ ÀÖÀ» ¼ö ¾øÀ½
+                if (num == i) continue; // ì–‘ë°œì´ ê°™ì€ ìœ„ì¹˜ì— ìžˆì„ ìˆ˜ ì—†ìŒ
                 for (int j = 0; j < 5; j++) {
                     dp[step][i][num] = Math.min(
                             dp[step][i][num],
@@ -87,7 +87,7 @@ public class DynamicProgramming10 {
                 }
             }
 
-            // ¿À¸¥¹ß °íÁ¤, ¿Þ¹ß ÀÌµ¿
+            // ì˜¤ë¥¸ë°œ ê³ ì •, ì™¼ë°œ ì´ë™
             for (int i = 0; i < 5; i++) {
                 if (num == i) continue;
                 for (int j = 0; j < 5; j++) {
@@ -98,18 +98,18 @@ public class DynamicProgramming10 {
                 }
             }
 
-            step++; // ´ÙÀ½ ½ºÅÜÀ¸·Î ÀÌµ¿
+            step++; // ë‹¤ìŒ ìŠ¤í…ìœ¼ë¡œ ì´ë™
         }
 
-        return step - 1; // ¸¶Áö¸· ½ºÅÜ ¹øÈ£ ¹ÝÈ¯
+        return step - 1; // ë§ˆì§€ë§‰ ìŠ¤í… ë²ˆí˜¸ ë°˜í™˜
     }
 
-    // ÃÖ¼Ò ¿¡³ÊÁö¸¦ ±¸ÇÏ´Â ÇÔ¼ö
+    // ìµœì†Œ ì—ë„ˆì§€ë¥¼ êµ¬í•˜ëŠ” í•¨ìˆ˜
     static int excute(StringTokenizer st) {
-        int step = mamoize(st); // DP ¼öÇà ÈÄ
+        int step = mamoize(st); // DP ìˆ˜í–‰ í›„
         int min = Integer.MAX_VALUE;
 
-        // ¸¶Áö¸· ´Ü°è¿¡¼­ °¡´ÉÇÑ ¸ðµç À§Ä¡ Á¶ÇÕ¿¡ ´ëÇØ ÃÖ¼Ò°ª °è»ê
+        // ë§ˆì§€ë§‰ ë‹¨ê³„ì—ì„œ ê°€ëŠ¥í•œ ëª¨ë“  ìœ„ì¹˜ ì¡°í•©ì— ëŒ€í•´ ìµœì†Œê°’ ê³„ì‚°
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 min = Math.min(min, dp[step][i][j]);
@@ -122,10 +122,10 @@ public class DynamicProgramming10 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        init(); // DP ¹è¿­ ÃÊ±âÈ­
+        init(); // DP ë°°ì—´ ì´ˆê¸°í™”
 
-        int result = excute(new StringTokenizer(br.readLine())); // ÀÔ·Â Ã³¸® ¹× °è»ê
+        int result = excute(new StringTokenizer(br.readLine())); // ìž…ë ¥ ì²˜ë¦¬ ë° ê³„ì‚°
 
-        System.out.println(result); // ÃÖ¼Ò ¿¡³ÊÁö Ãâ·Â
+        System.out.println(result); // ìµœì†Œ ì—ë„ˆì§€ ì¶œë ¥
     }
 }

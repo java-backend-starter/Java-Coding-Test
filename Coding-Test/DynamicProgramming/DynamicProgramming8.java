@@ -3,102 +3,102 @@ import java.util.*;
 
 public class DynamicProgramming8 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-30
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 17:58
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ìž‘ì„±ì¼ì‹œ : 2025-04-30
+     * ìµœì´ˆ ìž‘ì„±ì‹œê°„ : 17:58
+     * ìµœì´ˆ ìž‘ì„±ìž : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1915
-     * ¹®Á¦ ÀÌ¸§ : °¡Àå Å« Á¤»ç°¢Çü
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥³
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1915
+     * ë¬¸ì œ ì´ë¦„ : ê°€ìž¥ í° ì •ì‚¬ê°í˜•
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…£
      *
-     * ÀÛ¼º ¸ñÀû : ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ìž‘ì„± ëª©ì  : ë°±ì¤€ì— ìžˆëŠ” ë¬¸ì œ í’€ì´
      */
     /*
-     * ¹®Á¦ ¼³¸í:
-     * ÁÖ¾îÁø 0°ú 1·Î ÀÌ·ç¾îÁø ÀÌÁø Çà·Ä¿¡¼­, °¡Àå Å« Á¤»ç°¢ÇüÀ» Ã£¾Æ ±× Å©±â¸¦ Ãâ·ÂÇÏ´Â ¹®Á¦ÀÔ´Ï´Ù.
-     * ÀÌ ¹®Á¦´Â µ¿Àû °èÈ¹¹ý(DP)À» ÀÌ¿ëÇØ ÇØ°áÇÒ ¼ö ÀÖ½À´Ï´Ù.
+     * ë¬¸ì œ ì„¤ëª…:
+     * ì£¼ì–´ì§„ 0ê³¼ 1ë¡œ ì´ë£¨ì–´ì§„ ì´ì§„ í–‰ë ¬ì—ì„œ, ê°€ìž¥ í° ì •ì‚¬ê°í˜•ì„ ì°¾ì•„ ê·¸ í¬ê¸°ë¥¼ ì¶œë ¥í•˜ëŠ” ë¬¸ì œìž…ë‹ˆë‹¤.
+     * ì´ ë¬¸ì œëŠ” ë™ì  ê³„íšë²•(DP)ì„ ì´ìš©í•´ í•´ê²°í•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤.
      *
-     * ÀÔ·Â:
-     * Ã¹ ¹øÂ° ÁÙ¿¡ Çà·ÄÀÇ Å©±âÀÎ µÎ Á¤¼ö N, MÀÌ ÁÖ¾îÁö°í,
-     * µÎ ¹øÂ° ÁÙºÎÅÍ N°³ÀÇ ÁÙ¿¡ °ÉÃÄ °¢ Çà·ÄÀÇ °¢ °ªÀÌ ÁÖ¾îÁý´Ï´Ù. (0 ¶Ç´Â 1)
+     * ìž…ë ¥:
+     * ì²« ë²ˆì§¸ ì¤„ì— í–‰ë ¬ì˜ í¬ê¸°ì¸ ë‘ ì •ìˆ˜ N, Mì´ ì£¼ì–´ì§€ê³ ,
+     * ë‘ ë²ˆì§¸ ì¤„ë¶€í„° Nê°œì˜ ì¤„ì— ê±¸ì³ ê° í–‰ë ¬ì˜ ê° ê°’ì´ ì£¼ì–´ì§‘ë‹ˆë‹¤. (0 ë˜ëŠ” 1)
      *
-     * Ãâ·Â:
-     * °¡Àå Å« Á¤»ç°¢ÇüÀÇ ³ÐÀÌ¸¦ Ãâ·ÂÇÕ´Ï´Ù.
+     * ì¶œë ¥:
+     * ê°€ìž¥ í° ì •ì‚¬ê°í˜•ì˜ ë„“ì´ë¥¼ ì¶œë ¥í•©ë‹ˆë‹¤.
      *
-     * ¿¹½Ã:
-     * ÀÔ·Â:
+     * ì˜ˆì‹œ:
+     * ìž…ë ¥:
      * 3 4
      * 1010
      * 1111
      * 1111
-     * Ãâ·Â:
+     * ì¶œë ¥:
      * 4
      *
-     * ¼³¸í:
-     * ÁÖ¾îÁø Çà·Ä¿¡¼­ °¡Àå Å« Á¤»ç°¢ÇüÀº 2x2 Å©±âÀÌ¸ç, ±× ³ÐÀÌ´Â 4ÀÔ´Ï´Ù.
+     * ì„¤ëª…:
+     * ì£¼ì–´ì§„ í–‰ë ¬ì—ì„œ ê°€ìž¥ í° ì •ì‚¬ê°í˜•ì€ 2x2 í¬ê¸°ì´ë©°, ê·¸ ë„“ì´ëŠ” 4ìž…ë‹ˆë‹¤.
      *
      */
 
-    // DP Å×ÀÌºíÀ» ÀúÀåÇÒ 2D ¹è¿­ ¼±¾ð
+    // DP í…Œì´ë¸”ì„ ì €ìž¥í•  2D ë°°ì—´ ì„ ì–¸
     static int[][] dp;
 
     /*
-     * ÁÖ¾îÁø Çà·Ä¿¡¼­ °¡Àå Å« Á¤»ç°¢ÇüÀÇ Å©±â¸¦ ±¸ÇÏ´Â ÇÔ¼ö
-     * dp[i][j]´Â (i, j) ÁöÁ¡À» ¿À¸¥ÂÊ ¾Æ·¡ ¸ð¼­¸®·Î °®´Â Á¤»ç°¢ÇüÀÇ Å©±â¸¦ ÀúÀå
+     * ì£¼ì–´ì§„ í–‰ë ¬ì—ì„œ ê°€ìž¥ í° ì •ì‚¬ê°í˜•ì˜ í¬ê¸°ë¥¼ êµ¬í•˜ëŠ” í•¨ìˆ˜
+     * dp[i][j]ëŠ” (i, j) ì§€ì ì„ ì˜¤ë¥¸ìª½ ì•„ëž˜ ëª¨ì„œë¦¬ë¡œ ê°–ëŠ” ì •ì‚¬ê°í˜•ì˜ í¬ê¸°ë¥¼ ì €ìž¥
      *
-     * row : Çà·ÄÀÇ Çà ¼ö
-     * col : Çà·ÄÀÇ ¿­ ¼ö
+     * row : í–‰ë ¬ì˜ í–‰ ìˆ˜
+     * col : í–‰ë ¬ì˜ ì—´ ìˆ˜
      *
-     * DP °è»ê ¹æ½Ä:
+     * DP ê³„ì‚° ë°©ì‹:
      * - dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1]) + 1
-     *   (À§, ¿ÞÂÊ, ´ë°¢¼± ¿ÞÂÊ À§ ¼¿ÀÇ °ª Áß ÃÖ¼Ò°ª¿¡ 1À» ´õÇÔ)
-     * - ¸¸¾à dp[i][j] == 1ÀÌ¶ó¸é ÇØ´ç À§Ä¡¸¦ ³¡À¸·Î ÇÏ´Â Á¤»ç°¢ÇüÀ» ¸¸µé ¼ö ÀÖÀ½
-     * - °¡Àå Å« Á¤»ç°¢ÇüÀÇ Å©±â¸¦ ±¸ÇÑ ÈÄ, ±× ³ÐÀÌ¸¦ ¸®ÅÏ
+     *   (ìœ„, ì™¼ìª½, ëŒ€ê°ì„  ì™¼ìª½ ìœ„ ì…€ì˜ ê°’ ì¤‘ ìµœì†Œê°’ì— 1ì„ ë”í•¨)
+     * - ë§Œì•½ dp[i][j] == 1ì´ë¼ë©´ í•´ë‹¹ ìœ„ì¹˜ë¥¼ ëìœ¼ë¡œ í•˜ëŠ” ì •ì‚¬ê°í˜•ì„ ë§Œë“¤ ìˆ˜ ìžˆìŒ
+     * - ê°€ìž¥ í° ì •ì‚¬ê°í˜•ì˜ í¬ê¸°ë¥¼ êµ¬í•œ í›„, ê·¸ ë„“ì´ë¥¼ ë¦¬í„´
      */
     static int memoize(int row, int col) {
         int max = 0;
-        // Çà·ÄÀ» ¼øÂ÷ÀûÀ¸·Î Å½»öÇÏ¸é¼­ dp Å×ÀÌºíÀ» ¾÷µ¥ÀÌÆ®
+        // í–‰ë ¬ì„ ìˆœì°¨ì ìœ¼ë¡œ íƒìƒ‰í•˜ë©´ì„œ dp í…Œì´ë¸”ì„ ì—…ë°ì´íŠ¸
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
-                // ÇöÀç À§Ä¡°¡ 1ÀÌ¸é, ÀÌÀü °ªµéÀ» ÂüÁ¶ÇÏ¿© Á¤»ç°¢ÇüÀÇ Å©±â ¾÷µ¥ÀÌÆ®
+                // í˜„ìž¬ ìœ„ì¹˜ê°€ 1ì´ë©´, ì´ì „ ê°’ë“¤ì„ ì°¸ì¡°í•˜ì—¬ ì •ì‚¬ê°í˜•ì˜ í¬ê¸° ì—…ë°ì´íŠ¸
                 if (dp[i][j] == 1 && i > 0 && j > 0) {
                     dp[i][j] = Math.min(dp[i-1][j-1], Math.min(dp[i-1][j], dp[i][j-1])) + 1;
                 }
-                // °¡Àå Å« Á¤»ç°¢ÇüÀÇ Å©±â¸¦ ÃßÀû
+                // ê°€ìž¥ í° ì •ì‚¬ê°í˜•ì˜ í¬ê¸°ë¥¼ ì¶”ì 
                 if (max < dp[i][j]) {
                     max = dp[i][j];
                 }
             }
         }
-        // °¡Àå Å« Á¤»ç°¢ÇüÀÇ ÇÑ º¯ÀÇ ±æÀÌ¸¦ ¹ÝÈ¯
+        // ê°€ìž¥ í° ì •ì‚¬ê°í˜•ì˜ í•œ ë³€ì˜ ê¸¸ì´ë¥¼ ë°˜í™˜
         return max;
     }
 
     public static void main(String[] args) throws IOException {
-        // BufferedReader¿Í StringTokenizer¸¦ ÀÌ¿ëÇØ ÀÔ·Â Ã³¸®
+        // BufferedReaderì™€ StringTokenizerë¥¼ ì´ìš©í•´ ìž…ë ¥ ì²˜ë¦¬
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        // Çà·ÄÀÇ Å©±â ÀÔ·Â
+        // í–‰ë ¬ì˜ í¬ê¸° ìž…ë ¥
         int row = Integer.parseInt(st.nextToken());
         int col = Integer.parseInt(st.nextToken());
 
-        // DP Å×ÀÌºí ÃÊ±âÈ­
+        // DP í…Œì´ë¸” ì´ˆê¸°í™”
         dp = new int[1001][1001];
 
-        // Çà·ÄÀÇ °¢ ÇàÀ» ÀÐ¾î¼­ dp Å×ÀÌºí¿¡ ÀúÀå (0°ú 1·Î ÀÌ·ç¾îÁø ÀÌÁø Çà·Ä)
+        // í–‰ë ¬ì˜ ê° í–‰ì„ ì½ì–´ì„œ dp í…Œì´ë¸”ì— ì €ìž¥ (0ê³¼ 1ë¡œ ì´ë£¨ì–´ì§„ ì´ì§„ í–‰ë ¬)
         for (int i = 0; i < row; i++) {
             char[] temp = br.readLine().toCharArray();
             for (int j = 0; j < temp.length; j++) {
-                dp[i][j] = temp[j] - '0'; // char '0'À» ¼ýÀÚ 0À¸·Î, '1'À» ¼ýÀÚ 1·Î º¯È¯
+                dp[i][j] = temp[j] - '0'; // char '0'ì„ ìˆ«ìž 0ìœ¼ë¡œ, '1'ì„ ìˆ«ìž 1ë¡œ ë³€í™˜
             }
         }
 
-        // °¡Àå Å« Á¤»ç°¢ÇüÀÇ Å©±â °è»ê
+        // ê°€ìž¥ í° ì •ì‚¬ê°í˜•ì˜ í¬ê¸° ê³„ì‚°
         int max = memoize(row, col);
 
-        // °¡Àå Å« Á¤»ç°¢ÇüÀÇ ³ÐÀÌ Ãâ·Â
-        System.out.println((int) Math.pow(max, 2)); // °¡Àå Å« Á¤»ç°¢ÇüÀÇ Å©±â¸¦ Á¦°öÇÏ¿© ³ÐÀÌ¸¦ Ãâ·Â
+        // ê°€ìž¥ í° ì •ì‚¬ê°í˜•ì˜ ë„“ì´ ì¶œë ¥
+        System.out.println((int) Math.pow(max, 2)); // ê°€ìž¥ í° ì •ì‚¬ê°í˜•ì˜ í¬ê¸°ë¥¼ ì œê³±í•˜ì—¬ ë„“ì´ë¥¼ ì¶œë ¥
     }
 }

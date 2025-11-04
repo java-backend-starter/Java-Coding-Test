@@ -3,25 +3,25 @@ import java.util.*;
 
 public class DisjointSet2 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-05
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 11:40
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ìž‘ì„±ì¼ì‹œ : 2025-04-05
+     * ìµœì´ˆ ìž‘ì„±ì‹œê°„ : 11:40
+     * ìµœì´ˆ ìž‘ì„±ìž : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1976
-     * ¹®Á¦ ÀÌ¸§ : ¿©Çà °¡ÀÚ
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥³
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1976
+     * ë¬¸ì œ ì´ë¦„ : ì—¬í–‰ ê°€ìž
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…£
      *
-     * ÀÛ¼º ¸ñÀû
+     * ìž‘ì„± ëª©ì 
      *
-     * Ã¥¿¡ ÀÖ´Â ¹®Á¦ º¹½À
+     * ì±…ì— ìžˆëŠ” ë¬¸ì œ ë³µìŠµ
      */
     /*
-     * »óÈ£¹èÅ¸Àû ÁýÇÕ(Disjoint Set Union - DSU) ÀÚ·á±¸Á¶¸¦ ÀÌ¿ëÇÑ Ç®ÀÌ
-     * ÇÙ½É ¿¬»ê: makeSet (ÃÊ±âÈ­), findSet (ºÎ¸ð Ã£±â, °æ·Î ¾ÐÃà), unionSet (ÇÕÄ¡±â)
+     * ìƒí˜¸ë°°íƒ€ì  ì§‘í•©(Disjoint Set Union - DSU) ìžë£Œêµ¬ì¡°ë¥¼ ì´ìš©í•œ í’€ì´
+     * í•µì‹¬ ì—°ì‚°: makeSet (ì´ˆê¸°í™”), findSet (ë¶€ëª¨ ì°¾ê¸°, ê²½ë¡œ ì••ì¶•), unionSet (í•©ì¹˜ê¸°)
      */
     static int[] makeSet(int size) {
-        // °¢ ¿ø¼Ò¸¦ ÀÚ±â ÀÚ½ÅÀ¸·Î ÃÊ±âÈ­ (ÀÚ±â ÀÚ½ÅÀÌ ´ëÇ¥ÀÚ)
+        // ê° ì›ì†Œë¥¼ ìžê¸° ìžì‹ ìœ¼ë¡œ ì´ˆê¸°í™” (ìžê¸° ìžì‹ ì´ ëŒ€í‘œìž)
         int[] set = new int[size];
         for (int i = 0; i < size; i++) {
             set[i] = i;
@@ -30,68 +30,68 @@ public class DisjointSet2 {
     }
 
     static int findSet(int[] set, int x) {
-        // °æ·Î ¾ÐÃàÀ» ÀÌ¿ëÇØ ·çÆ®(´ëÇ¥ÀÚ)¸¦ Ã£´Â ÇÔ¼ö
+        // ê²½ë¡œ ì••ì¶•ì„ ì´ìš©í•´ ë£¨íŠ¸(ëŒ€í‘œìž)ë¥¼ ì°¾ëŠ” í•¨ìˆ˜
         if (set[x] != x) {
-            set[x] = findSet(set, set[x]); // ºÎ¸ð¸¦ ·çÆ®·Î °»½Å
+            set[x] = findSet(set, set[x]); // ë¶€ëª¨ë¥¼ ë£¨íŠ¸ë¡œ ê°±ì‹ 
         }
         return set[x];
     }
 
     static void unionSet(int[] set, int x, int y) {
-        // µÎ ¿ø¼ÒÀÇ ÁýÇÕÀ» ÇÕÄ¡´Â ¿¬»ê (·çÆ®¸¦ ±âÁØÀ¸·Î)
+        // ë‘ ì›ì†Œì˜ ì§‘í•©ì„ í•©ì¹˜ëŠ” ì—°ì‚° (ë£¨íŠ¸ë¥¼ ê¸°ì¤€ìœ¼ë¡œ)
         x = findSet(set, x);
         y = findSet(set, y);
         if (x != y) {
-            set[y] = x; // yÀÇ ·çÆ®¸¦ x·Î ¿¬°á
+            set[y] = x; // yì˜ ë£¨íŠ¸ë¥¼ xë¡œ ì—°ê²°
         }
     }
 
     /*
-     * ¿©Çà °èÈ¹(route)¿¡ ÀÖ´Â ¸ðµç µµ½ÃµéÀÌ
-     * °°Àº ÁýÇÕ¿¡ ¼ÓÇÏ´ÂÁö(=°°Àº ·çÆ®¸¦ °¡Áö´ÂÁö) È®ÀÎÇÏ´Â ÇÔ¼ö
+     * ì—¬í–‰ ê³„íš(route)ì— ìžˆëŠ” ëª¨ë“  ë„ì‹œë“¤ì´
+     * ê°™ì€ ì§‘í•©ì— ì†í•˜ëŠ”ì§€(=ê°™ì€ ë£¨íŠ¸ë¥¼ ê°€ì§€ëŠ”ì§€) í™•ì¸í•˜ëŠ” í•¨ìˆ˜
      */
     static boolean check(int[] set, int[] route) {
-        int root = findSet(set, route[1]); // Ã¹ µµ½ÃÀÇ ·çÆ®¸¦ ±âÁØÀ¸·Î
+        int root = findSet(set, route[1]); // ì²« ë„ì‹œì˜ ë£¨íŠ¸ë¥¼ ê¸°ì¤€ìœ¼ë¡œ
         for (int i = 2; i < route.length; i++) {
             if (root != findSet(set, route[i])) {
-                // ÇÏ³ª¶óµµ ´Ù¸¥ ·çÆ®°¡ ÀÖ´Ù¸é ¿¬°á ºÒ°¡
+                // í•˜ë‚˜ë¼ë„ ë‹¤ë¥¸ ë£¨íŠ¸ê°€ ìžˆë‹¤ë©´ ì—°ê²° ë¶ˆê°€
                 return false;
             }
         }
-        return true; // ¸ðµÎ °°Àº ÁýÇÕ¿¡ ¼ÓÇÔ
+        return true; // ëª¨ë‘ ê°™ì€ ì§‘í•©ì— ì†í•¨
     }
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
-        int cities = Integer.parseInt(br.readLine()); // µµ½Ã ¼ö (N)
-        int routes = Integer.parseInt(br.readLine()); // ¿©Çà °æ·Î¿¡ ÀÖ´Â µµ½Ã ¼ö (M)
+        int cities = Integer.parseInt(br.readLine()); // ë„ì‹œ ìˆ˜ (N)
+        int routes = Integer.parseInt(br.readLine()); // ì—¬í–‰ ê²½ë¡œì— ìžˆëŠ” ë„ì‹œ ìˆ˜ (M)
 
-        // »óÈ£¹èÅ¸Àû ÁýÇÕ ÃÊ±âÈ­ (µµ½Ã ¹øÈ£ 1~NÀÌ¹Ç·Î N+1 Å©±â)
+        // ìƒí˜¸ë°°íƒ€ì  ì§‘í•© ì´ˆê¸°í™” (ë„ì‹œ ë²ˆí˜¸ 1~Nì´ë¯€ë¡œ N+1 í¬ê¸°)
         int[] set = makeSet(cities + 1);
 
-        // µµ½Ã ¿¬°á Á¤º¸ ÀÔ·Â (ÀÎÁ¢ Çà·Ä)
+        // ë„ì‹œ ì—°ê²° ì •ë³´ ìž…ë ¥ (ì¸ì ‘ í–‰ë ¬)
         int[][] city = new int[cities + 1][cities + 1];
         for (int i = 1; i <= cities; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 1; j <= cities; j++) {
                 city[i][j] = Integer.parseInt(st.nextToken());
                 if (city[i][j] == 1) {
-                    // ¿¬°áµÈ µµ½Ã¶ó¸é °°Àº ÁýÇÕÀ¸·Î ¹­±â
+                    // ì—°ê²°ëœ ë„ì‹œë¼ë©´ ê°™ì€ ì§‘í•©ìœ¼ë¡œ ë¬¶ê¸°
                     unionSet(set, i, j);
                 }
             }
         }
 
-        // ¿©Çà °æ·Î ÀÔ·Â
-        int[] route = new int[routes + 1]; // 1-based ÀÎµ¦½º »ç¿ë
+        // ì—¬í–‰ ê²½ë¡œ ìž…ë ¥
+        int[] route = new int[routes + 1]; // 1-based ì¸ë±ìŠ¤ ì‚¬ìš©
         st = new StringTokenizer(br.readLine());
         for (int i = 1; i <= routes; i++) {
             route[i] = Integer.parseInt(st.nextToken());
         }
 
-        // ¸ðµç µµ½Ã°¡ °°Àº ÁýÇÕ(¿¬°áµÊ)¿¡ ¼ÓÇØ ÀÖ´Ù¸é "YES", ¾Æ´Ï¸é "NO"
+        // ëª¨ë“  ë„ì‹œê°€ ê°™ì€ ì§‘í•©(ì—°ê²°ë¨)ì— ì†í•´ ìžˆë‹¤ë©´ "YES", ì•„ë‹ˆë©´ "NO"
         System.out.println(check(set, route) ? "YES" : "NO");
     }
 

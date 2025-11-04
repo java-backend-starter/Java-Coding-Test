@@ -3,71 +3,71 @@ import java.util.*;
 
 public class DynamicProgramming9 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-05-01
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 12:05
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ìž‘ì„±ì¼ì‹œ : 2025-05-01
+     * ìµœì´ˆ ìž‘ì„±ì‹œê°„ : 12:05
+     * ìµœì´ˆ ìž‘ì„±ìž : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1328
-     * ¹®Á¦ ÀÌ¸§ : °íÃþ ºôµù
-     * ¹®Á¦ ³­ÀÌµµ : ÇÃ·¹Æ¼³Ñ 5
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1328
+     * ë¬¸ì œ ì´ë¦„ : ê³ ì¸µ ë¹Œë”©
+     * ë¬¸ì œ ë‚œì´ë„ : í”Œë ˆí‹°ë„˜ 5
      *
-     * ÀÛ¼º ¸ñÀû : ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ìž‘ì„± ëª©ì  : ë°±ì¤€ì— ìžˆëŠ” ë¬¸ì œ í’€ì´
      */
-    /* ¹®Á¦ ¼³¸í:
-     * °íÃþ ºôµù ¹®Á¦´Â ÁÖ¾îÁø ³ôÀÌÀÇ ºôµù¿¡¼­ ¿ÞÂÊ°ú ¿À¸¥ÂÊ¿¡¼­ °¢°¢
-     * Á¦ÇÑµÈ °³¼ö¸¸Å­ ÀÛÀº ºôµùÀ» ¹èÄ¡ÇÏ¿© ºôµùÀ» ½×´Â ¹æ¹ýÀ» ±¸ÇÏ´Â ¹®Á¦ÀÔ´Ï´Ù.
-     * °¢ ºôµùÀº ¿ÞÂÊÀÌ³ª ¿À¸¥ÂÊ¿¡ ³õÀÏ ¶§ ½×À» ¼ö ÀÖ´Â Á¦ÇÑÀÌ ÀÖÀ¸¸ç, ÀÌ Á¦ÇÑÀ»
-     * ¸¸Á·ÇÏ´Â °æ¿ìÀÇ ¼ö¸¦ ±¸ÇÏ´Â ¹®Á¦ÀÔ´Ï´Ù.
+    /* ë¬¸ì œ ì„¤ëª…:
+     * ê³ ì¸µ ë¹Œë”© ë¬¸ì œëŠ” ì£¼ì–´ì§„ ë†’ì´ì˜ ë¹Œë”©ì—ì„œ ì™¼ìª½ê³¼ ì˜¤ë¥¸ìª½ì—ì„œ ê°ê°
+     * ì œí•œëœ ê°œìˆ˜ë§Œí¼ ìž‘ì€ ë¹Œë”©ì„ ë°°ì¹˜í•˜ì—¬ ë¹Œë”©ì„ ìŒ“ëŠ” ë°©ë²•ì„ êµ¬í•˜ëŠ” ë¬¸ì œìž…ë‹ˆë‹¤.
+     * ê° ë¹Œë”©ì€ ì™¼ìª½ì´ë‚˜ ì˜¤ë¥¸ìª½ì— ë†“ì¼ ë•Œ ìŒ“ì„ ìˆ˜ ìžˆëŠ” ì œí•œì´ ìžˆìœ¼ë©°, ì´ ì œí•œì„
+     * ë§Œì¡±í•˜ëŠ” ê²½ìš°ì˜ ìˆ˜ë¥¼ êµ¬í•˜ëŠ” ë¬¸ì œìž…ë‹ˆë‹¤.
      *
-     * ÀÌ ¹®Á¦´Â µ¿Àû °èÈ¹¹ý(DP)À» »ç¿ëÇÏ¿© ÇØ°áÇÒ ¼ö ÀÖ½À´Ï´Ù. DP ¹è¿­À»
-     * È°¿ëÇØ ÀÌÀüÀÇ °è»êµÈ °á°ú¸¦ ÀúÀåÇÏ°í ÀÌ¸¦ ¹ÙÅÁÀ¸·Î Á¡È­½ÄÀ» ¸¸µé¾î
-     * ¹®Á¦¸¦ ÇØ°áÇÕ´Ï´Ù.
+     * ì´ ë¬¸ì œëŠ” ë™ì  ê³„íšë²•(DP)ì„ ì‚¬ìš©í•˜ì—¬ í•´ê²°í•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤. DP ë°°ì—´ì„
+     * í™œìš©í•´ ì´ì „ì˜ ê³„ì‚°ëœ ê²°ê³¼ë¥¼ ì €ìž¥í•˜ê³  ì´ë¥¼ ë°”íƒ•ìœ¼ë¡œ ì í™”ì‹ì„ ë§Œë“¤ì–´
+     * ë¬¸ì œë¥¼ í•´ê²°í•©ë‹ˆë‹¤.
      */
 
-    // 3Â÷¿ø DP ¹è¿­ ¼±¾ð (size x left x right)
-    // dp[i][j][k]´Â Å©±â iÀÎ ºôµù¿¡¼­ ¿ÞÂÊ¿¡ j°³ÀÇ ÀÛÀº ºôµù°ú ¿À¸¥ÂÊ¿¡ k°³ÀÇ ÀÛÀº ºôµùÀ» ¹èÄ¡ÇÏ´Â °æ¿ìÀÇ ¼ö
+    // 3ì°¨ì› DP ë°°ì—´ ì„ ì–¸ (size x left x right)
+    // dp[i][j][k]ëŠ” í¬ê¸° iì¸ ë¹Œë”©ì—ì„œ ì™¼ìª½ì— jê°œì˜ ìž‘ì€ ë¹Œë”©ê³¼ ì˜¤ë¥¸ìª½ì— kê°œì˜ ìž‘ì€ ë¹Œë”©ì„ ë°°ì¹˜í•˜ëŠ” ê²½ìš°ì˜ ìˆ˜
     static long [][][] dp = new long[101][101][101];
 
-    // ³ª¸ÓÁö ¿¬»êÀ» À§ÇÑ »ó¼ö°ª (1000000007)
+    // ë‚˜ë¨¸ì§€ ì—°ì‚°ì„ ìœ„í•œ ìƒìˆ˜ê°’ (1000000007)
     static long mod = 1000000007L;
 
-    // DP °è»êÀ» ¼öÇàÇÏ´Â ¸Þ¸ðÀÌÁ¦ÀÌ¼Ç ÇÔ¼ö
+    // DP ê³„ì‚°ì„ ìˆ˜í–‰í•˜ëŠ” ë©”ëª¨ì´ì œì´ì…˜ í•¨ìˆ˜
     static void memoize(int size, int left, int right){
-        // ÃÊ±â°ª ¼³Á¤ (1°³ ºôµùÀÏ ¶§´Â 1°¡Áö ¹æ¹ý)
+        // ì´ˆê¸°ê°’ ì„¤ì • (1ê°œ ë¹Œë”©ì¼ ë•ŒëŠ” 1ê°€ì§€ ë°©ë²•)
         dp[1][1][1] = 1;
 
-        // DP ¹è¿­ Ã¤¿ì±â
-        // size´Â ºôµùÀÇ Å©±â, left´Â ¿ÞÂÊ ÀÛÀº ºôµù ¼ö, right´Â ¿À¸¥ÂÊ ÀÛÀº ºôµù ¼ö
+        // DP ë°°ì—´ ì±„ìš°ê¸°
+        // sizeëŠ” ë¹Œë”©ì˜ í¬ê¸°, leftëŠ” ì™¼ìª½ ìž‘ì€ ë¹Œë”© ìˆ˜, rightëŠ” ì˜¤ë¥¸ìª½ ìž‘ì€ ë¹Œë”© ìˆ˜
         for(int i = 2; i <= size; i++){
             for(int j = 1; j <= left; j++){
                 for(int k = 1; k <= right; k++){
-                    // dp[i][j][k] °ª °è»ê
-                    // Á¡È­½Ä:
-                    // dp[i-1][j][k] * (i-2): ÀÌÀü Å©±â¿¡¼­ i-2°³ÀÇ ºôµùÀÌ Áß¾Ó¿¡ ¿Ã ¶§
-                    // dp[i-1][j-1][k]: ¿ÞÂÊ¿¡ ÇÏ³ªÀÇ ÀÛÀº ºôµùÀ» Ãß°¡ÇÑ °æ¿ì
-                    // dp[i-1][j][k-1]: ¿À¸¥ÂÊ¿¡ ÇÏ³ªÀÇ ÀÛÀº ºôµùÀ» Ãß°¡ÇÑ °æ¿ì
+                    // dp[i][j][k] ê°’ ê³„ì‚°
+                    // ì í™”ì‹:
+                    // dp[i-1][j][k] * (i-2): ì´ì „ í¬ê¸°ì—ì„œ i-2ê°œì˜ ë¹Œë”©ì´ ì¤‘ì•™ì— ì˜¬ ë•Œ
+                    // dp[i-1][j-1][k]: ì™¼ìª½ì— í•˜ë‚˜ì˜ ìž‘ì€ ë¹Œë”©ì„ ì¶”ê°€í•œ ê²½ìš°
+                    // dp[i-1][j][k-1]: ì˜¤ë¥¸ìª½ì— í•˜ë‚˜ì˜ ìž‘ì€ ë¹Œë”©ì„ ì¶”ê°€í•œ ê²½ìš°
                     dp[i][j][k] = (dp[i-1][j][k] * (i-2) + dp[i-1][j-1][k] + dp[i-1][j][k-1]) % mod;
                 }
             }
         }
     }
 
-    // ¸ÞÀÎ ÇÔ¼ö
+    // ë©”ì¸ í•¨ìˆ˜
     public static void main(String [] args) throws IOException {
-        // ÀÔ·Â ¹Þ±â
+        // ìž…ë ¥ ë°›ê¸°
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        // ÀÔ·Â °ª ÆÄ½Ì
-        int size = Integer.parseInt(st.nextToken());  // ºôµùÀÇ Å©±â
-        int left = Integer.parseInt(st.nextToken());  // ¿ÞÂÊ¿¡ ³õÀ» ¼ö ÀÖ´Â ÀÛÀº ºôµùÀÇ °³¼ö
-        int right = Integer.parseInt(st.nextToken()); // ¿À¸¥ÂÊ¿¡ ³õÀ» ¼ö ÀÖ´Â ÀÛÀº ºôµùÀÇ °³¼ö
+        // ìž…ë ¥ ê°’ íŒŒì‹±
+        int size = Integer.parseInt(st.nextToken());  // ë¹Œë”©ì˜ í¬ê¸°
+        int left = Integer.parseInt(st.nextToken());  // ì™¼ìª½ì— ë†“ì„ ìˆ˜ ìžˆëŠ” ìž‘ì€ ë¹Œë”©ì˜ ê°œìˆ˜
+        int right = Integer.parseInt(st.nextToken()); // ì˜¤ë¥¸ìª½ì— ë†“ì„ ìˆ˜ ìžˆëŠ” ìž‘ì€ ë¹Œë”©ì˜ ê°œìˆ˜
 
-        // ¸Þ¸ðÀÌÁ¦ÀÌ¼ÇÀ» ¼öÇàÇÏ¿© DP ¹è¿­ °è»ê
+        // ë©”ëª¨ì´ì œì´ì…˜ì„ ìˆ˜í–‰í•˜ì—¬ DP ë°°ì—´ ê³„ì‚°
         memoize(size, left, right);
 
-        // °á°ú Ãâ·Â (Å©±â sizeÀÎ ºôµù¿¡¼­ ¿ÞÂÊ¿¡ left°³ÀÇ ÀÛÀº ºôµù°ú ¿À¸¥ÂÊ¿¡ right°³ÀÇ ÀÛÀº ºôµùÀ» ¹èÄ¡ÇÏ´Â °æ¿ìÀÇ ¼ö)
+        // ê²°ê³¼ ì¶œë ¥ (í¬ê¸° sizeì¸ ë¹Œë”©ì—ì„œ ì™¼ìª½ì— leftê°œì˜ ìž‘ì€ ë¹Œë”©ê³¼ ì˜¤ë¥¸ìª½ì— rightê°œì˜ ìž‘ì€ ë¹Œë”©ì„ ë°°ì¹˜í•˜ëŠ” ê²½ìš°ì˜ ìˆ˜)
         System.out.println(dp[size][left][right]);
     }
 }

@@ -3,72 +3,72 @@ import java.util.*;
 
 public class DynamicProgramming7 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-30
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 17:28
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ìž‘ì„±ì¼ì‹œ : 2025-04-30
+     * ìµœì´ˆ ìž‘ì„±ì‹œê°„ : 17:28
+     * ìµœì´ˆ ìž‘ì„±ìž : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 9252
-     * ¹®Á¦ ÀÌ¸§ : LCS 2
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥³
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 9252
+     * ë¬¸ì œ ì´ë¦„ : LCS 2
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…£
      *
-     * ÀÛ¼º ¸ñÀû : ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ìž‘ì„± ëª©ì  : ë°±ì¤€ì— ìžˆëŠ” ë¬¸ì œ í’€ì´
      */
     /*
-     * ¹®Á¦ ¼³¸í:
-     * µÎ ¹®ÀÚ¿­ A¿Í B°¡ ÁÖ¾îÁ³À» ¶§, ÀÌµéÀÇ ÃÖÀå °øÅë ºÎºÐ ¼ö¿­(LCS)À» ±¸ÇÏ´Â ¹®Á¦ÀÔ´Ï´Ù.
-     * LCS´Â µÎ ¹®ÀÚ¿­¿¡¼­ ¼ø¼­´ë·Î µîÀåÇÏ´Â °øÅëµÈ ¹®ÀÚÀÇ ÃÖ´ë ºÎºÐ ¼ö¿­À» ÀÇ¹ÌÇÕ´Ï´Ù.
-     * ¿¹¸¦ µé¾î, ¹®ÀÚ¿­ "ABCBDAB"¿Í "BDCAB"¿¡ ´ëÇØ LCS´Â "BCAB"ÀÔ´Ï´Ù.
-     * ÀÌ ¹®Á¦¿¡¼­´Â LCSÀÇ ±æÀÌ¿Í ÇÔ²² LCS ¹®ÀÚ¿­À» ±¸ÇÏ´Â °ÍÀÌ ¸ñÇ¥ÀÔ´Ï´Ù.
+     * ë¬¸ì œ ì„¤ëª…:
+     * ë‘ ë¬¸ìžì—´ Aì™€ Bê°€ ì£¼ì–´ì¡Œì„ ë•Œ, ì´ë“¤ì˜ ìµœìž¥ ê³µí†µ ë¶€ë¶„ ìˆ˜ì—´(LCS)ì„ êµ¬í•˜ëŠ” ë¬¸ì œìž…ë‹ˆë‹¤.
+     * LCSëŠ” ë‘ ë¬¸ìžì—´ì—ì„œ ìˆœì„œëŒ€ë¡œ ë“±ìž¥í•˜ëŠ” ê³µí†µëœ ë¬¸ìžì˜ ìµœëŒ€ ë¶€ë¶„ ìˆ˜ì—´ì„ ì˜ë¯¸í•©ë‹ˆë‹¤.
+     * ì˜ˆë¥¼ ë“¤ì–´, ë¬¸ìžì—´ "ABCBDAB"ì™€ "BDCAB"ì— ëŒ€í•´ LCSëŠ” "BCAB"ìž…ë‹ˆë‹¤.
+     * ì´ ë¬¸ì œì—ì„œëŠ” LCSì˜ ê¸¸ì´ì™€ í•¨ê»˜ LCS ë¬¸ìžì—´ì„ êµ¬í•˜ëŠ” ê²ƒì´ ëª©í‘œìž…ë‹ˆë‹¤.
      *
-     * ÀÔ·Â:
-     * µÎ ÁÙ¿¡ °ÉÃÄ °¢°¢ A¿Í B ¹®ÀÚ¿­ÀÌ ÁÖ¾îÁý´Ï´Ù. µÎ ¹®ÀÚ¿­ÀÇ ±æÀÌ´Â ÃÖ´ë 1000ÀÔ´Ï´Ù.
+     * ìž…ë ¥:
+     * ë‘ ì¤„ì— ê±¸ì³ ê°ê° Aì™€ B ë¬¸ìžì—´ì´ ì£¼ì–´ì§‘ë‹ˆë‹¤. ë‘ ë¬¸ìžì—´ì˜ ê¸¸ì´ëŠ” ìµœëŒ€ 1000ìž…ë‹ˆë‹¤.
      *
-     * Ãâ·Â:
-     * Ã¹ ¹øÂ° ÁÙ¿¡´Â LCSÀÇ ±æÀÌ¸¦ Ãâ·ÂÇÏ°í, µÎ ¹øÂ° ÁÙ¿¡´Â LCS ¹®ÀÚ¿­À» Ãâ·ÂÇÕ´Ï´Ù.
-     * LCS°¡ ¿©·¯ °³ÀÏ °æ¿ì »çÀü¼øÀ¸·Î °¡Àå ¾Õ¼­´Â °ÍÀ» Ãâ·ÂÇÕ´Ï´Ù.
+     * ì¶œë ¥:
+     * ì²« ë²ˆì§¸ ì¤„ì—ëŠ” LCSì˜ ê¸¸ì´ë¥¼ ì¶œë ¥í•˜ê³ , ë‘ ë²ˆì§¸ ì¤„ì—ëŠ” LCS ë¬¸ìžì—´ì„ ì¶œë ¥í•©ë‹ˆë‹¤.
+     * LCSê°€ ì—¬ëŸ¬ ê°œì¼ ê²½ìš° ì‚¬ì „ìˆœìœ¼ë¡œ ê°€ìž¥ ì•žì„œëŠ” ê²ƒì„ ì¶œë ¥í•©ë‹ˆë‹¤.
      *
-     * ¿¹½Ã:
-     * ÀÔ·Â:
+     * ì˜ˆì‹œ:
+     * ìž…ë ¥:
      * ABCBDAB
      * BDCAB
-     * Ãâ·Â:
+     * ì¶œë ¥:
      * 4
      * BCAB
      *
-     * À§ ¿¹½Ã¿¡¼­ LCS´Â "BCAB"·Î ±æÀÌ´Â 4ÀÔ´Ï´Ù.
+     * ìœ„ ì˜ˆì‹œì—ì„œ LCSëŠ” "BCAB"ë¡œ ê¸¸ì´ëŠ” 4ìž…ë‹ˆë‹¤.
      *
      */
 
-    // LCS °æ·Î¸¦ ÀúÀåÇÒ ArrayList ¼±¾ð
+    // LCS ê²½ë¡œë¥¼ ì €ìž¥í•  ArrayList ì„ ì–¸
     static ArrayList<Character> path = new ArrayList<>();
 
-    // ÀÔ·Â ¹®ÀÚ¿­ A¿Í B¸¦ ÀúÀåÇÒ ¹è¿­ ¼±¾ð
+    // ìž…ë ¥ ë¬¸ìžì—´ Aì™€ Bë¥¼ ì €ìž¥í•  ë°°ì—´ ì„ ì–¸
     static char[] A;
     static char[] B;
 
-    // DP Å×ÀÌºíÀ» ÀúÀåÇÒ 2D ¹è¿­ ¼±¾ð
+    // DP í…Œì´ë¸”ì„ ì €ìž¥í•  2D ë°°ì—´ ì„ ì–¸
     static int[][] dp;
 
     /*
-     * DP Å×ÀÌºíÀ» ÃÊ±âÈ­ÇÏ°í LCSÀÇ ±æÀÌ¸¦ °è»êÇÏ´Â ÇÔ¼ö
-     * dp[i][j]´Â A[0..i-1]°ú B[0..j-1]±îÁöÀÇ LCS ±æÀÌ¸¦ ÀÇ¹ÌÇÑ´Ù.
+     * DP í…Œì´ë¸”ì„ ì´ˆê¸°í™”í•˜ê³  LCSì˜ ê¸¸ì´ë¥¼ ê³„ì‚°í•˜ëŠ” í•¨ìˆ˜
+     * dp[i][j]ëŠ” A[0..i-1]ê³¼ B[0..j-1]ê¹Œì§€ì˜ LCS ê¸¸ì´ë¥¼ ì˜ë¯¸í•œë‹¤.
      *
-     * row : A ¹®ÀÚ¿­ÀÇ ±æÀÌ
-     * col : B ¹®ÀÚ¿­ÀÇ ±æÀÌ
+     * row : A ë¬¸ìžì—´ì˜ ê¸¸ì´
+     * col : B ë¬¸ìžì—´ì˜ ê¸¸ì´
      */
     static void init(int row, int col) {
-        // dp Å×ÀÌºíÀ» row+1 x col+1 Å©±â·Î ÃÊ±âÈ­
+        // dp í…Œì´ë¸”ì„ row+1 x col+1 í¬ê¸°ë¡œ ì´ˆê¸°í™”
         dp = new int[row+1][col+1];
 
-        // 1ºÎÅÍ row±îÁö, 1ºÎÅÍ col±îÁö ¼øÂ÷ÀûÀ¸·Î dp °ªÀ» °è»ê
+        // 1ë¶€í„° rowê¹Œì§€, 1ë¶€í„° colê¹Œì§€ ìˆœì°¨ì ìœ¼ë¡œ dp ê°’ì„ ê³„ì‚°
         for (int i = 1; i <= row; i++) {
             for (int j = 1; j <= col; j++) {
-                // ¸¸¾à A[i-1]°ú B[j-1]ÀÌ °°´Ù¸é, ÀÌÀü LCS °ª¿¡ 1À» ´õÇÔ
+                // ë§Œì•½ A[i-1]ê³¼ B[j-1]ì´ ê°™ë‹¤ë©´, ì´ì „ LCS ê°’ì— 1ì„ ë”í•¨
                 if (A[i-1] == B[j-1]) {
                     dp[i][j] = dp[i-1][j-1] + 1;
                 } else {
-                    // ´Ù¸£¸é, ÀÌÀü °è»ê °ª Áß ´õ Å« °ªÀ¸·Î ¼³Á¤
+                    // ë‹¤ë¥´ë©´, ì´ì „ ê³„ì‚° ê°’ ì¤‘ ë” í° ê°’ìœ¼ë¡œ ì„¤ì •
                     dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
                 }
             }
@@ -76,60 +76,60 @@ public class DynamicProgramming7 {
     }
 
     /*
-     * dp Å×ÀÌºíÀ» ±â¹ÝÀ¸·Î ½ÇÁ¦ LCS ¹®ÀÚ¿­À» Ã£¾Æ path¿¡ ÀúÀåÇÏ´Â ÇÔ¼ö
+     * dp í…Œì´ë¸”ì„ ê¸°ë°˜ìœ¼ë¡œ ì‹¤ì œ LCS ë¬¸ìžì—´ì„ ì°¾ì•„ pathì— ì €ìž¥í•˜ëŠ” í•¨ìˆ˜
      *
-     * row : A ¹®ÀÚ¿­ÀÇ ÀÎµ¦½º
-     * col : B ¹®ÀÚ¿­ÀÇ ÀÎµ¦½º
+     * row : A ë¬¸ìžì—´ì˜ ì¸ë±ìŠ¤
+     * col : B ë¬¸ìžì—´ì˜ ì¸ë±ìŠ¤
      */
     static void LCS(int row, int col) {
-        // ¸¸¾à ÇÑ ¹®ÀÚ¿­ÀÌ ³¡¿¡ µµ´ÞÇÏ¸é ´õ ÀÌ»ó Ã£À» ÇÊ¿ä°¡ ¾øÀ½
+        // ë§Œì•½ í•œ ë¬¸ìžì—´ì´ ëì— ë„ë‹¬í•˜ë©´ ë” ì´ìƒ ì°¾ì„ í•„ìš”ê°€ ì—†ìŒ
         if (row == 0 || col == 0) {
             return;
         }
 
-        // A[row-1]°ú B[col-1]ÀÌ °°À¸¸é LCSÀÇ ÀÏºÎ·Î Æ÷ÇÔ
+        // A[row-1]ê³¼ B[col-1]ì´ ê°™ìœ¼ë©´ LCSì˜ ì¼ë¶€ë¡œ í¬í•¨
         if (A[row-1] == B[col-1]) {
             path.add(A[row-1]);
-            // ±× ÈÄ ÀÌÀü ¹®ÀÚ¿­·Î °è¼ÓÇØ¼­ LCS¸¦ Ã£À½
+            // ê·¸ í›„ ì´ì „ ë¬¸ìžì—´ë¡œ ê³„ì†í•´ì„œ LCSë¥¼ ì°¾ìŒ
             LCS(row-1, col-1);
         } else {
-            // A[row-1] != B[col-1]ÀÏ °æ¿ì, ´õ ±ä LCS¸¦ ÃßÀûÇÏ¿© °æ·Î¸¦ Ã£À½
+            // A[row-1] != B[col-1]ì¼ ê²½ìš°, ë” ê¸´ LCSë¥¼ ì¶”ì í•˜ì—¬ ê²½ë¡œë¥¼ ì°¾ìŒ
             if (dp[row-1][col] > dp[row][col-1]) {
-                LCS(row-1, col); // À§ÂÊ¿¡¼­ ´õ Å« °ªÀ» Ã£¾Ò´Ù¸é, À§·Î ÀÌµ¿
+                LCS(row-1, col); // ìœ„ìª½ì—ì„œ ë” í° ê°’ì„ ì°¾ì•˜ë‹¤ë©´, ìœ„ë¡œ ì´ë™
             } else {
-                LCS(row, col-1); // ¿ÞÂÊ¿¡¼­ ´õ Å« °ªÀ» Ã£¾Ò´Ù¸é, ¿ÞÂÊÀ¸·Î ÀÌµ¿
+                LCS(row, col-1); // ì™¼ìª½ì—ì„œ ë” í° ê°’ì„ ì°¾ì•˜ë‹¤ë©´, ì™¼ìª½ìœ¼ë¡œ ì´ë™
             }
         }
     }
 
     public static void main(String[] args) throws IOException {
-        // BufferedReader¿Í BufferedWriter¸¦ ÀÌ¿ëÇØ ÀÔÃâ·Â Ã³¸®
+        // BufferedReaderì™€ BufferedWriterë¥¼ ì´ìš©í•´ ìž…ì¶œë ¥ ì²˜ë¦¬
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        // A¿Í B ¹®ÀÚ¿­À» ÀÔ·Â¹Þ¾Æ char ¹è¿­·Î º¯È¯
+        // Aì™€ B ë¬¸ìžì—´ì„ ìž…ë ¥ë°›ì•„ char ë°°ì—´ë¡œ ë³€í™˜
         A = br.readLine().toCharArray();
         B = br.readLine().toCharArray();
 
-        // dp Å×ÀÌºí ÃÊ±âÈ­ ¹× LCS ±æÀÌ °è»ê
+        // dp í…Œì´ë¸” ì´ˆê¸°í™” ë° LCS ê¸¸ì´ ê³„ì‚°
         init(A.length, B.length);
 
-        // ÃÖÁ¾ LCS ±æÀÌ´Â dp[A.length][B.length]¿¡ ÀúÀåµÊ
+        // ìµœì¢… LCS ê¸¸ì´ëŠ” dp[A.length][B.length]ì— ì €ìž¥ë¨
         int lcs = dp[A.length][B.length];
 
-        // LCS °æ·Î¸¦ Ã£À½
+        // LCS ê²½ë¡œë¥¼ ì°¾ìŒ
         LCS(A.length, B.length);
 
-        // LCS ±æÀÌ Ãâ·Â
+        // LCS ê¸¸ì´ ì¶œë ¥
         bw.write(lcs + "\n");
 
-        // °æ·Î¿¡ ÀúÀåµÈ LCS ¹®ÀÚ¿­À» ¿ª¼øÀ¸·Î Ãâ·Â (LCS´Â µÚ¿¡¼­ºÎÅÍ Â÷·Ê·Î Ãß°¡µÇ¹Ç·Î ¿ª¼øÀ¸·Î Ãâ·Â)
+        // ê²½ë¡œì— ì €ìž¥ëœ LCS ë¬¸ìžì—´ì„ ì—­ìˆœìœ¼ë¡œ ì¶œë ¥ (LCSëŠ” ë’¤ì—ì„œë¶€í„° ì°¨ë¡€ë¡œ ì¶”ê°€ë˜ë¯€ë¡œ ì—­ìˆœìœ¼ë¡œ ì¶œë ¥)
         for (int i = path.size() - 1; i >= 0; i--) {
             bw.write(path.get(i));
         }
         bw.write("\n");
 
-        // Ãâ·Â ¹öÆÛ¸¦ flushÇÏ¿© °á°ú¸¦ Ãâ·Â
+        // ì¶œë ¥ ë²„í¼ë¥¼ flushí•˜ì—¬ ê²°ê³¼ë¥¼ ì¶œë ¥
         bw.flush();
     }
 }

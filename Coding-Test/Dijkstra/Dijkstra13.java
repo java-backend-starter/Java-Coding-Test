@@ -3,56 +3,56 @@ import java.util.*;
 
 public class Dijkstra13 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-08
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 14:51
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-08
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 14:51
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1854
-     * ¹®Á¦ ÀÌ¸§ : K¹øÂ° ÃÖ´Ü °æ·Î
-     * ¹®Á¦ ³­ÀÌµµ : ÇÃ·¹Æ¼³Ñ ¥³
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1854
+     * ë¬¸ì œ ì´ë¦„ : Kë²ˆì§¸ ìµœë‹¨ ê²½ë¡œ
+     * ë¬¸ì œ ë‚œì´ë„ : í”Œë ˆí‹°ë„˜ â…£
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìˆëŠ” ë¬¸ì œ í’€ì´
      */
     /*
-     * graph : ÀÔ·Â¹ŞÀº ±×·¡ÇÁ
-     * distance : °¢ ³ëµåº° °Å¸® µ¥ÀÌÅÍ ÀúÀå ¹è¿­
+     * graph : ì…ë ¥ë°›ì€ ê·¸ë˜í”„
+     * distance : ê° ë…¸ë“œë³„ ê±°ë¦¬ ë°ì´í„° ì €ì¥ ë°°ì—´
      */
     static int[][] graph = new int[1001][1001];
     static ArrayList<PriorityQueue<Integer>> distance = new ArrayList<>();
 
-    // k¹øÂ° ÃÖ´Ü °æ·Î¸¦ ±¸ÇÏ´Â ´ÙÀÍ½ºÆ®¶ó º¯Çü ¾Ë°í¸®Áò
-// start: ½ÃÀÛ Á¤Á¡, node: ÃÑ Á¤Á¡ ¼ö, k: °¢ Á¤Á¡±îÁö ÃÖ´ë ¸î °³ÀÇ ÃÖ´Ü °æ·Î¸¦ ÀúÀåÇÒÁö
+    // kë²ˆì§¸ ìµœë‹¨ ê²½ë¡œë¥¼ êµ¬í•˜ëŠ” ë‹¤ìµìŠ¤íŠ¸ë¼ ë³€í˜• ì•Œê³ ë¦¬ì¦˜
+// start: ì‹œì‘ ì •ì , node: ì´ ì •ì  ìˆ˜, k: ê° ì •ì ê¹Œì§€ ìµœëŒ€ ëª‡ ê°œì˜ ìµœë‹¨ ê²½ë¡œë¥¼ ì €ì¥í• ì§€
     static void dijkstra(int start, int node, int k) {
-        // ÃÖ¼Ò °Å¸® ±âÁØÀ¸·Î Á¤Á¡À» Ã³¸®ÇÏ±â À§ÇÑ ¿ì¼±¼øÀ§ Å¥
+        // ìµœì†Œ ê±°ë¦¬ ê¸°ì¤€ìœ¼ë¡œ ì •ì ì„ ì²˜ë¦¬í•˜ê¸° ìœ„í•œ ìš°ì„ ìˆœìœ„ í
         PriorityQueue<Node> queue = new PriorityQueue<>();
 
-        // ½ÃÀÛ Á¤Á¡¿¡¼­ÀÇ °Å¸® 0À¸·Î ÃÊ±âÈ­ÇÏ°í Å¥¿¡ »ğÀÔ
+        // ì‹œì‘ ì •ì ì—ì„œì˜ ê±°ë¦¬ 0ìœ¼ë¡œ ì´ˆê¸°í™”í•˜ê³  íì— ì‚½ì…
         queue.add(new Node(start, 0));
-        distance.get(1).add(0); // ½ÃÀÛ Á¤Á¡ 1¹ø¿¡ ´ëÇÑ °Å¸® ¸®½ºÆ®¿¡ 0 Ãß°¡
+        distance.get(1).add(0); // ì‹œì‘ ì •ì  1ë²ˆì— ëŒ€í•œ ê±°ë¦¬ ë¦¬ìŠ¤íŠ¸ì— 0 ì¶”ê°€
 
-        // Å¥°¡ ºô ¶§±îÁö ¹İº¹
+        // íê°€ ë¹Œ ë•Œê¹Œì§€ ë°˜ë³µ
         while (!queue.isEmpty()) {
-            Node now = queue.poll(); // ÇöÀç±îÁö °¡Àå ÂªÀº °Å¸®ÀÇ Á¤Á¡ ²¨³¿
+            Node now = queue.poll(); // í˜„ì¬ê¹Œì§€ ê°€ì¥ ì§§ì€ ê±°ë¦¬ì˜ ì •ì  êº¼ëƒ„
 
-            // ¸ğµç ´Ù¸¥ Á¤Á¡¿¡ ´ëÇØ È®ÀÎ
+            // ëª¨ë“  ë‹¤ë¥¸ ì •ì ì— ëŒ€í•´ í™•ì¸
             for (int next = 1; next <= node; next++) {
-                // ÇöÀç Á¤Á¡¿¡¼­ next Á¤Á¡À¸·Î °¡´Â °£¼±ÀÌ Á¸ÀçÇÒ °æ¿ì
+                // í˜„ì¬ ì •ì ì—ì„œ next ì •ì ìœ¼ë¡œ ê°€ëŠ” ê°„ì„ ì´ ì¡´ì¬í•  ê²½ìš°
                 if (graph[now.getVertex()][next] != 0) {
-                    // ÇöÀç °Å¸® + °£¼± °¡ÁßÄ¡
+                    // í˜„ì¬ ê±°ë¦¬ + ê°„ì„  ê°€ì¤‘ì¹˜
                     int newDist = now.getWeight() + graph[now.getVertex()][next];
 
-                    // ¾ÆÁ÷ k°³ÀÇ °æ·Î°¡ ÀúÀåµÇÁö ¾Ê¾ÒÀ¸¸é ±×³É Ãß°¡
+                    // ì•„ì§ kê°œì˜ ê²½ë¡œê°€ ì €ì¥ë˜ì§€ ì•Šì•˜ìœ¼ë©´ ê·¸ëƒ¥ ì¶”ê°€
                     if (distance.get(next).size() < k) {
                         distance.get(next).add(newDist);
                         queue.add(new Node(next, newDist));
 
-                        // ÀÌ¹Ì k°³°¡ Ã¡Áö¸¸, ÇöÀç °Å¸®º¸´Ù Å« °ªÀÌ ÀÖ´Ù¸é ±³Ã¼
+                        // ì´ë¯¸ kê°œê°€ ì°¼ì§€ë§Œ, í˜„ì¬ ê±°ë¦¬ë³´ë‹¤ í° ê°’ì´ ìˆë‹¤ë©´ êµì²´
                     } else if (distance.get(next).peek() > newDist) {
-                        distance.get(next).poll(); // °¡Àå Å« °ª Á¦°Å (¿ì¼±¼øÀ§ Å¥°¡ max-heapÀÏ °æ¿ì)
-                        distance.get(next).add(newDist); // »õ·Î¿î ´õ ÂªÀº °Å¸® Ãß°¡
+                        distance.get(next).poll(); // ê°€ì¥ í° ê°’ ì œê±° (ìš°ì„ ìˆœìœ„ íê°€ max-heapì¼ ê²½ìš°)
+                        distance.get(next).add(newDist); // ìƒˆë¡œìš´ ë” ì§§ì€ ê±°ë¦¬ ì¶”ê°€
                         queue.add(new Node(next, newDist));
                     }
                 }
@@ -69,12 +69,12 @@ public class Dijkstra13 {
         int edge = Integer.parseInt(st.nextToken());
         int k = Integer.parseInt(st.nextToken());
 
-        // °Å¸® ¹è¿­ ÃÊ±âÈ­ (Max Heap)
+        // ê±°ë¦¬ ë°°ì—´ ì´ˆê¸°í™” (Max Heap)
         for (int i = 0; i <= node; i++) {
-            distance.add(new PriorityQueue<>(k, (o1, o2) -> o2 - o1)); // ³»¸²Â÷¼ø = Max Heap
+            distance.add(new PriorityQueue<>(k, (o1, o2) -> o2 - o1)); // ë‚´ë¦¼ì°¨ìˆœ = Max Heap
         }
 
-        // °£¼± Á¤º¸ ÀÔ·Â
+        // ê°„ì„  ì •ë³´ ì…ë ¥
         for (int i = 0; i < edge; i++) {
             st = new StringTokenizer(br.readLine());
             int u = Integer.parseInt(st.nextToken());
@@ -83,9 +83,9 @@ public class Dijkstra13 {
             graph[u][v] = w;
         }
 
-        dijkstra(1, node, k); // ½ÃÀÛ Á¤Á¡ 1
+        dijkstra(1, node, k); // ì‹œì‘ ì •ì  1
 
-        // Ãâ·Â
+        // ì¶œë ¥
         for (int i = 1; i <= node; i++) {
             if (distance.get(i).size() == k) {
                 bw.write(distance.get(i).peek() + "\n");
@@ -101,8 +101,8 @@ public class Dijkstra13 {
 }
 
 /*
- * ÀÎÁ¢ ³ëµå¸¦ Ç¥ÇöÇÑ Å¬·¡½º
- * ³ëµå ¹øÈ£¿Í °¡ÁßÄ¡ ÀúÀå
+ * ì¸ì ‘ ë…¸ë“œë¥¼ í‘œí˜„í•œ í´ë˜ìŠ¤
+ * ë…¸ë“œ ë²ˆí˜¸ì™€ ê°€ì¤‘ì¹˜ ì €ì¥
  */
 class Node implements Comparable<Node> {
     private int vertex;

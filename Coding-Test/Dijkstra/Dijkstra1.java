@@ -3,55 +3,55 @@ import java.util.*;
 
 public class Dijkstra1 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-08
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 10:01
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-08
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 10:01
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1753
-     * ¹®Á¦ ÀÌ¸§ : ÃÖ´Ü°æ·Î
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥³
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1753
+     * ë¬¸ì œ ì´ë¦„ : ìµœë‹¨ê²½ë¡œ
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…£
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìˆëŠ” ë¬¸ì œ í’€ì´
      */
     /*
-     * graph : ÀÔ·Â¹ŞÀ» ±×·¡ÇÁ
-     * visited : ¹æ¹® ¿©ºÎ¸¦ ÀúÀåÇÏ´Â ¹è¿­
-     * distance : °¡ÁßÄ¡ ¹è¿­
+     * graph : ì…ë ¥ë°›ì„ ê·¸ë˜í”„
+     * visited : ë°©ë¬¸ ì—¬ë¶€ë¥¼ ì €ì¥í•˜ëŠ” ë°°ì—´
+     * distance : ê°€ì¤‘ì¹˜ ë°°ì—´
      */
     static ArrayList<ArrayList<Node>> graph = new ArrayList<>();
     static boolean [] visited;
     static int [] distance;
 
     /*
-     * ´ÙÀÍ½ºÆ®¶ó ¾Ë°í¸®Áò
-     * - ÇÏ³ªÀÇ ½ÃÀÛ Á¤Á¡¿¡¼­ ´Ù¸¥ ¸ğµç Á¤Á¡±îÁöÀÇ ÃÖ´Ü °æ·Î¸¦ ±¸ÇÔ
-     * - ¹æÇâ/¹«¹æÇâ ±×·¡ÇÁ ¸ğµÎ °¡´É (´Ü, À½ÀÇ °¡ÁßÄ¡´Â Çã¿ëµÇÁö ¾ÊÀ½)
-     * - ¿ì¼±¼øÀ§ Å¥¸¦ »ç¿ëÇØ °¡Àå °¡±î¿î Á¤Á¡ºÎÅÍ Ã³¸®
-     * - °¡ÁßÄ¡°¡ ÀÖ´Â ±×·¡ÇÁ¿¡ BFS ¾ÆÀÌµğ¾î¸¦ È®ÀåÇÑ ¹æ½Ä
+     * ë‹¤ìµìŠ¤íŠ¸ë¼ ì•Œê³ ë¦¬ì¦˜
+     * - í•˜ë‚˜ì˜ ì‹œì‘ ì •ì ì—ì„œ ë‹¤ë¥¸ ëª¨ë“  ì •ì ê¹Œì§€ì˜ ìµœë‹¨ ê²½ë¡œë¥¼ êµ¬í•¨
+     * - ë°©í–¥/ë¬´ë°©í–¥ ê·¸ë˜í”„ ëª¨ë‘ ê°€ëŠ¥ (ë‹¨, ìŒì˜ ê°€ì¤‘ì¹˜ëŠ” í—ˆìš©ë˜ì§€ ì•ŠìŒ)
+     * - ìš°ì„ ìˆœìœ„ íë¥¼ ì‚¬ìš©í•´ ê°€ì¥ ê°€ê¹Œìš´ ì •ì ë¶€í„° ì²˜ë¦¬
+     * - ê°€ì¤‘ì¹˜ê°€ ìˆëŠ” ê·¸ë˜í”„ì— BFS ì•„ì´ë””ì–´ë¥¼ í™•ì¥í•œ ë°©ì‹
      */
     static void dijkstra(int start) {
-        // ÃÖ¼Ò °Å¸® ¿ì¼±¼øÀ§·Î Á¤Á¡ Ã³¸®
+        // ìµœì†Œ ê±°ë¦¬ ìš°ì„ ìˆœìœ„ë¡œ ì •ì  ì²˜ë¦¬
         PriorityQueue<Node> queue = new PriorityQueue<>();
-        queue.add(new Node(start, 0)); // ½ÃÀÛ Á¤Á¡À» Å¥¿¡ »ğÀÔ
-        distance[start] = 0; // ½ÃÀÛ Á¤Á¡±îÁöÀÇ °Å¸®´Â 0
+        queue.add(new Node(start, 0)); // ì‹œì‘ ì •ì ì„ íì— ì‚½ì…
+        distance[start] = 0; // ì‹œì‘ ì •ì ê¹Œì§€ì˜ ê±°ë¦¬ëŠ” 0
 
         while (!queue.isEmpty()) {
-            Node node = queue.poll(); // ÇöÀç±îÁö °¡Àå ÂªÀº °Å¸®ÀÇ Á¤Á¡ ²¨³¿
+            Node node = queue.poll(); // í˜„ì¬ê¹Œì§€ ê°€ì¥ ì§§ì€ ê±°ë¦¬ì˜ ì •ì  êº¼ëƒ„
             int now = node.getVertex();
 
-            // ¹æ¹®ÇÏÁö ¾ÊÀº Á¤Á¡ÀÌ¶ó¸é Ã³¸®
+            // ë°©ë¬¸í•˜ì§€ ì•Šì€ ì •ì ì´ë¼ë©´ ì²˜ë¦¬
             if (!visited[now]) {
                 visited[now] = true;
 
-                // ÇöÀç Á¤Á¡ÀÇ ¸ğµç ÀÎÁ¢ Á¤Á¡ È®ÀÎ
+                // í˜„ì¬ ì •ì ì˜ ëª¨ë“  ì¸ì ‘ ì •ì  í™•ì¸
                 for (Node next : graph.get(now)) {
                     int nextVertex = next.getVertex();
                     int newDist = distance[now] + next.getWeight();
 
-                    // ´õ ÂªÀº °æ·Î°¡ ¹ß°ßµÇ¸é °»½Å
+                    // ë” ì§§ì€ ê²½ë¡œê°€ ë°œê²¬ë˜ë©´ ê°±ì‹ 
                     if (!visited[nextVertex] && distance[nextVertex] > newDist) {
                         distance[nextVertex] = newDist;
                         queue.add(new Node(nextVertex, newDist));
@@ -67,9 +67,9 @@ public class Dijkstra1 {
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         /*
-         * node : ³ëµå °³¼ö
-         * edge : °£¼± °³¼ö
-         * start : ½ÃÀÛ ³ëµå
+         * node : ë…¸ë“œ ê°œìˆ˜
+         * edge : ê°„ì„  ê°œìˆ˜
+         * start : ì‹œì‘ ë…¸ë“œ
          */
         int node = Integer.parseInt(st.nextToken());
         int edge = Integer.parseInt(st.nextToken());
@@ -79,8 +79,8 @@ public class Dijkstra1 {
             graph.add(new ArrayList<>());
         }
         /*
-         * ÃÊ±âÈ­
-         * distance´Â ¹«ÇÑ´ë·Î ÃÊ±âÈ­ÇØ¾ß ÇÏ±â¶§¹®¿¡ Integer.MAX_VALUE·Î °ªÀ» Ã¤¿ò
+         * ì´ˆê¸°í™”
+         * distanceëŠ” ë¬´í•œëŒ€ë¡œ ì´ˆê¸°í™”í•´ì•¼ í•˜ê¸°ë•Œë¬¸ì— Integer.MAX_VALUEë¡œ ê°’ì„ ì±„ì›€
          */
         visited = new boolean[node + 1];
         distance = new int[node + 1];
@@ -108,8 +108,8 @@ public class Dijkstra1 {
 }
 
 /*
- * ÀÎÁ¢ ³ëµå¸¦ Ç¥ÇöÇÑ Å¬·¡½º
- * ³ëµå ¹øÈ£¿Í °¡ÁßÄ¡ ÀúÀå
+ * ì¸ì ‘ ë…¸ë“œë¥¼ í‘œí˜„í•œ í´ë˜ìŠ¤
+ * ë…¸ë“œ ë²ˆí˜¸ì™€ ê°€ì¤‘ì¹˜ ì €ì¥
  */
 class Node implements Comparable<Node>{
     private int vertex;

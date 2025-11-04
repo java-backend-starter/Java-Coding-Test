@@ -3,74 +3,74 @@ import java.util.*;
 
 public class DynamicProgramming6 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-26
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 15:12
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ìž‘ì„±ì¼ì‹œ : 2025-04-26
+     * ìµœì´ˆ ìž‘ì„±ì‹œê°„ : 15:12
+     * ìµœì´ˆ ìž‘ì„±ìž : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 13398
-     * ¹®Á¦ ÀÌ¸§ : ¿¬¼Ó ÇÕ
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥´
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 13398
+     * ë¬¸ì œ ì´ë¦„ : ì—°ì† í•©
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…¤
      *
-     * ÀÛ¼º ¸ñÀû : ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ìž‘ì„± ëª©ì  : ë°±ì¤€ì— ìžˆëŠ” ë¬¸ì œ í’€ì´
      *
      */
     /*
-     * ¹®Á¦ ¼³¸í:
-     * Á¤¼ö ¼ö¿­ÀÌ ÁÖ¾îÁú ¶§, ¿¬¼ÓµÈ ¸î °³ÀÇ ¼ö¸¦ ¼±ÅÃÇÏ¿© ¾òÀ» ¼ö ÀÖ´Â ÃÖ´ë ÇÕÀ» ±¸ÇÑ´Ù.
-     * ´Ü, ¼ö¿­¿¡¼­ "ÇÑ °³ÀÇ ¿ø¼Ò¸¦ Á¦°ÅÇÒ ¼ö ÀÖÀ½".
+     * ë¬¸ì œ ì„¤ëª…:
+     * ì •ìˆ˜ ìˆ˜ì—´ì´ ì£¼ì–´ì§ˆ ë•Œ, ì—°ì†ëœ ëª‡ ê°œì˜ ìˆ˜ë¥¼ ì„ íƒí•˜ì—¬ ì–»ì„ ìˆ˜ ìžˆëŠ” ìµœëŒ€ í•©ì„ êµ¬í•œë‹¤.
+     * ë‹¨, ìˆ˜ì—´ì—ì„œ "í•œ ê°œì˜ ì›ì†Œë¥¼ ì œê±°í•  ìˆ˜ ìžˆìŒ".
      *
-     * ¿¹:
-     * ÀÔ·Â: 10 -4 3 1 5 6 -35 12 21 -1
-     * Ãâ·Â: 54 (6À» Á¦°ÅÇÑ ÈÄ 12 + 21 + (-1) = 32, ¶Ç´Â -35¸¦ Á¦°Å µî)
+     * ì˜ˆ:
+     * ìž…ë ¥: 10 -4 3 1 5 6 -35 12 21 -1
+     * ì¶œë ¥: 54 (6ì„ ì œê±°í•œ í›„ 12 + 21 + (-1) = 32, ë˜ëŠ” -35ë¥¼ ì œê±° ë“±)
      *
-     * ÇØ°á Àü·«:
-     * - ÀÏ¹ÝÀûÀÎ ¿¬¼Ó ÇÕ(DP)Ã³·³ Á¢±ÙÇÏµÇ,
-     * - °¢ ÀÎµ¦½º¸¦ Á¦°ÅÇßÀ» ¶§¸¦ °í·ÁÇÏ¿© ¾çÂÊ ¹æÇâÀÇ ÃÖ´ë ¿¬¼Ó ÇÕÀ» µû·Î ÀúÀå
+     * í•´ê²° ì „ëžµ:
+     * - ì¼ë°˜ì ì¸ ì—°ì† í•©(DP)ì²˜ëŸ¼ ì ‘ê·¼í•˜ë˜,
+     * - ê° ì¸ë±ìŠ¤ë¥¼ ì œê±°í–ˆì„ ë•Œë¥¼ ê³ ë ¤í•˜ì—¬ ì–‘ìª½ ë°©í–¥ì˜ ìµœëŒ€ ì—°ì† í•©ì„ ë”°ë¡œ ì €ìž¥
      *
-     * Á¡È­½Ä:
+     * ì í™”ì‹:
      * - leftSum[i]  = max(values[i], values[i] + leftSum[i-1])
-     *   ¡æ 0ºÎÅÍ i±îÁöÀÇ ±¸°£¿¡¼­ i¸¦ ³¡À¸·Î ÇÏ´Â ÃÖ´ë ¿¬¼Ó ÇÕ
+     *   â†’ 0ë¶€í„° iê¹Œì§€ì˜ êµ¬ê°„ì—ì„œ ië¥¼ ëìœ¼ë¡œ í•˜ëŠ” ìµœëŒ€ ì—°ì† í•©
      * - rightSum[i] = max(values[i], values[i] + rightSum[i+1])
-     *   ¡æ iºÎÅÍ ³¡±îÁö ±¸°£¿¡¼­ i¸¦ ½ÃÀÛÀ¸·Î ÇÏ´Â ÃÖ´ë ¿¬¼Ó ÇÕ
+     *   â†’ ië¶€í„° ëê¹Œì§€ êµ¬ê°„ì—ì„œ ië¥¼ ì‹œìž‘ìœ¼ë¡œ í•˜ëŠ” ìµœëŒ€ ì—°ì† í•©
      *
-     * - ¾î¶² ÇÏ³ªÀÇ ÀÎµ¦½º i¸¦ Á¦°ÅÇßÀ» ¶§,
-     *   ÃÖ´ë ÇÕÀº leftSum[i-1] + rightSum[i+1]
+     * - ì–´ë–¤ í•˜ë‚˜ì˜ ì¸ë±ìŠ¤ ië¥¼ ì œê±°í–ˆì„ ë•Œ,
+     *   ìµœëŒ€ í•©ì€ leftSum[i-1] + rightSum[i+1]
      *
-     * ÃÖÁ¾ Á¤´äÀº:
-     * 1. ¾Æ¹«°Íµµ Á¦°ÅÇÏÁö ¾Ê°í ¾òÀº ÃÖ´ë ÇÕ
-     * 2. ÇÏ³ªÀÇ ÀÎµ¦½º¸¦ Á¦°ÅÇØ¼­ ¾ò´Â ÃÖ´ë ÇÕ
-     * ÀÌ µÎ °¡Áö Áß Å« °ª
+     * ìµœì¢… ì •ë‹µì€:
+     * 1. ì•„ë¬´ê²ƒë„ ì œê±°í•˜ì§€ ì•Šê³  ì–»ì€ ìµœëŒ€ í•©
+     * 2. í•˜ë‚˜ì˜ ì¸ë±ìŠ¤ë¥¼ ì œê±°í•´ì„œ ì–»ëŠ” ìµœëŒ€ í•©
+     * ì´ ë‘ ê°€ì§€ ì¤‘ í° ê°’
      */
 
-    // ÀÔ·ÂµÈ ¼ö¿­
+    // ìž…ë ¥ëœ ìˆ˜ì—´
     static int[] values;
 
-    // °¢ À§Ä¡¿¡¼­ ¿ÞÂÊ¿¡¼­ºÎÅÍÀÇ ÃÖ´ë ¿¬¼Ó ÇÕ
+    // ê° ìœ„ì¹˜ì—ì„œ ì™¼ìª½ì—ì„œë¶€í„°ì˜ ìµœëŒ€ ì—°ì† í•©
     static int[] leftSum;
 
-    // °¢ À§Ä¡¿¡¼­ ¿À¸¥ÂÊ¿¡¼­ºÎÅÍÀÇ ÃÖ´ë ¿¬¼Ó ÇÕ
+    // ê° ìœ„ì¹˜ì—ì„œ ì˜¤ë¥¸ìª½ì—ì„œë¶€í„°ì˜ ìµœëŒ€ ì—°ì† í•©
     static int[] rightSum;
 
-    // ¿ÞÂÊ/¿À¸¥ÂÊ ´©ÀûÇÕ ¹è¿­À» Ã¤¿ì°í, Á¦°ÅÇÏÁö ¾Ê¾ÒÀ» ¶§ÀÇ ÃÖ´ë ¿¬¼Ó ÇÕÀ» °è»ê
+    // ì™¼ìª½/ì˜¤ë¥¸ìª½ ëˆ„ì í•© ë°°ì—´ì„ ì±„ìš°ê³ , ì œê±°í•˜ì§€ ì•Šì•˜ì„ ë•Œì˜ ìµœëŒ€ ì—°ì† í•©ì„ ê³„ì‚°
     static int mamoize(int size) {
         leftSum = new int[size];
         rightSum = new int[size];
 
-        // ½ÃÀÛ°ª ÃÊ±âÈ­
+        // ì‹œìž‘ê°’ ì´ˆê¸°í™”
         leftSum[0] = values[0];
         rightSum[size - 1] = values[size - 1];
 
-        // Á¦°ÅÇÏÁö ¾Ê¾ÒÀ» ¶§ ÃÖ´ë ¿¬¼Ó ÇÕ (ÃÊ±ê°ª)
+        // ì œê±°í•˜ì§€ ì•Šì•˜ì„ ë•Œ ìµœëŒ€ ì—°ì† í•© (ì´ˆê¹ƒê°’)
         int result = leftSum[0];
 
-        // ¿ÞÂÊ¿¡¼­ ¿À¸¥ÂÊÀ¸·Î ÃÖ´ë ¿¬¼Ó ÇÕ °è»ê (Kadane's ¾Ë°í¸®Áò)
+        // ì™¼ìª½ì—ì„œ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ìµœëŒ€ ì—°ì† í•© ê³„ì‚° (Kadane's ì•Œê³ ë¦¬ì¦˜)
         for (int i = 1; i < size; i++) {
             leftSum[i] = Math.max(values[i], values[i] + leftSum[i - 1]);
-            result = Math.max(result, leftSum[i]); // Áß°£Áß°£ ÃÖ´ñ°ª °»½Å
+            result = Math.max(result, leftSum[i]); // ì¤‘ê°„ì¤‘ê°„ ìµœëŒ“ê°’ ê°±ì‹ 
         }
 
-        // ¿À¸¥ÂÊ¿¡¼­ ¿ÞÂÊÀ¸·Î ÃÖ´ë ¿¬¼Ó ÇÕ °è»ê
+        // ì˜¤ë¥¸ìª½ì—ì„œ ì™¼ìª½ìœ¼ë¡œ ìµœëŒ€ ì—°ì† í•© ê³„ì‚°
         for (int i = size - 2; i >= 0; i--) {
             rightSum[i] = Math.max(values[i], rightSum[i + 1] + values[i]);
         }
@@ -78,35 +78,35 @@ public class DynamicProgramming6 {
         return result;
     }
 
-    // ÇÏ³ªÀÇ ¿ø¼Ò¸¦ Á¦°ÅÇßÀ» ¶§ÀÇ ÃÖ´ë ÇÕÀ» °è»ê
+    // í•˜ë‚˜ì˜ ì›ì†Œë¥¼ ì œê±°í–ˆì„ ë•Œì˜ ìµœëŒ€ í•©ì„ ê³„ì‚°
     static int max(int size, int result) {
         for (int i = 1; i < size - 1; i++) {
-            // i¹øÂ° ¿ø¼Ò¸¦ Á¦°ÅÇÑ °æ¿ì: i-1±îÁöÀÇ ÃÖ´ë ¿¬¼Ó ÇÕ + i+1ºÎÅÍÀÇ ÃÖ´ë ¿¬¼Ó ÇÕ
+            // ië²ˆì§¸ ì›ì†Œë¥¼ ì œê±°í•œ ê²½ìš°: i-1ê¹Œì§€ì˜ ìµœëŒ€ ì—°ì† í•© + i+1ë¶€í„°ì˜ ìµœëŒ€ ì—°ì† í•©
             int temp = leftSum[i - 1] + rightSum[i + 1];
-            result = Math.max(result, temp); // ±âÁ¸ ÃÖ´ñ°ª°ú ºñ±³ÇÏ¿© °»½Å
+            result = Math.max(result, temp); // ê¸°ì¡´ ìµœëŒ“ê°’ê³¼ ë¹„êµí•˜ì—¬ ê°±ì‹ 
         }
         return result;
     }
 
     public static void main(String[] args) throws IOException {
-        // ºü¸¥ ÀÔ·ÂÀ» À§ÇÑ BufferedReader
+        // ë¹ ë¥¸ ìž…ë ¥ì„ ìœ„í•œ BufferedReader
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
-        // ¼ö¿­ÀÇ ±æÀÌ
+        // ìˆ˜ì—´ì˜ ê¸¸ì´
         int size = Integer.parseInt(br.readLine());
         values = new int[size];
 
-        // ¼ö¿­ ÀÔ·Â
+        // ìˆ˜ì—´ ìž…ë ¥
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < size; i++) {
             values[i] = Integer.parseInt(st.nextToken());
         }
 
-        // 1. ¿ø¼Ò¸¦ Á¦°ÅÇÏÁö ¾ÊÀº °æ¿ì ÃÖ´ë ÇÕ °è»ê
+        // 1. ì›ì†Œë¥¼ ì œê±°í•˜ì§€ ì•Šì€ ê²½ìš° ìµœëŒ€ í•© ê³„ì‚°
         int result = mamoize(size);
 
-        // 2. ÇÏ³ªÀÇ ¿ø¼Ò¸¦ Á¦°ÅÇßÀ» ¶§ °¡´ÉÇÑ ÃÖ´ë ÇÕ °è»ê ÈÄ ÃÖ´ñ°ª ºñ±³
+        // 2. í•˜ë‚˜ì˜ ì›ì†Œë¥¼ ì œê±°í–ˆì„ ë•Œ ê°€ëŠ¥í•œ ìµœëŒ€ í•© ê³„ì‚° í›„ ìµœëŒ“ê°’ ë¹„êµ
         System.out.println(max(size, result));
     }
 }

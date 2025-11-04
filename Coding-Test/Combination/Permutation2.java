@@ -3,40 +3,40 @@ import java.util.*;
 
 public class Permutation2 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-23
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 15:18
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ìž‘ì„±ì¼ì‹œ : 2025-04-23
+     * ìµœì´ˆ ìž‘ì„±ì‹œê°„ : 15:18
+     * ìµœì´ˆ ìž‘ì„±ìž : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1947
-     * ¹®Á¦ ÀÌ¸§ : ¼±¹° Àü´Þ
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥²
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1947
+     * ë¬¸ì œ ì´ë¦„ : ì„ ë¬¼ ì „ë‹¬
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…¢
      *
-     * ÀÛ¼º ¸ñÀû : ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ìž‘ì„± ëª©ì  : ë°±ì¤€ì— ìžˆëŠ” ë¬¸ì œ í’€ì´
      */
-    // derangement(¿ÏÀü ¼ø¿­, ÀÚ±â ÀÚ¸®¿¡ ¿ÀÁö ¾Ê´Â ¼ø¿­) ¼ö¸¦ ÀúÀåÇÒ ¹è¿­
+    // derangement(ì™„ì „ ìˆœì—´, ìžê¸° ìžë¦¬ì— ì˜¤ì§€ ì•ŠëŠ” ìˆœì—´) ìˆ˜ë¥¼ ì €ìž¥í•  ë°°ì—´
     static long[] permutation;
 
-    // derangement ¼ö¸¦ ±¸ÇÏ±â À§ÇÑ ÃÊ±âÈ­ ¸Þ¼­µå
+    // derangement ìˆ˜ë¥¼ êµ¬í•˜ê¸° ìœ„í•œ ì´ˆê¸°í™” ë©”ì„œë“œ
     static void init(int size) {
-        permutation = new long[size + 1];  // ÀÎµ¦½º 1ºÎÅÍ »ç¿ëÇÏ±â À§ÇØ size + 1 Å©±â·Î ¹è¿­ »ý¼º
-        permutation[1] = 0;                // D(1) = 0: ÀÚ±â ÀÚ½Å¹Û¿¡ ¾ø±â ¶§¹®¿¡ derangement ºÒ°¡´É
-        permutation[2] = 1;                // D(2) = 1: 2°³ÀÇ ¿ø¼Ò°¡ ¼­·Î ÀÚ¸®¸¦ ¹Ù²Ü ¼ö ÀÖ´Â °æ¿ì 1°¡Áö
+        permutation = new long[size + 1];  // ì¸ë±ìŠ¤ 1ë¶€í„° ì‚¬ìš©í•˜ê¸° ìœ„í•´ size + 1 í¬ê¸°ë¡œ ë°°ì—´ ìƒì„±
+        permutation[1] = 0;                // D(1) = 0: ìžê¸° ìžì‹ ë°–ì— ì—†ê¸° ë•Œë¬¸ì— derangement ë¶ˆê°€ëŠ¥
+        permutation[2] = 1;                // D(2) = 1: 2ê°œì˜ ì›ì†Œê°€ ì„œë¡œ ìžë¦¬ë¥¼ ë°”ê¿€ ìˆ˜ ìžˆëŠ” ê²½ìš° 1ê°€ì§€
 
-        // Á¡È­½Ä D(n) = (n - 1) * (D(n - 1) + D(n - 2))À» ÀÌ¿ëÇØ DP ¹æ½ÄÀ¸·Î °è»ê
+        // ì í™”ì‹ D(n) = (n - 1) * (D(n - 1) + D(n - 2))ì„ ì´ìš©í•´ DP ë°©ì‹ìœ¼ë¡œ ê³„ì‚°
         for (int i = 3; i <= size; i++) {
             permutation[i] = (i - 1) * (permutation[i - 1] + permutation[i - 2]) % 1000000000;
-            // °á°ú°ªÀÌ Ä¿Áú ¼ö ÀÖÀ¸¹Ç·Î 1,000,000,000(10^9)À¸·Î ³ª´« ³ª¸ÓÁö¸¦ ÀúÀå (¿À¹öÇÃ·Î ¹æÁö)
+            // ê²°ê³¼ê°’ì´ ì»¤ì§ˆ ìˆ˜ ìžˆìœ¼ë¯€ë¡œ 1,000,000,000(10^9)ìœ¼ë¡œ ë‚˜ëˆˆ ë‚˜ë¨¸ì§€ë¥¼ ì €ìž¥ (ì˜¤ë²„í”Œë¡œ ë°©ì§€)
         }
     }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);  // »ç¿ëÀÚ ÀÔ·ÂÀ» ¹Þ±â À§ÇÑ Scanner °´Ã¼ »ý¼º
+        Scanner sc = new Scanner(System.in);  // ì‚¬ìš©ìž ìž…ë ¥ì„ ë°›ê¸° ìœ„í•œ Scanner ê°ì²´ ìƒì„±
 
-        int size = sc.nextInt();  // »ç¿ëÀÚ·ÎºÎÅÍ ÀÔ·Â Å©±â(n)¸¦ ÀÔ·Â¹ÞÀ½
-        init(size);               // derangement ¹è¿­ ÃÊ±âÈ­ ¹× °è»ê ¼öÇà
+        int size = sc.nextInt();  // ì‚¬ìš©ìžë¡œë¶€í„° ìž…ë ¥ í¬ê¸°(n)ë¥¼ ìž…ë ¥ë°›ìŒ
+        init(size);               // derangement ë°°ì—´ ì´ˆê¸°í™” ë° ê³„ì‚° ìˆ˜í–‰
 
-        System.out.println(permutation[size]);  // n¿¡ ´ëÇÑ derangement ¼ö Ãâ·Â
+        System.out.println(permutation[size]);  // nì— ëŒ€í•œ derangement ìˆ˜ ì¶œë ¥
     }
 
 }

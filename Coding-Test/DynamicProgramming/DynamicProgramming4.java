@@ -3,36 +3,36 @@ import java.util.*;
 
 public class DynamicProgramming4 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-24
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 15:15
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ìž‘ì„±ì¼ì‹œ : 2025-04-24
+     * ìµœì´ˆ ìž‘ì„±ì‹œê°„ : 15:15
+     * ìµœì´ˆ ìž‘ì„±ìž : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 11726
-     * ¹®Á¦ ÀÌ¸§ : 2¡¿n Å¸ÀÏ¸µ
-     * ¹®Á¦ ³­ÀÌµµ : ½Ç¹ö ¥²
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 11726
+     * ë¬¸ì œ ì´ë¦„ : 2Ã—n íƒ€ì¼ë§
+     * ë¬¸ì œ ë‚œì´ë„ : ì‹¤ë²„ â…¢
      *
-     * ÀÛ¼º ¸ñÀû : ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ìž‘ì„± ëª©ì  : ë°±ì¤€ì— ìžˆëŠ” ë¬¸ì œ í’€ì´
      *
-     * ¹®Á¦ ¼³¸í:
-     * - 2¡¿1 Å©±âÀÇ Å¸ÀÏÀ» °¡Áö°í 2¡¿n Å©±âÀÇ Á÷»ç°¢ÇüÀ» Ã¤¿ì´Â ¹æ¹ýÀÇ ¼ö¸¦ ±¸ÇÏ´Â ¹®Á¦
-     * - Å¸ÀÏÀº ¼¼·Î·Î 1°³ ¶Ç´Â °¡·Î·Î 2°³¸¦ ÀÌ¾î ºÙÀÌ´Â ÇüÅÂ·Î »ç¿ë °¡´É
-     * - Ã¤¿ì´Â ¹æ¹ýÀÇ ¼ö¸¦ 10,007·Î ³ª´« ³ª¸ÓÁö¸¦ Ãâ·ÂÇØ¾ß ÇÔ
+     * ë¬¸ì œ ì„¤ëª…:
+     * - 2Ã—1 í¬ê¸°ì˜ íƒ€ì¼ì„ ê°€ì§€ê³  2Ã—n í¬ê¸°ì˜ ì§ì‚¬ê°í˜•ì„ ì±„ìš°ëŠ” ë°©ë²•ì˜ ìˆ˜ë¥¼ êµ¬í•˜ëŠ” ë¬¸ì œ
+     * - íƒ€ì¼ì€ ì„¸ë¡œë¡œ 1ê°œ ë˜ëŠ” ê°€ë¡œë¡œ 2ê°œë¥¼ ì´ì–´ ë¶™ì´ëŠ” í˜•íƒœë¡œ ì‚¬ìš© ê°€ëŠ¥
+     * - ì±„ìš°ëŠ” ë°©ë²•ì˜ ìˆ˜ë¥¼ 10,007ë¡œ ë‚˜ëˆˆ ë‚˜ë¨¸ì§€ë¥¼ ì¶œë ¥í•´ì•¼ í•¨
      *
-     * ¿¹½Ã:
-     *  - n = 1: ÇÑ Ä­À» ¼¼·Î·Î Å¸ÀÏ ÇÏ³ª => 1°¡Áö
-     *  - n = 2: ¼¼·Î 1 + ¼¼·Î 1 ¶Ç´Â °¡·Î 2 => 2°¡Áö
-     *  - n = 3: [¼¼·Î+¼¼·Î+¼¼·Î], [°¡·Î+¼¼·Î], [¼¼·Î+°¡·Î] => 3°¡Áö
+     * ì˜ˆì‹œ:
+     *  - n = 1: í•œ ì¹¸ì„ ì„¸ë¡œë¡œ íƒ€ì¼ í•˜ë‚˜ => 1ê°€ì§€
+     *  - n = 2: ì„¸ë¡œ 1 + ì„¸ë¡œ 1 ë˜ëŠ” ê°€ë¡œ 2 => 2ê°€ì§€
+     *  - n = 3: [ì„¸ë¡œ+ì„¸ë¡œ+ì„¸ë¡œ], [ê°€ë¡œ+ì„¸ë¡œ], [ì„¸ë¡œ+ê°€ë¡œ] => 3ê°€ì§€
      *
-     * Á¡È­½Ä:
+     * ì í™”ì‹:
      *  - dp[n] = dp[n - 1] + dp[n - 2]
-     *    (¸¶Áö¸·¿¡ ¼¼·Î Å¸ÀÏÀ» ºÙÀÌ´Â °æ¿ì + °¡·Î Å¸ÀÏ µÎ °³¸¦ ºÙÀÌ´Â °æ¿ì)
+     *    (ë§ˆì§€ë§‰ì— ì„¸ë¡œ íƒ€ì¼ì„ ë¶™ì´ëŠ” ê²½ìš° + ê°€ë¡œ íƒ€ì¼ ë‘ ê°œë¥¼ ë¶™ì´ëŠ” ê²½ìš°)
      */
 
-    // dp[i] : 2¡¿i Å©±âÀÇ Á÷»ç°¢ÇüÀ» Å¸ÀÏ·Î Ã¤¿ì´Â ¹æ¹ýÀÇ ¼ö
+    // dp[i] : 2Ã—i í¬ê¸°ì˜ ì§ì‚¬ê°í˜•ì„ íƒ€ì¼ë¡œ ì±„ìš°ëŠ” ë°©ë²•ì˜ ìˆ˜
     static long[] dp;
 
-    // dp ¹è¿­ ÃÊ±âÈ­
+    // dp ë°°ì—´ ì´ˆê¸°í™”
     static void init(int size){
         dp = new long[size + 1];
         dp[1] = 1;
@@ -41,20 +41,20 @@ public class DynamicProgramming4 {
         }
     }
 
-    // Á¡È­½ÄÀ¸·Î dp ¹è¿­ Ã¤¿ì±â
+    // ì í™”ì‹ìœ¼ë¡œ dp ë°°ì—´ ì±„ìš°ê¸°
     static void mamoize(int size){
         for(int i = 3; i <= size; i++){
-            dp[i] = (dp[i - 1] + dp[i - 2]) % 10007; // °á°ú´Â 10007·Î ³ª´« ³ª¸ÓÁö
+            dp[i] = (dp[i - 1] + dp[i - 2]) % 10007; // ê²°ê³¼ëŠ” 10007ë¡œ ë‚˜ëˆˆ ë‚˜ë¨¸ì§€
         }
     }
 
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
-        int size = sc.nextInt(); // 2¡¿n Á÷»ç°¢Çü¿¡¼­ n ÀÔ·Â
+        int size = sc.nextInt(); // 2Ã—n ì§ì‚¬ê°í˜•ì—ì„œ n ìž…ë ¥
 
-        init(size);        // ÃÊ±âÈ­
-        mamoize(size);     // DP·Î °á°ú °è»ê
+        init(size);        // ì´ˆê¸°í™”
+        mamoize(size);     // DPë¡œ ê²°ê³¼ ê³„ì‚°
 
-        System.out.println(dp[size]); // °á°ú Ãâ·Â
+        System.out.println(dp[size]); // ê²°ê³¼ ì¶œë ¥
     }
 }

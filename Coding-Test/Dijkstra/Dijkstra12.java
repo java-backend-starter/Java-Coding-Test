@@ -3,56 +3,56 @@ import java.util.*;
 
 public class Dijkstra12{
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-08
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 10:32
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-08
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 10:32
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1916
-     * ¹®Á¦ ÀÌ¸§ : ÃÖ¼Òºñ¿ë ±¸ÇÏ±â
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥´
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1916
+     * ë¬¸ì œ ì´ë¦„ : ìµœì†Œë¹„ìš© êµ¬í•˜ê¸°
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…¤
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ë°±ì¤€ì— ìˆëŠ” ë¬¸ì œ í’€ì´
      */
     /*
-     * graph : ÀÔ·Â¹ŞÀ» ±×·¡ÇÁ
-     * visited : ¹æ¹® ¿©ºÎ¸¦ ÀúÀåÇÏ´Â ¹è¿­
-     * distance : °¡ÁßÄ¡ ¹è¿­
+     * graph : ì…ë ¥ë°›ì„ ê·¸ë˜í”„
+     * visited : ë°©ë¬¸ ì—¬ë¶€ë¥¼ ì €ì¥í•˜ëŠ” ë°°ì—´
+     * distance : ê°€ì¤‘ì¹˜ ë°°ì—´
      */
     static ArrayList<ArrayList<Node>> graph = new ArrayList<>();
     static boolean [] visited;
     static int [] distance;
 
-    // ´ÙÀÍ½ºÆ®¶ó ¾Ë°í¸®Áò: ½ÃÀÛ Á¤Á¡ start·ÎºÎÅÍ ¸ğµç Á¤Á¡±îÁöÀÇ ÃÖ´Ü °Å¸® °è»ê
+    // ë‹¤ìµìŠ¤íŠ¸ë¼ ì•Œê³ ë¦¬ì¦˜: ì‹œì‘ ì •ì  startë¡œë¶€í„° ëª¨ë“  ì •ì ê¹Œì§€ì˜ ìµœë‹¨ ê±°ë¦¬ ê³„ì‚°
     static void dijkstra(int start) {
-        // ÃÖ¼Ò °Å¸®¸¦ ±âÁØÀ¸·Î Á¤Á¡À» ²¨³»±â À§ÇÑ ¿ì¼±¼øÀ§ Å¥ »ı¼º
+        // ìµœì†Œ ê±°ë¦¬ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ì •ì ì„ êº¼ë‚´ê¸° ìœ„í•œ ìš°ì„ ìˆœìœ„ í ìƒì„±
         PriorityQueue<Node> queue = new PriorityQueue<>();
 
-        // ½ÃÀÛ Á¤Á¡À» Å¥¿¡ ³Ö°í, ½ÃÀÛ Á¤Á¡±îÁöÀÇ °Å¸® 0À¸·Î ÃÊ±âÈ­
+        // ì‹œì‘ ì •ì ì„ íì— ë„£ê³ , ì‹œì‘ ì •ì ê¹Œì§€ì˜ ê±°ë¦¬ 0ìœ¼ë¡œ ì´ˆê¸°í™”
         queue.offer(new Node(start, 0));
         distance[start] = 0;
 
-        // Å¥°¡ ºô ¶§±îÁö ¹İº¹
+        // íê°€ ë¹Œ ë•Œê¹Œì§€ ë°˜ë³µ
         while (!queue.isEmpty()) {
-            // ÇöÀç±îÁö °¡Àå °¡±î¿î Á¤Á¡À» ²¨³¿
+            // í˜„ì¬ê¹Œì§€ ê°€ì¥ ê°€ê¹Œìš´ ì •ì ì„ êº¼ëƒ„
             Node node = queue.poll();
             int now = node.getVertex();
 
-            // ¾ÆÁ÷ ¹æ¹®ÇÏÁö ¾Ê¾Ò´Ù¸é Ã³¸® ½ÃÀÛ
+            // ì•„ì§ ë°©ë¬¸í•˜ì§€ ì•Šì•˜ë‹¤ë©´ ì²˜ë¦¬ ì‹œì‘
             if (!visited[now]) {
-                visited[now] = true; // ¹æ¹® Ã¼Å©
+                visited[now] = true; // ë°©ë¬¸ ì²´í¬
 
-                // ÇöÀç Á¤Á¡°ú ¿¬°áµÈ ¸ğµç ÀÎÁ¢ Á¤Á¡ È®ÀÎ
+                // í˜„ì¬ ì •ì ê³¼ ì—°ê²°ëœ ëª¨ë“  ì¸ì ‘ ì •ì  í™•ì¸
                 for (Node n : graph.get(now)) {
-                    int next = n.getVertex();    // ´ÙÀ½ Á¤Á¡
-                    int weight = n.getWeight();  // °£¼± °¡ÁßÄ¡
+                    int next = n.getVertex();    // ë‹¤ìŒ ì •ì 
+                    int weight = n.getWeight();  // ê°„ì„  ê°€ì¤‘ì¹˜
 
-                    // ´õ ÂªÀº °æ·Î°¡ ¹ß°ßµÇ¾úÀ» °æ¿ì °»½Å
+                    // ë” ì§§ì€ ê²½ë¡œê°€ ë°œê²¬ë˜ì—ˆì„ ê²½ìš° ê°±ì‹ 
                     if (distance[next] > distance[now] + weight) {
                         distance[next] = distance[now] + weight;
-                        queue.add(new Node(next, distance[next])); // °»½ÅµÈ °Å¸®·Î Å¥¿¡ Ãß°¡
+                        queue.add(new Node(next, distance[next])); // ê°±ì‹ ëœ ê±°ë¦¬ë¡œ íì— ì¶”ê°€
                     }
                 }
             }
@@ -64,8 +64,8 @@ public class Dijkstra12{
         StringTokenizer st;
 
         /*
-         * node : ³ëµå ¼ö
-         * edge : °£¼± ¼ö
+         * node : ë…¸ë“œ ìˆ˜
+         * edge : ê°„ì„  ìˆ˜
          */
         int node = Integer.parseInt(br.readLine());
         int edge = Integer.parseInt(br.readLine());
@@ -75,7 +75,7 @@ public class Dijkstra12{
         }
         
         /*
-         * ÃÊ±âÈ­
+         * ì´ˆê¸°í™”
          */
         visited = new boolean[node + 1];
         distance = new int[node + 1];
@@ -90,8 +90,8 @@ public class Dijkstra12{
             graph.get(u).add(new Node(v, w));
         }
         /*
-         * start : Ãâ¹æ µµ½Ã
-         * end : µµÂø µµ½Ã
+         * start : ì¶œë°© ë„ì‹œ
+         * end : ë„ì°© ë„ì‹œ
          */
         st = new StringTokenizer(br.readLine());
         int start = Integer.parseInt(st.nextToken());
@@ -100,15 +100,15 @@ public class Dijkstra12{
         dijkstra(start);
 
         /*
-         * start¿¡¼­ Ãâ¹ßÇØ¼­ end¿¡ µµÂøÇßÀ» ¶§ ºñ¿ë Ãâ·Â
+         * startì—ì„œ ì¶œë°œí•´ì„œ endì— ë„ì°©í–ˆì„ ë•Œ ë¹„ìš© ì¶œë ¥
          */
         System.out.println(distance[end]);
     }
 }
 
 /*
- * ÀÎÁ¢ ³ëµå¸¦ Ç¥ÇöÇÑ Å¬·¡½º
- * ³ëµå ¹øÈ£¿Í °¡ÁßÄ¡ ÀúÀå
+ * ì¸ì ‘ ë…¸ë“œë¥¼ í‘œí˜„í•œ í´ë˜ìŠ¤
+ * ë…¸ë“œ ë²ˆí˜¸ì™€ ê°€ì¤‘ì¹˜ ì €ì¥
  */
 class Node implements Comparable<Node>{
     private int vertex;

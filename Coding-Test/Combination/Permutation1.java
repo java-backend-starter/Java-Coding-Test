@@ -3,93 +3,93 @@ import java.util.*;
 
 public class Permutation1 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-21
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 12:58
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ìž‘ì„±ì¼ì‹œ : 2025-04-21
+     * ìµœì´ˆ ìž‘ì„±ì‹œê°„ : 12:58
+     * ìµœì´ˆ ìž‘ì„±ìž : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1722
-     * ¹®Á¦ ÀÌ¸§ : ¼ø¿­ÀÇ ¼ø¼­
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥´
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1722
+     * ë¬¸ì œ ì´ë¦„ : ìˆœì—´ì˜ ìˆœì„œ
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…¤
      *
-     * ÀÛ¼º ¸ñÀû : ¹éÁØ¿¡ ÀÖ´Â ¹®Á¦ Ç®ÀÌ
+     * ìž‘ì„± ëª©ì  : ë°±ì¤€ì— ìžˆëŠ” ë¬¸ì œ í’€ì´
      */
     /*
-     * factorial : °¢ ¼ýÀÚ °³¼ö(n)¿¡ ´ëÇØ ¸¸µé ¼ö ÀÖ´Â ¼ø¿­ÀÇ ÃÑ °æ¿ìÀÇ ¼ö ÀúÀå
-     *             ¿¹: factorial[3] = 6 (3! = 3¡¿2¡¿1)
+     * factorial : ê° ìˆ«ìž ê°œìˆ˜(n)ì— ëŒ€í•´ ë§Œë“¤ ìˆ˜ ìžˆëŠ” ìˆœì—´ì˜ ì´ ê²½ìš°ì˜ ìˆ˜ ì €ìž¥
+     *             ì˜ˆ: factorial[3] = 6 (3! = 3Ã—2Ã—1)
      *
-     * permutation : ¼ø¿­ Á¤º¸¸¦ ´ã´Â ¹è¿­ (1-based index »ç¿ë)
+     * permutation : ìˆœì—´ ì •ë³´ë¥¼ ë‹´ëŠ” ë°°ì—´ (1-based index ì‚¬ìš©)
      *
-     * visited : ¼ø¿­ »ý¼º/Å½»ö Áß ÀÌ¹Ì »ç¿ëµÈ ¼ýÀÚÀÎÁö ¿©ºÎ¸¦ Ã¼Å©ÇÏ±â À§ÇÑ ¹è¿­
+     * visited : ìˆœì—´ ìƒì„±/íƒìƒ‰ ì¤‘ ì´ë¯¸ ì‚¬ìš©ëœ ìˆ«ìžì¸ì§€ ì—¬ë¶€ë¥¼ ì²´í¬í•˜ê¸° ìœ„í•œ ë°°ì—´
      */
     static long[] factorial;
     static int[] permutation;
     static boolean[] visited;
 
     /*
-     * k¹øÂ° ¼ø¿­À» ±¸ÇÏ´Â ÇÔ¼ö
+     * kë²ˆì§¸ ìˆœì—´ì„ êµ¬í•˜ëŠ” í•¨ìˆ˜
      *
-     * ÀÔ·Â:
-     * - size : ¼ø¿­ÀÇ Å©±â (¿ä¼Ò °³¼ö)
-     * - k    : ¸î ¹øÂ° ¼ø¿­ÀÎÁö (1-based index)
+     * ìž…ë ¥:
+     * - size : ìˆœì—´ì˜ í¬ê¸° (ìš”ì†Œ ê°œìˆ˜)
+     * - k    : ëª‡ ë²ˆì§¸ ìˆœì—´ì¸ì§€ (1-based index)
      *
-     * °á°ú:
-     * - permutation ¹è¿­¿¡ k¹øÂ° ¼ø¿­ °á°ú°¡ ÀúÀåµÊ
+     * ê²°ê³¼:
+     * - permutation ë°°ì—´ì— kë²ˆì§¸ ìˆœì—´ ê²°ê³¼ê°€ ì €ìž¥ë¨
      */
     static void findPermutation(int size, long k) {
-        // °¢ ÀÚ¸®(position i)¿¡ µé¾î°¥ ¼ö¸¦ °áÁ¤
+        // ê° ìžë¦¬(position i)ì— ë“¤ì–´ê°ˆ ìˆ˜ë¥¼ ê²°ì •
         for (int i = 1; i <= size; i++) {
-            long count = 0; // °¡´ÉÇÑ ¼ö Áß ¾ÆÁ÷ »ç¿ëµÇÁö ¾ÊÀº ¼öÀÇ À§Ä¡¸¦ ¼¼±â À§ÇÑ º¯¼ö
+            long count = 0; // ê°€ëŠ¥í•œ ìˆ˜ ì¤‘ ì•„ì§ ì‚¬ìš©ë˜ì§€ ì•Šì€ ìˆ˜ì˜ ìœ„ì¹˜ë¥¼ ì„¸ê¸° ìœ„í•œ ë³€ìˆ˜
 
             for (int j = 1; j <= size; j++) {
-                if (visited[j]) continue; // ÀÌ¹Ì »ç¿ëµÈ ¼ö´Â °Ç³Ê¶Ü
+                if (visited[j]) continue; // ì´ë¯¸ ì‚¬ìš©ëœ ìˆ˜ëŠ” ê±´ë„ˆëœ€
 
-                // (size - i)! ¸¸Å­ÀÇ °æ¿ìÀÇ ¼ö°¡ ÇÑ ¼ýÀÚ¸¶´Ù ¹Ýº¹µÊ
-                // ÀÌ ¹üÀ§ ¾È¿¡ ÇöÀç k°¡ µé¾î¿Â´Ù¸é j¸¦ ÇöÀç À§Ä¡(i)¿¡ ¹èÁ¤
+                // (size - i)! ë§Œí¼ì˜ ê²½ìš°ì˜ ìˆ˜ê°€ í•œ ìˆ«ìžë§ˆë‹¤ ë°˜ë³µë¨
+                // ì´ ë²”ìœ„ ì•ˆì— í˜„ìž¬ kê°€ ë“¤ì–´ì˜¨ë‹¤ë©´ jë¥¼ í˜„ìž¬ ìœ„ì¹˜(i)ì— ë°°ì •
                 if (k <= factorial[size - i] * (count + 1)) {
-                    permutation[i] = j;       // ÇöÀç ÀÚ¸®(i)¿¡ j¸¦ ¹èÁ¤
-                    visited[j] = true;       // ÇØ´ç ¼ö´Â ÀÌÁ¦ »ç¿ëµÇ¾úÀ½
-                    k -= factorial[size - i] * count; // ³²Àº k°ª °»½Å
+                    permutation[i] = j;       // í˜„ìž¬ ìžë¦¬(i)ì— jë¥¼ ë°°ì •
+                    visited[j] = true;       // í•´ë‹¹ ìˆ˜ëŠ” ì´ì œ ì‚¬ìš©ë˜ì—ˆìŒ
+                    k -= factorial[size - i] * count; // ë‚¨ì€ kê°’ ê°±ì‹ 
                     break;
                 }
-                count++; // ´ÙÀ½ ÈÄº¸ ¼ýÀÚ·Î ÀÌµ¿
+                count++; // ë‹¤ìŒ í›„ë³´ ìˆ«ìžë¡œ ì´ë™
             }
         }
     }
 
     /*
-     * ÇöÀç ÀÔ·ÂµÈ ¼ø¿­ÀÌ »çÀü ¼øÀ¸·Î ¸î ¹øÂ° ¼ø¿­ÀÎÁö ±¸ÇÏ´Â ÇÔ¼ö
+     * í˜„ìž¬ ìž…ë ¥ëœ ìˆœì—´ì´ ì‚¬ì „ ìˆœìœ¼ë¡œ ëª‡ ë²ˆì§¸ ìˆœì—´ì¸ì§€ êµ¬í•˜ëŠ” í•¨ìˆ˜
      *
-     * ÀÔ·Â:
-     * - size : ¼ø¿­ÀÇ Å©±â (¿ä¼Ò °³¼ö)
-     * - st   : ¼ø¿­ÀÌ ´ã±ä StringTokenizer (°ø¹éÀ¸·Î ºÐ¸®µÈ ¼ýÀÚµé)
+     * ìž…ë ¥:
+     * - size : ìˆœì—´ì˜ í¬ê¸° (ìš”ì†Œ ê°œìˆ˜)
+     * - st   : ìˆœì—´ì´ ë‹´ê¸´ StringTokenizer (ê³µë°±ìœ¼ë¡œ ë¶„ë¦¬ëœ ìˆ«ìžë“¤)
      *
-     * °á°ú:
-     * - ÇØ´ç ¼ø¿­ÀÌ »çÀü ¼ø¿¡¼­ ¸î ¹øÂ° ¼ø¿­ÀÎÁö ¹ÝÈ¯ (1-based index)
+     * ê²°ê³¼:
+     * - í•´ë‹¹ ìˆœì—´ì´ ì‚¬ì „ ìˆœì—ì„œ ëª‡ ë²ˆì§¸ ìˆœì—´ì¸ì§€ ë°˜í™˜ (1-based index)
      */
     static long findK(int size, StringTokenizer st) {
-        long k = 1; // 1ºÎÅÍ ½ÃÀÛ (1¹øÂ° ¼ø¿­)
+        long k = 1; // 1ë¶€í„° ì‹œìž‘ (1ë²ˆì§¸ ìˆœì—´)
 
         for (int i = 1; i <= size; i++) {
-            // i¹øÂ° ¼ýÀÚ¸¦ ÀÔ·Â¹Þ¾Æ permutation ¹è¿­¿¡ ÀúÀå
+            // ië²ˆì§¸ ìˆ«ìžë¥¼ ìž…ë ¥ë°›ì•„ permutation ë°°ì—´ì— ì €ìž¥
             permutation[i] = Integer.parseInt(st.nextToken());
-            long count = 0; // permutation[i]º¸´Ù ÀÛÀº ¼ö Áß »ç¿ëµÇÁö ¾ÊÀº ¼ö °³¼ö
+            long count = 0; // permutation[i]ë³´ë‹¤ ìž‘ì€ ìˆ˜ ì¤‘ ì‚¬ìš©ë˜ì§€ ì•Šì€ ìˆ˜ ê°œìˆ˜
 
-            // permutation[i]º¸´Ù ÀÛÀº ¼ö Áß ¾ÆÁ÷ ¹æ¹®ÇÏÁö ¾ÊÀº ¼ö °³¼ö °è»ê
+            // permutation[i]ë³´ë‹¤ ìž‘ì€ ìˆ˜ ì¤‘ ì•„ì§ ë°©ë¬¸í•˜ì§€ ì•Šì€ ìˆ˜ ê°œìˆ˜ ê³„ì‚°
             for (int j = 1; j < permutation[i]; j++) {
                 if (!visited[j]) {
                     count++;
                 }
             }
 
-            // count°³ÀÇ ¼ö°¡ i¹øÂ° ÀÚ¸®¿¡ ¿Ã ¼ö ÀÖ¾úÀ¸¹Ç·Î, ±×¸¸Å­ ¼ø¿­ ¼ö Áõ°¡
+            // countê°œì˜ ìˆ˜ê°€ ië²ˆì§¸ ìžë¦¬ì— ì˜¬ ìˆ˜ ìžˆì—ˆìœ¼ë¯€ë¡œ, ê·¸ë§Œí¼ ìˆœì—´ ìˆ˜ ì¦ê°€
             k += count * factorial[size - i];
 
-            // ÇöÀç ¼ö´Â »ç¿ë Ã³¸®
+            // í˜„ìž¬ ìˆ˜ëŠ” ì‚¬ìš© ì²˜ë¦¬
             visited[permutation[i]] = true;
         }
 
-        return k; // ÃÖÁ¾ÀûÀ¸·Î °è»êµÈ ¼ø¿­ ¹øÈ£ ¹ÝÈ¯
+        return k; // ìµœì¢…ì ìœ¼ë¡œ ê³„ì‚°ëœ ìˆœì—´ ë²ˆí˜¸ ë°˜í™˜
     }
 
     public static void main(String [] args) throws IOException{
@@ -103,7 +103,7 @@ public class Permutation1 {
         permutation = new int[size+1];
         visited = new boolean[size+1];
 
-        // °æ¿ìÀÇ ¼ö ÃÊ±âÈ­
+        // ê²½ìš°ì˜ ìˆ˜ ì´ˆê¸°í™”
         factorial[0] = 1;
         for(int i = 1; i <= size; i++){
             factorial[i] = factorial[i-1] * i;
@@ -112,9 +112,9 @@ public class Permutation1 {
         st = new StringTokenizer(br.readLine());
 
         /*
-         * query : »ç¿ëÀÚ·ÎºÎÅÍ ÀÔ·Â¹Þ´Â ÁúÀÇ À¯Çü
-         * - 1ÀÎ °æ¿ì: k¹øÂ° ¼ø¿­À» ±¸ÇÏ¿© Ãâ·ÂÇÔ
-         * - 2ÀÎ °æ¿ì: ÁÖ¾îÁø ¼ø¿­ÀÌ »çÀü ¼øÀ¸·Î ¸î ¹øÂ°ÀÎÁö °è»êÇÏ¿© Ãâ·ÂÇÔ
+         * query : ì‚¬ìš©ìžë¡œë¶€í„° ìž…ë ¥ë°›ëŠ” ì§ˆì˜ ìœ í˜•
+         * - 1ì¸ ê²½ìš°: kë²ˆì§¸ ìˆœì—´ì„ êµ¬í•˜ì—¬ ì¶œë ¥í•¨
+         * - 2ì¸ ê²½ìš°: ì£¼ì–´ì§„ ìˆœì—´ì´ ì‚¬ì „ ìˆœìœ¼ë¡œ ëª‡ ë²ˆì§¸ì¸ì§€ ê³„ì‚°í•˜ì—¬ ì¶œë ¥í•¨
          */
         int query = Integer.parseInt(st.nextToken());
         if(query == 1){

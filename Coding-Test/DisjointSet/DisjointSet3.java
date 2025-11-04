@@ -3,24 +3,24 @@ import java.util.*;
 
 public class DisjointSet3 {
     /*
-     * ÃÖÃÊ ÀÛ¼ºÀÏ½Ã : 2025-04-05
-     * ÃÖÃÊ ÀÛ¼º½Ã°£ : 12:32
-     * ÃÖÃÊ ÀÛ¼ºÀÚ : Á¤¼ºÈ¯
+     * ìµœì´ˆ ì‘ì„±ì¼ì‹œ : 2025-04-05
+     * ìµœì´ˆ ì‘ì„±ì‹œê°„ : 12:32
+     * ìµœì´ˆ ì‘ì„±ì : ì •ì„±í™˜
      *
-     * ¹®Á¦ ÃâÃ³ : ¹éÁØ
-     * ¹®Á¦ ¹øÈ£ : 1043
-     * ¹®Á¦ ÀÌ¸§ : ¿©Çà °¡ÀÚ
-     * ¹®Á¦ ³­ÀÌµµ : °ñµå ¥³
+     * ë¬¸ì œ ì¶œì²˜ : ë°±ì¤€
+     * ë¬¸ì œ ë²ˆí˜¸ : 1043
+     * ë¬¸ì œ ì´ë¦„ : ì—¬í–‰ ê°€ì
+     * ë¬¸ì œ ë‚œì´ë„ : ê³¨ë“œ â…£
      *
-     * ÀÛ¼º ¸ñÀû
+     * ì‘ì„± ëª©ì 
      *
-     * Ã¥¿¡ ÀÖ´Â ¹®Á¦ º¹½À
+     * ì±…ì— ìˆëŠ” ë¬¸ì œ ë³µìŠµ
      */
     /*
-     * set : °¢ »ç¶÷ÀÇ ´ëÇ¥ ³ëµå¸¦ ÀúÀåÇÏ´Â ¹è¿­ (À¯´Ï¿Â ÆÄÀÎµå¿ë)
-     * know : Áø½ÇÀ» ¾Æ´Â »ç¶÷µéÀÇ ¹øÈ£
-     * party : °¢ ÆÄÆ¼¿¡ Âü¿©ÇÏ´Â »ç¶÷µéÀÇ ¸í´Ü (2Â÷¿ø ¸®½ºÆ®)
-     * count : °ÅÁş¸»À» ÇØµµ µÇ´Â ÆÄÆ¼ÀÇ °³¼ö
+     * set : ê° ì‚¬ëŒì˜ ëŒ€í‘œ ë…¸ë“œë¥¼ ì €ì¥í•˜ëŠ” ë°°ì—´ (ìœ ë‹ˆì˜¨ íŒŒì¸ë“œìš©)
+     * know : ì§„ì‹¤ì„ ì•„ëŠ” ì‚¬ëŒë“¤ì˜ ë²ˆí˜¸
+     * party : ê° íŒŒí‹°ì— ì°¸ì—¬í•˜ëŠ” ì‚¬ëŒë“¤ì˜ ëª…ë‹¨ (2ì°¨ì› ë¦¬ìŠ¤íŠ¸)
+     * count : ê±°ì§“ë§ì„ í•´ë„ ë˜ëŠ” íŒŒí‹°ì˜ ê°œìˆ˜
      */
     static int[] set;
     static int[] know;
@@ -28,8 +28,8 @@ public class DisjointSet3 {
     static int count = 0;
 
     /*
-     * makeSet: À¯´Ï¿Â ÆÄÀÎµå¸¦ À§ÇÑ ÃÊ±â ¼¼ÆÃ
-     * °¢ »ç¶÷À» ÀÚ½ÅÀ» ´ëÇ¥ÀÚ·Î °¡Áöµµ·Ï ¼³Á¤
+     * makeSet: ìœ ë‹ˆì˜¨ íŒŒì¸ë“œë¥¼ ìœ„í•œ ì´ˆê¸° ì„¸íŒ…
+     * ê° ì‚¬ëŒì„ ìì‹ ì„ ëŒ€í‘œìë¡œ ê°€ì§€ë„ë¡ ì„¤ì •
      */
     static int[] makeSet(int size) {
         int[] set = new int[size];
@@ -40,19 +40,19 @@ public class DisjointSet3 {
     }
 
     /*
-     * findSet: ÇØ´ç ¿ø¼ÒÀÇ ·çÆ®(´ëÇ¥ÀÚ)¸¦ Ã£À½
-     * °æ·Î ¾ĞÃà(Path Compression) ±â¹ıÀ» »ç¿ëÇÏ¿© Æ®¸® ³ôÀÌ¸¦ ³·Ãã
+     * findSet: í•´ë‹¹ ì›ì†Œì˜ ë£¨íŠ¸(ëŒ€í‘œì)ë¥¼ ì°¾ìŒ
+     * ê²½ë¡œ ì••ì¶•(Path Compression) ê¸°ë²•ì„ ì‚¬ìš©í•˜ì—¬ íŠ¸ë¦¬ ë†’ì´ë¥¼ ë‚®ì¶¤
      */
     static int findSet(int x) {
         if (set[x] != x) {
-            set[x] = findSet(set[x]);  // Àç±ÍÀûÀ¸·Î ·çÆ®¸¦ Ã£¾Æ ¹Ù·Î ¿¬°á
+            set[x] = findSet(set[x]);  // ì¬ê·€ì ìœ¼ë¡œ ë£¨íŠ¸ë¥¼ ì°¾ì•„ ë°”ë¡œ ì—°ê²°
         }
         return set[x];
     }
 
     /*
-     * unionSet: µÎ ¿ø¼Ò°¡ ¼ÓÇÑ ÁıÇÕÀ» ÇÏ³ª·Î ÇÕÄ§
-     * ´ëÇ¥ÀÚ°¡ ´Ù¸£¸é ÇÏ³ª·Î ¿¬°á
+     * unionSet: ë‘ ì›ì†Œê°€ ì†í•œ ì§‘í•©ì„ í•˜ë‚˜ë¡œ í•©ì¹¨
+     * ëŒ€í‘œìê°€ ë‹¤ë¥´ë©´ í•˜ë‚˜ë¡œ ì—°ê²°
      */
     static void unionSet(int x, int y) {
         x = findSet(x);
@@ -63,7 +63,7 @@ public class DisjointSet3 {
     }
 
     /*
-     * checkSameSet: µÎ »ç¶÷ÀÌ °°Àº ÁıÇÕ(´ëÇ¥ÀÚ °øÀ¯)ÀÎÁö È®ÀÎ
+     * checkSameSet: ë‘ ì‚¬ëŒì´ ê°™ì€ ì§‘í•©(ëŒ€í‘œì ê³µìœ )ì¸ì§€ í™•ì¸
      */
     static boolean checkSameSet(int x, int y) {
         return findSet(x) == findSet(y);
@@ -73,20 +73,20 @@ public class DisjointSet3 {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int people = Integer.parseInt(st.nextToken());       // ÀüÃ¼ »ç¶÷ ¼ö
-        int partiesCount = Integer.parseInt(st.nextToken()); // ÆÄÆ¼ °³¼ö
+        int people = Integer.parseInt(st.nextToken());       // ì „ì²´ ì‚¬ëŒ ìˆ˜
+        int partiesCount = Integer.parseInt(st.nextToken()); // íŒŒí‹° ê°œìˆ˜
 
-        set = makeSet(people + 1); // 1¹øºÎÅÍ people¹ø±îÁö, 0Àº »ç¿ë ¾È ÇÔ
+        set = makeSet(people + 1); // 1ë²ˆë¶€í„° peopleë²ˆê¹Œì§€, 0ì€ ì‚¬ìš© ì•ˆ í•¨
 
         st = new StringTokenizer(br.readLine());
-        int knowCount = Integer.parseInt(st.nextToken()); // Áø½ÇÀ» ¾Æ´Â »ç¶÷ ¼ö
+        int knowCount = Integer.parseInt(st.nextToken()); // ì§„ì‹¤ì„ ì•„ëŠ” ì‚¬ëŒ ìˆ˜
 
         know = new int[knowCount];
         for (int i = 0; i < knowCount; i++) {
             know[i] = Integer.parseInt(st.nextToken());
         }
 
-        // °¢ ÆÄÆ¼ÀÇ Âü¼®ÀÚ ¸ñ·Ï ÀúÀå
+        // ê° íŒŒí‹°ì˜ ì°¸ì„ì ëª©ë¡ ì €ì¥
         for (int i = 0; i < partiesCount; i++) {
             st = new StringTokenizer(br.readLine());
             int memberCount = Integer.parseInt(st.nextToken());
@@ -98,31 +98,31 @@ public class DisjointSet3 {
             party.add(members);
         }
 
-        // ÆÄÆ¼¿¡ ¼ÓÇÑ »ç¶÷µéÀ» °°Àº ÁıÇÕÀ¸·Î ¹­±â (À¯´Ï¿Â)
+        // íŒŒí‹°ì— ì†í•œ ì‚¬ëŒë“¤ì„ ê°™ì€ ì§‘í•©ìœ¼ë¡œ ë¬¶ê¸° (ìœ ë‹ˆì˜¨)
         for (ArrayList<Integer> members : party) {
             for (int j = 1; j < members.size(); j++) {
-                unionSet(members.get(0), members.get(j)); // Ã¹ »ç¶÷À» ±âÁØÀ¸·Î ¸ğµÎ ¿¬°á
+                unionSet(members.get(0), members.get(j)); // ì²« ì‚¬ëŒì„ ê¸°ì¤€ìœ¼ë¡œ ëª¨ë‘ ì—°ê²°
             }
         }
 
-        // °¢ ÆÄÆ¼¸¶´Ù Áø½ÇÀ» ¾Æ´Â »ç¶÷°ú ¿¬°áµÇ¾î ÀÖ´ÂÁö È®ÀÎ
+        // ê° íŒŒí‹°ë§ˆë‹¤ ì§„ì‹¤ì„ ì•„ëŠ” ì‚¬ëŒê³¼ ì—°ê²°ë˜ì–´ ìˆëŠ”ì§€ í™•ì¸
         for (ArrayList<Integer> members : party) {
             boolean possible = true;
-            int rep = members.get(0); // ÇØ´ç ÆÄÆ¼ÀÇ ´ëÇ¥ÀÚ
+            int rep = members.get(0); // í•´ë‹¹ íŒŒí‹°ì˜ ëŒ€í‘œì
 
             for (int person : know) {
                 if (checkSameSet(rep, person)) {
-                    // ÀÌ ÆÄÆ¼¿¡ Áø½ÇÀ» ¾Æ´Â »ç¶÷°ú ¿¬°áµÈ »ç¶÷ÀÌ ÀÖÀ¸¸é °ÅÁş¸» ºÒ°¡
+                    // ì´ íŒŒí‹°ì— ì§„ì‹¤ì„ ì•„ëŠ” ì‚¬ëŒê³¼ ì—°ê²°ëœ ì‚¬ëŒì´ ìˆìœ¼ë©´ ê±°ì§“ë§ ë¶ˆê°€
                     possible = false;
                     break;
                 }
             }
 
             if (possible) {
-                count++; // °ÅÁş¸»ÀÌ °¡´ÉÇÑ ÆÄÆ¼
+                count++; // ê±°ì§“ë§ì´ ê°€ëŠ¥í•œ íŒŒí‹°
             }
         }
 
-        System.out.println(count); // °¡´ÉÇÑ ÆÄÆ¼ ¼ö Ãâ·Â
+        System.out.println(count); // ê°€ëŠ¥í•œ íŒŒí‹° ìˆ˜ ì¶œë ¥
     }
 }
