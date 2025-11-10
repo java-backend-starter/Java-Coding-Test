@@ -19,65 +19,100 @@ public class Sort5 {
      * 
      * 특이사항
      * 
-     * 91%에서 시간초과로 Arrays.sort() 함수로 대신 통과한 문제
+     * 2025.03.02 : quick-select 알고리즘을 썼으나 91%에서 시간초과로 Arrays.sort() 함수로 대신 통과한 문제
+     *
+     * 2025.11.11 : quick-sort 알고리즘에 사용되는 hoare 방식과 lomuto 방식을 공부하고 적용해서 통과해서 코드 수정
+     * 
      */
     /*
-     * quick select 알고리즘은 정렬했을 때 특정 위치의 요소를 전체 정렬을 하지 않고도 찾는 알고리즘이다.
-     *
+     * 두 원소를 교환하는 함수
+     * values : 배열
+     * x, y : 교환할 두 원소의 인덱스
      */
-    static final Random random = new Random();
+    static void swap(int [] values, int x, int y){
+        int temp = values[x];
+        values[x] = values[y];
+        values[y] = temp;
+    }
 
     /*
-     * quick select 알고리즘
-     * 1. 요소가 1개일 때 : 해당 요소를 반환
-     * 2. 요소가 2개 이상일 때 : partition 함수로 피봇의 위치(pivot)를 구하고 3가지 경우를 확인한다.
-     * 2-1. 요소가 k번째 요소일 때 : 해당 요소를 반환
-     * 2-2. 요소가 k번째 수보다 작을 때 : start부터 pivot - 1(피봇 앞의 요소)까지의 범위에서 탐색
-     * 2-3. 요소가 k번째 수보다 클 때 : pivot + 1부터 end까지의 범위에서 탐색
-     *
-     * 2-2, 2-3은 quick select 함수를 재귀 호출한다.
+     * Hoare 방식 퀵소트
+     * 1. begin < end 조건에서만 처리
+     * 2. hoarePartition 함수로 피벗 위치를 구한 뒤,
+     *    피벗을 기준으로 좌우 부분 배열을 재귀적으로 정렬
      */
-    static int quickSelect(int [] values, int start, int end, int k){
-        if(start == end){
-            return values[start];
-        }
-        int pivot = partition(values, start, end);
-        if(k == pivot){
-            return values[k];
-        }
-        else if(k < pivot){
-            return quickSelect(values, start, pivot-1, k);
-        }
-        else {
-            return quickSelect(values, pivot+1, end, k);
+    static void hoare(int [] values, int begin, int end){
+        if(begin < end){
+            int pivot = hoarePartition(values, begin, end);
+            hoare(values, begin, pivot);    // 왼쪽 부분 배열 정렬
+            hoare(values, pivot+1, end);    // 오른쪽 부분 배열 정렬
         }
     }
 
     /*
-     * 피봇의 위치를 반환하는 함수
-     * 1. 피봇을 random 클래스로 구한다.
-     * 2. 피봇을 기준으로 두 개의 부분 집합을 형성
-     * 3. 피봇 위치를 반환
+     * Hoare Partition 함수
+     * 1. 배열 중간값을 피벗으로 선택
+     * 2. left, right 포인터를 양 끝에서 시작
+     * 3. left는 피벗 이상, right는 피벗 이하인 값을 찾으면 교환
+     * 4. 포인터가 교차하면 right 인덱스를 반환
      */
-    static int partition(int [] values, int start, int end){
-        int index = start + random.nextInt(end - start + 1);
-        swap(values, index, end);
+    static int hoarePartition(int [] values, int begin, int end){
+        int left = begin - 1;
+        int right = end + 1;
+        int pivot = values[(begin + end)/2];
+
+        while(true){
+            do {
+                left++;
+            } while(values[left] < pivot);
+
+            do {
+                right--;
+            } while(values[right] > pivot);
+
+            if(left >= right) return right;
+
+            swap(values, left, right);
+        }
+    }
+
+    /*
+     * Lomuto 방식 퀵소트
+     * 1. begin < end 조건에서만 처리
+     * 2. lomutoPartition 함수로 피벗 위치를 구한 뒤,
+     *    피벗을 기준으로 좌우 부분 배열을 재귀적으로 정렬
+     */
+    static void lomuto(int [] values, int begin, int end){
+        if(begin < end){
+            int pivot = lomutoPartition(values, begin, end);
+            lomuto(values, begin, pivot-1);   // 왼쪽 부분 배열 정렬
+            lomuto(values, pivot+1, end);     // 오른쪽 부분 배열 정렬
+        }
+    }
+
+    /*
+     * Lomuto Partition 함수
+     * 1. 마지막 요소를 피벗으로 선택
+     * 2. left 포인터를 pivot보다 작은 값의 경계로 사용
+     * 3. 배열을 순회하며 pivot보다 작은 값은 left 오른쪽으로 이동 후 교환
+     * 4. 마지막에 pivot을 left+1 위치로 이동
+     * 5. pivot 위치 반환
+     */
+    static int lomutoPartition(int [] values, int begin, int end){
+        int left = begin -1;
+        int right;
         int pivot = values[end];
-        int left = start-1;
-        for(int right = start; right < end; right++){
+
+        for(right = begin; right < end; right++){
             if(values[right] < pivot){
                 swap(values, ++left, right);
             }
         }
+
         swap(values, left+1, end);
         return left+1;
     }
 
-    static void swap(int [] values, int i, int j){
-        int temp = values[i];
-        values[i] = values[j];
-        values[j] = temp;
-    }
 
     public static void main(String [] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -95,7 +130,8 @@ public class Sort5 {
         for(int i = 0; i < size; i++){
             values[i] = Integer.parseInt(st.nextToken());
         }
-        
-        System.out.println(quickSelect(values, 0, size-1, k-1));
+
+        hoare(values, 0, size-1); // hoare 방식이 lomuto 방식보다 스왑횟수가 적어 성능이 더 좋다.
+        System.out.println(values[k-1]);
     }
 }
